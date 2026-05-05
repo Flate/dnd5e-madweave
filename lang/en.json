@@ -1686,6 +1686,7 @@
     "hint": "When this Active Effect is applied, these additional status conditions will be applied separately."
   }
 },
+"DND5E.ConEldritchMadness": "Eldritch Madness",
 "DND5E.ConExhaustion": "Exhaustion",
 "DND5E.ConFrightened": "Frightened",
 "DND5E.ConGrappled": "Grappled",
@@ -2468,6 +2469,8 @@
 "DND5E.EquipmentShield": "Shield",
 "DND5E.EquipmentShieldProficiency": "Shields",
 "DND5E.Equipped": "Equipped",
+"DND5E.EldritchMadness": "Eldritch Madness",
+"DND5E.EldritchMadnessLevel": "Eldritch Madness Level {n}",
 "DND5E.Exhaustion": "Exhaustion",
 "DND5E.ExhaustionLevel": "Exhaustion Level {n}",
 

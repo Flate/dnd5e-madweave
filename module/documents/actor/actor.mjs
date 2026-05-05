@@ -514,9 +514,10 @@ export default class Actor5e extends SystemDocumentMixin(Actor) {
     data.name = this.name;
     data.statuses = {};
     for ( const status of this.statuses ) {
-      data.statuses[status] = status === "exhaustion"
-        ? this.system.attributes?.exhaustion ?? 1
-        : status === "concentrating" ? this.concentration.effects.size : 1;
+      data.statuses[status] = status === "eldritchMadness"
+        ? this.system.attributes?.eldritchMadness ?? 1
+        : status === "exhaustion" ? this.system.attributes?.exhaustion ?? 1
+          : status === "concentrating" ? this.concentration.effects.size : 1;
     }
     return data;
   }
@@ -3370,6 +3371,7 @@ export default class Actor5e extends SystemDocumentMixin(Actor) {
     super._onUpdate(data, options, userId);
     if ( userId === game.userId ) {
       await this.updateEncumbrance(options);
+      this._onUpdateEldritchMadness(data, options);
       this._onUpdateExhaustion(data, options);
     }
   }
@@ -3398,6 +3400,10 @@ export default class Actor5e extends SystemDocumentMixin(Actor) {
   /** @inheritDoc */
   async _onCreateDescendantDocuments(parent, collection, documents, data, options, userId) {
     if ( userId === game.userId ) {
+      if ( (collection === "effects") && documents.find(d => d.id === ActiveEffect5e.ID.ELDRITCH_MADNESS)
+        && !this._source.system.attributes?.eldritchMadness ) {
+        await this.update({ "system.attributes.eldritchMadness": 1 });
+      }
       if ( (collection === "effects") && documents.find(d => d.id === ActiveEffect5e.ID.EXHAUSTION)
         && !this._source.system.attributes?.exhaustion ) {
         await this.update({ "system.attributes.exhaustion": 1 });
@@ -3549,6 +3555,29 @@ export default class Actor5e extends SystemDocumentMixin(Actor) {
     } else {
       effect = await ActiveEffect.implementation.fromStatusEffect("exhaustion", { parent: this });
       effect.updateSource({ "flags.dnd5e.exhaustionLevel": level });
+      return ActiveEffect.implementation.create(effect, { parent: this, keepId: true });
+    }
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Handle syncing the Actor's eldritch madness level with the ActiveEffect.
+   * @param {object} data                          The Actor's update delta.
+   * @param {DocumentModificationContext} options  Additional options supplied with the update.
+   * @returns {Promise<ActiveEffect|void>}
+   * @protected
+   */
+  async _onUpdateEldritchMadness(data, options) {
+    const level = foundry.utils.getProperty(data, "system.attributes.eldritchMadness");
+    if ( !Number.isFinite(level) ) return;
+    let effect = this.effects.get(ActiveEffect5e.ID.ELDRITCH_MADNESS);
+    if ( level < 1 ) return effect?.delete();
+    else if ( effect ) {
+      return effect.update({ "flags.dnd5e.eldritchMadnessLevel": level });
+    } else {
+      effect = await ActiveEffect.implementation.fromStatusEffect("eldritchMadness", { parent: this });
+      effect.updateSource({ "flags.dnd5e.eldritchMadnessLevel": level });
       return ActiveEffect.implementation.create(effect, { parent: this, keepId: true });
     }
   }

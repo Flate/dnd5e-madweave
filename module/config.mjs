@@ -3679,6 +3679,11 @@ DND5E.conditionTypes = {
     pseudo: true,
     reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.oNQWvyRZkTOJ8PBq"
   },
+  eldritchMadness: {
+    name: "DND5E.ConEldritchMadness",
+    img: "systems/dnd5e/icons/svg/statuses/eldritch-madness.svg",
+    levels: 6
+  },
   exhaustion: {
     name: "DND5E.ConExhaustion",
     img: "systems/dnd5e/icons/svg/statuses/exhaustion.svg",

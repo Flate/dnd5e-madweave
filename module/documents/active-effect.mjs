@@ -31,6 +31,7 @@ export default class ActiveEffect5e extends DependentDocumentMixin(ActiveEffect)
    */
   static ID = {
     BLOODIED: staticID("dnd5ebloodied"),
+    ELDRITCH_MADNESS: staticID("dnd5eeldritchmadness"),
     ENCUMBERED: staticID("dnd5eencumbered"),
     EXHAUSTION: staticID("dnd5eexhaustion")
   };
@@ -414,8 +415,27 @@ export default class ActiveEffect5e extends DependentDocumentMixin(ActiveEffect)
   /** @inheritDoc */
   prepareDerivedData() {
     super.prepareDerivedData();
+    if ( this.id === this.constructor.ID.ELDRITCH_MADNESS ) this._prepareEldritchMadnessLevel();
     if ( this.id === this.constructor.ID.EXHAUSTION ) this._prepareExhaustionLevel();
     if ( this.isAppliedEnchantment && this.uuid ) dnd5e.registry.enchantments.track(this.origin, this.uuid);
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Modify the ActiveEffect's attributes based on the eldritch madness level.
+   * @protected
+   */
+  _prepareEldritchMadnessLevel() {
+    const config = CONFIG.DND5E.conditionTypes.eldritchMadness;
+    let level = this.getFlag("dnd5e", "eldritchMadnessLevel");
+    if ( !Number.isFinite(level) ) level = 1;
+    this.img = this.constructor._getEldritchMadnessImage(level);
+    this.name = `${game.i18n.localize("DND5E.EldritchMadness")} ${level}`;
+    if ( level >= config.levels ) {
+      this.statuses.add("dead");
+      CONFIG.DND5E.statusEffects.dead.statuses?.forEach(s => this.statuses.add(s));
+    }
   }
 
   /* -------------------------------------------- */
@@ -776,9 +796,20 @@ export default class ActiveEffect5e extends DependentDocumentMixin(ActiveEffect)
    */
   static onTokenHUDRender(app, html) {
     const actor = app.object.actor;
-    const level = foundry.utils.getProperty(actor, "system.attributes.exhaustion");
-    if ( Number.isFinite(level) && (level > 0) ) {
-      const img = ActiveEffect5e._getExhaustionImage(level);
+
+    const madnessLevel = foundry.utils.getProperty(actor, "system.attributes.eldritchMadness");
+    if ( Number.isFinite(madnessLevel) && (madnessLevel > 0) ) {
+      const img = ActiveEffect5e._getEldritchMadnessImage(madnessLevel);
+      const elem = html.querySelector('[data-status-id="eldritchMadness"]');
+      if ( elem ) {
+        elem.style.objectPosition = "-100px";
+        elem.style.background = `url('${img}') no-repeat center / contain`;
+      }
+    }
+
+    const exhaustionLevel = foundry.utils.getProperty(actor, "system.attributes.exhaustion");
+    if ( Number.isFinite(exhaustionLevel) && (exhaustionLevel > 0) ) {
+      const img = ActiveEffect5e._getExhaustionImage(exhaustionLevel);
       const elem = html.querySelector('[data-status-id="exhaustion"]');
       if ( elem ) {
         elem.style.objectPosition = "-100px";
@@ -794,6 +825,16 @@ export default class ActiveEffect5e extends DependentDocumentMixin(ActiveEffect)
    * @param {number} level
    * @returns {string}
    */
+  static _getEldritchMadnessImage(level) {
+    const { img } = CONFIG.DND5E.conditionTypes.eldritchMadness;
+    const split = img.split(".");
+    const ext = split.pop();
+    const path = split.join(".");
+    return `${path}-${level}.${ext}`;
+  }
+
+  /* -------------------------------------------- */
+
   static _getExhaustionImage(level) {
     const { img } = CONFIG.DND5E.conditionTypes.exhaustion;
     const split = img.split(".");
@@ -816,8 +857,27 @@ export default class ActiveEffect5e extends DependentDocumentMixin(ActiveEffect)
     if ( !actor ) return;
 
     const id = target.dataset?.statusId;
-    if ( id === "exhaustion" ) ActiveEffect5e._manageExhaustion(event, actor);
+    if ( id === "eldritchMadness" ) ActiveEffect5e._manageEldritchMadness(event, actor);
+    else if ( id === "exhaustion" ) ActiveEffect5e._manageExhaustion(event, actor);
     else if ( id === "concentrating" ) ActiveEffect5e._manageConcentration(event, actor);
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Manage custom eldritch madness cycling when interacting with the token HUD.
+   * @param {PointerEvent} event        The triggering event.
+   * @param {Actor5e} actor             The actor belonging to the token.
+   */
+  static _manageEldritchMadness(event, actor) {
+    let level = foundry.utils.getProperty(actor, "system.attributes.eldritchMadness");
+    if ( !Number.isFinite(level) ) return;
+    event.preventDefault();
+    event.stopPropagation();
+    if ( event.button === 0 ) level++;
+    else level--;
+    const max = CONFIG.DND5E.conditionTypes.eldritchMadness.levels;
+    actor.update({ "system.attributes.eldritchMadness": Math.clamp(level, 0, max) });
   }
 
   /* -------------------------------------------- */
