@@ -2319,6 +2319,11 @@ DND5E.damageTypes = {
     icon: "systems/dnd5e/icons/svg/damage/thunder.svg",
     reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.iqsmMHk7FSpiNkQy",
     color: new Color(0x708090)
+  },
+  vortex: {
+    label: "DND5E.DAMAGE.Type.Vortex",
+    icon: "systems/dnd5e/icons/svg/damage/vortex.svg",
+    color: new Color(0x6A0DAD)
   }
 };
 preLocalize("damageTypes", { keys: ["label"], sort: true });

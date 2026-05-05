@@ -954,6 +954,33 @@ export default class Actor5e extends SystemDocumentMixin(Actor) {
       return setActive("type");
     }
 
+    // Vortex damage is a combination of psychic and necrotic.
+    // Vulnerability applies if the target is vulnerable to either component.
+    // Resistance applies if the target has at least resistance (or immunity) to both components.
+    // Immunity applies only if the target is immune to both components.
+    if ( type === "vortex" ) {
+      if ( category === "vulnerability" ) {
+        const hasPsychic = !this.#changeIsIgnored(category, "psychic", { options, skipDowngrade })
+          && config?.value.has("psychic");
+        const hasNecrotic = !this.#changeIsIgnored(category, "necrotic", { options, skipDowngrade })
+          && config?.value.has("necrotic");
+        if ( hasPsychic || hasNecrotic ) return setActive("type");
+      } else if ( category === "resistance" ) {
+        const imm = this.system.traits?.di;
+        const hasPsychic = (!this.#changeIsIgnored(category, "psychic", { options, skipDowngrade })
+          && config?.value.has("psychic")) || imm?.value.has("psychic");
+        const hasNecrotic = (!this.#changeIsIgnored(category, "necrotic", { options, skipDowngrade })
+          && config?.value.has("necrotic")) || imm?.value.has("necrotic");
+        if ( hasPsychic && hasNecrotic ) return setActive("type");
+      } else if ( category === "immunity" ) {
+        const hasPsychic = !this.#changeIsIgnored(category, "psychic", { options, skipDowngrade })
+          && config?.value.has("psychic");
+        const hasNecrotic = !this.#changeIsIgnored(category, "necrotic", { options, skipDowngrade })
+          && config?.value.has("necrotic");
+        if ( hasPsychic && hasNecrotic ) return setActive("type");
+      }
+    }
+
     return false;
   }
 
