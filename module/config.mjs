@@ -3339,6 +3339,11 @@ DND5E.spellSchools = {
     icon: "systems/dnd5e/icons/svg/schools/transmutation.svg",
     fullKey: "transmutation",
     reference: "Compendium.dnd5e.content24.JournalEntry.phbAppendixDRule.JournalEntryPage.IYWewSailtmv6qEb"
+  },
+  ela: {
+    label: "DND5E.SchoolEla",
+    icon: "systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg",
+    fullKey: "eldritch-arcanum"
   }
 };
 preLocalize("spellSchools", { key: "label", sort: true });
