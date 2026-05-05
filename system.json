@@ -7,9 +7,9 @@
     "minimum": "13.347",
     "verified": "14"
   },
-  "url": "https://github.com/flate/dnd5e/",
-  "manifest": "https://raw.githubusercontent.com/flate/dnd5e/master/system.json",
-  "download": "https://github.com/flate/dnd5e/releases/download/release-5.3.2-mw/dnd5e-release-5.3.2-mw.zip",
+  "url": "https://github.com/flate/dnd5e-madweave/",
+  "manifest": "https://raw.githubusercontent.com/flate/dnd5e-madweave/master/system.json",
+  "download": "https://github.com/flate/dnd5e-madweave/releases/download/release-5.3.2-mw/dnd5e-release-5.3.2-mw.zip",
   "authors": [
     {
       "name": "Atropos",
