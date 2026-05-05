@@ -2327,6 +2327,14 @@ export default class Actor5e extends SystemDocumentMixin(Actor) {
       foundry.utils.mergeObject(result.updateData, { [path]: Math.max(0, value + config.exhaustionDelta) });
     }
 
+    // Reset Critical Madness Events on long rest.
+    if ( result.type === "long" ) {
+      const cmePath = "system.attributes.criticalMadnessEvents";
+      if ( (foundry.utils.getProperty(result.clone, cmePath) ?? 0) > 0 ) {
+        foundry.utils.mergeObject(result.updateData, { [cmePath]: 0 });
+      }
+    }
+
     /**
      * A hook event that fires after rest result is calculated, but before any updates are performed.
      * @function dnd5e.preRestCompleted
@@ -3362,6 +3370,22 @@ export default class Actor5e extends SystemDocumentMixin(Actor) {
     if ( Number.isFinite(foundry.utils.getProperty(changed, "system.attributes.exhaustion")) ) {
       foundry.utils.setProperty(options, "dnd5e.originalExhaustion", this.system.attributes.exhaustion);
     }
+
+    // Intercept Eldritch Madness 5→6: accumulate Critical Madness Events instead.
+    // Only triggers when an effect would push a character at exactly EM 5 beyond level 5.
+    const newEM = foundry.utils.getProperty(changed, "system.attributes.eldritchMadness");
+    if ( Number.isFinite(newEM) && newEM > 5 && (this.system.attributes?.eldritchMadness ?? 0) === 5 ) {
+      const currentCME = this.system.attributes?.criticalMadnessEvents ?? 0;
+      const newCME = currentCME + 1;
+      if ( newCME >= 3 ) {
+        // Third Critical Madness Event: progress to EM 6 and reset counter.
+        foundry.utils.setProperty(changed, "system.attributes.criticalMadnessEvents", 0);
+      } else {
+        // Accumulate the event but hold EM at 5.
+        foundry.utils.setProperty(changed, "system.attributes.eldritchMadness", 5);
+        foundry.utils.setProperty(changed, "system.attributes.criticalMadnessEvents", newCME);
+      }
+    }
   }
 
   /* -------------------------------------------- */
@@ -3573,13 +3597,70 @@ export default class Actor5e extends SystemDocumentMixin(Actor) {
     if ( !Number.isFinite(level) ) return;
     let effect = this.effects.get(ActiveEffect5e.ID.ELDRITCH_MADNESS);
     if ( level < 1 ) return effect?.delete();
-    else if ( effect ) {
-      return effect.update({ "flags.dnd5e.eldritchMadnessLevel": level });
+    const changes = this.constructor._buildEldritchMadnessChanges(level);
+    if ( effect ) {
+      return effect.update({ "flags.dnd5e.eldritchMadnessLevel": level, changes });
     } else {
       effect = await ActiveEffect.implementation.fromStatusEffect("eldritchMadness", { parent: this });
-      effect.updateSource({ "flags.dnd5e.eldritchMadnessLevel": level });
+      effect.updateSource({ "flags.dnd5e.eldritchMadnessLevel": level, changes });
       return ActiveEffect.implementation.create(effect, { parent: this, keepId: true });
     }
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Build the cumulative ActiveEffect changes array for a given Eldritch Madness level.
+   * Each level's effects are additive; higher levels include all lower-level effects.
+   * @param {number} level  The current Eldritch Madness level (1–6).
+   * @returns {object[]}    Array of change objects suitable for an ActiveEffect.
+   */
+  static _buildEldritchMadnessChanges(level) {
+    const { ADD, OVERRIDE } = CONST.ACTIVE_EFFECT_MODES;
+    const changes = [];
+
+    if ( level >= 1 ) {
+      // Whispers of the Void: disadvantage on Wisdom saves, disadvantage on Perception, grant Deep Speech
+      changes.push(
+        { key: "system.abilities.wis.save.roll.mode", value: "-1", mode: ADD, priority: 20 },
+        { key: "system.skills.prc.roll.mode", value: "-1", mode: ADD, priority: 20 },
+        { key: "system.traits.languages.value", value: "deep", mode: ADD, priority: 20 }
+      );
+    }
+
+    if ( level >= 2 ) {
+      // Unnatural Insight: advantage on Arcana, disadvantage on all Charisma and Wisdom checks
+      changes.push(
+        { key: "system.skills.arc.roll.mode", value: "1", mode: ADD, priority: 20 },
+        { key: "system.abilities.cha.check.roll.mode", value: "-1", mode: ADD, priority: 20 },
+        { key: "system.abilities.wis.check.roll.mode", value: "-1", mode: ADD, priority: 20 }
+      );
+    }
+
+    if ( level >= 3 ) {
+      // Fractured Reality: Ethereal Vision 30 ft.
+      changes.push(
+        { key: "system.attributes.senses.special", value: "Ethereal Vision 30 ft.", mode: OVERRIDE, priority: 20 }
+      );
+    }
+
+    // Level 4 (Chaotic Surge): active trigger, to be added later.
+
+    if ( level >= 5 ) {
+      // Eldritch Resonance: resistance to non-magical bludgeoning/piercing/slashing; vulnerability to psychic and radiant
+      changes.push(
+        { key: "system.traits.dr.value", value: "bludgeoning", mode: ADD, priority: 20 },
+        { key: "system.traits.dr.value", value: "piercing", mode: ADD, priority: 20 },
+        { key: "system.traits.dr.value", value: "slashing", mode: ADD, priority: 20 },
+        { key: "system.traits.dr.bypasses", value: "mgc", mode: ADD, priority: 20 },
+        { key: "system.traits.dv.value", value: "psychic", mode: ADD, priority: 20 },
+        { key: "system.traits.dv.value", value: "radiant", mode: ADD, priority: 20 }
+      );
+    }
+
+    // Level 6 (Mind-Shattered): narrative + active trigger, to be added later.
+
+    return changes;
   }
 
   /* -------------------------------------------- */

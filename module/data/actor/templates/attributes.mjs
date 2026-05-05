@@ -82,6 +82,10 @@ export default class AttributesFields {
       eldritchMadness: new NumberField({
         required: true, nullable: false, integer: true, min: 0, initial: 0, label: "DND5E.EldritchMadness"
       }),
+      criticalMadnessEvents: new NumberField({
+        required: true, nullable: false, integer: true, min: 0, max: 3, initial: 0,
+        label: "DND5E.CriticalMadnessEvents"
+      }),
       exhaustion: new NumberField({
         required: true, nullable: false, integer: true, min: 0, initial: 0, label: "DND5E.Exhaustion"
       }),
