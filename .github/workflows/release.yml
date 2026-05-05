@@ -87,9 +87,9 @@ jobs:
       run: npm ci --ignore-scripts
 
 
-    - name: Integrate Free Rules
-      uses: ./utils/integrate
-      continue-on-error: true
+    #- name: Integrate Free Rules
+    #  uses: ./utils/integrate
+    #  continue-on-error: true
 
 
     - name: Build All
