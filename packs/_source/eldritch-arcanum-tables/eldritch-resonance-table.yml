@@ -1,0 +1,405 @@
+name: Eldritch Resonance Table
+img: systems/dnd5e/icons/svg/statuses/eldritch-madness-4.svg
+description: >-
+  Roll on this table whenever you cast a spell from the Eldritch Arcanum school.
+  The effect triggers immediately after casting unless otherwise noted.
+results:
+  - type: text
+    weight: 1
+    range:
+      - 1
+      - 1
+    drawn: false
+    _id: ERAbyssalConsume
+    img: icons/svg/d20-black.svg
+    flags: {}
+    _stats:
+      coreVersion: '13.344'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    description: >-
+      <strong>Abyssal Consumption.</strong> You are stunned until the end of
+      your next turn. You gain 3 Eldritch Madness levels (maximum 5). The spell
+      fails and its slot is expended.
+    name: Abyssal Consumption
+    _key: '!tables.results!EldResTable00001.ERAbyssalConsume'
+  - type: text
+    weight: 1
+    range:
+      - 2
+      - 10
+    drawn: false
+    _id: ERAbyssalWhisper
+    img: icons/svg/d20-black.svg
+    flags: {}
+    _stats:
+      coreVersion: '13.344'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    description: >-
+      <strong>Abyssal Whispers.</strong> You gain 1 Eldritch Madness level
+      (maximum 5). The spell fails and its slot is expended.
+    name: Abyssal Whispers
+    _key: '!tables.results!EldResTable00001.ERAbyssalWhisper'
+  - type: text
+    weight: 1
+    range:
+      - 11
+      - 20
+    drawn: false
+    _id: ERVoidCaress0001
+    img: icons/svg/d20-black.svg
+    flags: {}
+    _stats:
+      coreVersion: '13.344'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    description: >-
+      <strong>Void's Caress.</strong> You gain temporary hit points equal to
+      the spell's level. The spell succeeds normally.
+    name: Void's Caress
+    _key: '!tables.results!EldResTable00001.ERVoidCaress0001'
+  - type: text
+    weight: 1
+    range:
+      - 21
+      - 30
+    drawn: false
+    _id: ERRealityFractur
+    img: icons/svg/d20-black.svg
+    flags: {}
+    _stats:
+      coreVersion: '13.344'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    description: >-
+      <strong>Reality Fracture.</strong> You teleport up to 30 feet to an
+      unoccupied space you can see. Each creature within 10 feet of your
+      original position is teleported to a random unoccupied space within 30
+      feet of that position (GM determines destination). The spell fails and
+      its slot is expended.
+    name: Reality Fracture
+    _key: '!tables.results!EldResTable00001.ERRealityFractur'
+  - type: text
+    weight: 1
+    range:
+      - 31
+      - 35
+    drawn: false
+    _id: EREldritchEcho01
+    img: icons/svg/d20-black.svg
+    flags: {}
+    _stats:
+      coreVersion: '13.344'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    description: >-
+      <strong>Eldritch Echo.</strong> The next Eldritch Arcanum spell you cast
+      is treated as one level higher (maximum 9th level), with no additional
+      slot cost. The current spell succeeds normally.
+    name: Eldritch Echo
+    _key: '!tables.results!EldResTable00001.EREldritchEcho01'
+  - type: text
+    weight: 1
+    range:
+      - 36
+      - 37
+    drawn: false
+    _id: ERCosmicComedy01
+    img: icons/svg/d20-black.svg
+    flags: {}
+    _stats:
+      coreVersion: '13.344'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    description: >-
+      <strong>Cosmic Comedy.</strong> A rubber chicken materializes in your
+      free hand (or falls to your feet if both hands are full). It vanishes
+      after 1 minute. You have advantage on your next Charisma ability check.
+      The spell succeeds normally.
+    name: Cosmic Comedy
+    _key: '!tables.results!EldResTable00001.ERCosmicComedy01'
+  - type: text
+    weight: 1
+    range:
+      - 38
+      - 47
+    drawn: false
+    _id: ERSoulErosion001
+    img: icons/svg/d20-black.svg
+    flags: {}
+    _stats:
+      coreVersion: '13.344'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    description: >-
+      <strong>Soul Erosion.</strong> You take necrotic damage equal to twice
+      the spell's level (e.g. a 3rd-level spell deals 6 necrotic damage). The
+      spell succeeds normally.
+    name: Soul Erosion
+    _key: '!tables.results!EldResTable00001.ERSoulErosion001'
+  - type: text
+    weight: 1
+    range:
+      - 48
+      - 49
+    drawn: false
+    _id: EREldritchQuack0
+    img: icons/svg/d20-black.svg
+    flags: {}
+    _stats:
+      coreVersion: '13.344'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    description: >-
+      <strong>Eldritch Quackery.</strong> A spectral duck appears atop your
+      head for 1 hour (it can't be removed by mundane means). While the duck
+      is present, you have disadvantage on Stealth checks and advantage on
+      Intimidation checks. The spell succeeds normally.
+    name: Eldritch Quackery
+    _key: '!tables.results!EldResTable00001.EREldritchQuack0'
+  - type: text
+    weight: 1
+    range:
+      - 50
+      - 59
+    drawn: false
+    _id: ERCosmicFavor001
+    img: icons/svg/d20-black.svg
+    flags: {}
+    _stats:
+      coreVersion: '13.344'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    description: >-
+      <strong>Cosmic Favor.</strong> Choose one: you have advantage on your
+      next spell attack roll, OR the next creature that must make a saving
+      throw against one of your spells does so with disadvantage. The spell
+      succeeds normally.
+    name: Cosmic Favor
+    _key: '!tables.results!EldResTable00001.ERCosmicFavor001'
+  - type: text
+    weight: 1
+    range:
+      - 60
+      - 69
+    drawn: false
+    _id: EREldBacklash001
+    img: icons/svg/d20-black.svg
+    flags: {}
+    _stats:
+      coreVersion: '13.344'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    description: >-
+      <strong>Eldritch Backlash.</strong> You gain 2 Eldritch Madness levels
+      (maximum 5). The spell fails and its slot is expended.
+    name: Eldritch Backlash
+    _key: '!tables.results!EldResTable00001.EREldBacklash001'
+  - type: text
+    weight: 1
+    range:
+      - 70
+      - 79
+    drawn: false
+    _id: ERTemporalDisto0
+    img: icons/svg/d20-black.svg
+    flags: {}
+    _stats:
+      coreVersion: '13.344'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    description: >-
+      <strong>Temporal Distortion.</strong> Time bends around you. You gain
+      one additional action on your next turn (this action can only be used to
+      take the Attack, Dash, Disengage, Hide, or Use an Object action). The
+      spell succeeds normally.
+    name: Temporal Distortion
+    _key: '!tables.results!EldResTable00001.ERTemporalDisto0'
+  - type: text
+    weight: 1
+    range:
+      - 80
+      - 89
+    drawn: false
+    _id: ERAbyssalSurge01
+    img: icons/svg/d20-black.svg
+    flags: {}
+    _stats:
+      coreVersion: '13.344'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    description: >-
+      <strong>Abyssal Surge.</strong> Raw void energy amplifies your magic.
+      All damage dice for this spell are treated as their maximum value (no
+      roll needed). The spell succeeds normally.
+    name: Abyssal Surge
+    _key: '!tables.results!EldResTable00001.ERAbyssalSurge01'
+  - type: text
+    weight: 1
+    range:
+      - 90
+      - 98
+    drawn: false
+    _id: ERCosmicAlignmnt
+    img: icons/svg/d20-black.svg
+    flags: {}
+    _stats:
+      coreVersion: '13.344'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    description: >-
+      <strong>Cosmic Alignment.</strong> The eldritch forces work in your
+      favor — you lose 1 Eldritch Madness level. The spell succeeds normally.
+    name: Cosmic Alignment
+    _key: '!tables.results!EldResTable00001.ERCosmicAlignmnt'
+  - type: text
+    weight: 1
+    range:
+      - 99
+      - 99
+    drawn: false
+    _id: EREldAscendanc00
+    img: icons/svg/d20-black.svg
+    flags: {}
+    _stats:
+      coreVersion: '13.344'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    description: >-
+      <strong>Eldritch Ascendance.</strong> You partially slip into the Void.
+      You become ethereal for 1 minute (as the Etherealness spell), and you
+      lose 2 Eldritch Madness levels. The spell succeeds normally.
+    name: Eldritch Ascendance
+    _key: '!tables.results!EldResTable00001.EREldAscendanc00'
+  - type: text
+    weight: 1
+    range:
+      - 100
+      - 100
+    drawn: false
+    _id: ERCosmicRecknng0
+    img: icons/svg/d20-black.svg
+    flags: {}
+    _stats:
+      coreVersion: '13.344'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+    description: >-
+      <strong>Cosmic Reckoning.</strong> Reality shatters around you. All
+      creatures within 30 feet must make a Wisdom saving throw (DC = 8 + your
+      proficiency bonus + your Intelligence modifier) or gain 3 Eldritch
+      Madness levels. You gain 3 Eldritch Madness levels (maximum 5) and
+      permanently increase your primary spellcasting ability score by 1. The
+      spell fails and its slot is expended.
+    name: Cosmic Reckoning
+    _key: '!tables.results!EldResTable00001.ERCosmicRecknng0'
+formula: 1d100
+replacement: true
+displayRoll: true
+flags: {}
+_id: EldResTable00001
+_stats:
+  duplicateSource: null
+  coreVersion: '13.344'
+  systemId: dnd5e
+  systemVersion: 4.0.0
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+  exportSource: null
+sort: 0
+folder: null
+ownership:
+  default: 0
+_key: '!tables!EldResTable00001'

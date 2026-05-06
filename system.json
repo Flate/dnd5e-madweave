@@ -647,6 +647,22 @@
           ]
         }
       }
+    },
+    {
+      "name": "eldritch-arcanum-tables",
+      "label": "Eldritch Arcanum Tables",
+      "path": "packs/eldritch-arcanum-tables",
+      "type": "RollTable",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "system": "dnd5e",
+      "flags": {
+        "dnd5e": {
+          "sourceBook": "Madweave Campaign"
+        }
+      }
     }
   ],
   "packFolders": [
@@ -707,6 +723,15 @@
             "monsterfeatures"
           ]
         }
+      ]
+    },
+    {
+      "name": "Madweave Campaign",
+      "color": "#5b3d8a",
+      "sorting": "m",
+      "packs": [
+        "eldritch-madness",
+        "eldritch-arcanum-tables"
       ]
     }
   ],
