@@ -3780,47 +3780,24 @@ export default class Actor5e extends SystemDocumentMixin(Actor) {
   /* -------------------------------------------- */
 
   /**
-   * Roll the Chaotic Surge d6 for a spell cast or weapon attack.
-   * Spells: auto-rolls and applies immediately (spells always resolve).
-   * Weapons: posts a chat card button the player clicks only if the attack hit,
-   * deferring the d6 roll until then so misses have no consequence.
+   * Post a Chaotic Surge weapon chat card for the player to confirm on hit.
+   * Spell surges are handled automatically inside _prepareUsageScaling (mixin.mjs).
    * @param {Actor5e} actor      The actor with Chaotic Surge.
    * @param {Activity} activity  The activity that triggered the check.
    * @returns {Promise<void>}
    */
   static async rollChaoticSurge(actor, activity) {
-    const isSpell = activity.item?.type === "spell";
-    const isWeapon = activity.item?.type === "weapon" && activity.type === "attack";
-    if ( !isSpell && !isWeapon ) return;
-
-    const speaker = ChatMessage.getSpeaker({ actor });
-
-    if ( isSpell ) {
-      const d6 = await new Roll("1d6").evaluate();
-      if ( d6.total !== 6 ) return;
-      const baseLevel = activity.item.system.level ?? 1;
-      const newLevel = Math.max(1, baseLevel + 1);
-      await ChatMessage.create({
-        speaker,
-        content: `<p><strong>⚡ Chaotic Surge!</strong> (rolled 6)</p>
-          <p>Treat <em>${activity.item.name}</em> as a <strong>level ${newLevel}</strong> spell instead of level ${baseLevel}.</p>
-          <p>${actor.name} takes <strong>${newLevel} Vortex damage</strong> (applied automatically).</p>`
-      });
-      const currentHP = actor.system.attributes?.hp?.value ?? 0;
-      await actor.update({ "system.attributes.hp.value": Math.max(0, currentHP - newLevel) });
-    } else {
-      // Post a button card — the player only clicks it if the attack actually hit.
-      const tokenDoc = actor.token;
-      await ChatMessage.create({
-        speaker,
-        content: `<p><strong>⚡ Chaotic Surge</strong></p>
-          <p>If the attack hit, click below to roll for the surge.</p>
-          <button class="chaotic-surge-roll"
-            data-actor-id="${actor.id}"
-            data-scene-id="${tokenDoc?.parent?.id ?? ""}"
-            data-token-id="${tokenDoc?.id ?? ""}">Roll Surge (1d6)</button>`
-      });
-    }
+    if ( activity.item?.type !== "weapon" || activity.type !== "attack" ) return;
+    const tokenDoc = actor.token;
+    await ChatMessage.create({
+      speaker: ChatMessage.getSpeaker({ actor }),
+      content: `<p><strong>⚡ Chaotic Surge</strong></p>
+        <p>If the attack hit, click below to roll for the surge.</p>
+        <button class="chaotic-surge-roll"
+          data-actor-id="${actor.id}"
+          data-scene-id="${tokenDoc?.parent?.id ?? ""}"
+          data-token-id="${tokenDoc?.id ?? ""}">Roll Surge (1d6)</button>`
+    });
   }
 
   /* -------------------------------------------- */

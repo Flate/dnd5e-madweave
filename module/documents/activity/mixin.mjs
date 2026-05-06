@@ -508,6 +508,31 @@ export default function ActivityMixin(Base) {
         }
       }
 
+      // Chaotic Surge: after base scaling is known, roll d6. On a 6, treat the spell as
+      // one level higher by boosting scaling before item.prepareFinalAttributes() runs.
+      // The spell slot consumed is unchanged; only the effective cast level increases.
+      // Cantrips (level 0) are excluded — they scale by character level, not spell level.
+      if ( this.isSpell && this.actor && (item.system.level ?? 0) > 0 ) {
+        const hasChaoticSurge = this.actor.items?.some(i => i.getFlag("dnd5e", "chaoticSurge"));
+        if ( hasChaoticSurge ) {
+          const baseLevel = item.system.level;
+          const effectiveLevel = baseLevel + (usageConfig.scaling ?? 0);
+          if ( effectiveLevel < 9 ) {
+            const d6 = await new Roll("1d6").evaluate();
+            if ( d6.total === 6 ) {
+              usageConfig.scaling = (usageConfig.scaling ?? 0) + 1;
+              const newLevel = effectiveLevel + 1;
+              await d6.toMessage({
+                flavor: `<strong>⚡ Chaotic Surge!</strong> — ${this.actor.name}'s spell surges to level ${newLevel}. They take <strong>${newLevel} Vortex damage</strong>.`,
+                speaker: ChatMessage.getSpeaker({ actor: this.actor })
+              });
+              const currentHP = this.actor.system.attributes?.hp?.value ?? 0;
+              await this.actor.update({ "system.attributes.hp.value": Math.max(0, currentHP - newLevel) });
+            }
+          }
+        }
+      }
+
       if ( usageConfig.scaling ) {
         foundry.utils.setProperty(messageConfig, "data.system.scaling", usageConfig.scaling);
         if ( usageConfig.scaling !== item.flags.dnd5e?.scaling ) {
