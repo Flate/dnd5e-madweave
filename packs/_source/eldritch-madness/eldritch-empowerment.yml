@@ -1,0 +1,104 @@
+_id: EldEmpowerment01
+name: Eldritch Empowerment
+type: feat
+img: systems/dnd5e/icons/svg/statuses/eldritch-madness-1.svg
+system:
+  description:
+    value: >-
+      <p><strong>Requirement:</strong> Eldritch Madness level 1 or higher.</p>
+      <p>When you deal damage after a successful attack roll, you may choose to
+      treat the attack as a critical hit, rolling your damage dice twice.</p>
+      <p><strong>Risk:</strong> After invoking this ability, a Risk Roll of 1d6
+      is made automatically. On a <strong>6</strong>, you gain 1 level of
+      Eldritch Madness.</p>
+    chat: ''
+  source:
+    custom: Madweave Campaign
+    rules: homebrew
+    book: ''
+    page: ''
+    license: ''
+  uses:
+    max: ''
+    spent: 0
+    recovery: []
+  type:
+    value: class
+    subtype: ''
+  prerequisites:
+    level: null
+    repeatable: false
+  properties: []
+  requirements: Eldritch Madness 1
+  activities:
+    dnd5eactivity000:
+      _id: dnd5eactivity000
+      type: utility
+      name: ''
+      activation:
+        type: special
+        value: null
+        condition: ''
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: false
+      description:
+        chatFlavor: Invoke Eldritch Empowerment — risk roll will follow automatically.
+      duration:
+        concentration: false
+        value: ''
+        units: ''
+        special: ''
+        override: false
+      effects: []
+      range:
+        units: self
+        special: ''
+        override: false
+      target:
+        template:
+          count: ''
+          contiguous: false
+          type: ''
+          size: ''
+          width: ''
+          height: ''
+          units: ''
+        affects:
+          count: ''
+          type: self
+          choice: false
+          special: ''
+        prompt: true
+        override: false
+      roll:
+        formula: ''
+        name: ''
+        prompt: false
+        visible: false
+      uses:
+        spent: 0
+        recovery: []
+      sort: 0
+  enchant: {}
+  identifier: eldritch-empowerment
+  advancement: []
+  cover: null
+  crewed: false
+ownership:
+  default: 0
+flags:
+  dnd5e:
+    eldritchMadnessAbility:
+      requiredLevel: 1
+      riskThresholds:
+        - 6
+      abilityName: Eldritch Empowerment
+effects: []
+folder: null
+sort: 100000
+_key: '!items!EldEmpowerment01'

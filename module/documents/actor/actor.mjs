@@ -3596,15 +3596,20 @@ export default class Actor5e extends SystemDocumentMixin(Actor) {
     const level = foundry.utils.getProperty(data, "system.attributes.eldritchMadness");
     if ( !Number.isFinite(level) ) return;
     let effect = this.effects.get(ActiveEffect5e.ID.ELDRITCH_MADNESS);
-    if ( level < 1 ) return effect?.delete();
+    if ( level < 1 ) {
+      await effect?.delete();
+      await this.constructor._syncEldritchMadnessAbilities(this, 0);
+      return;
+    }
     const changes = this.constructor._buildEldritchMadnessChanges(level);
     if ( effect ) {
-      return effect.update({ "flags.dnd5e.eldritchMadnessLevel": level, changes });
+      await effect.update({ "flags.dnd5e.eldritchMadnessLevel": level, changes });
     } else {
       effect = await ActiveEffect.implementation.fromStatusEffect("eldritchMadness", { parent: this });
       effect.updateSource({ "flags.dnd5e.eldritchMadnessLevel": level, changes });
-      return ActiveEffect.implementation.create(effect, { parent: this, keepId: true });
+      await ActiveEffect.implementation.create(effect, { parent: this, keepId: true });
     }
+    await this.constructor._syncEldritchMadnessAbilities(this, level);
   }
 
   /* -------------------------------------------- */
@@ -3661,6 +3666,216 @@ export default class Actor5e extends SystemDocumentMixin(Actor) {
     // Level 6 (Mind-Shattered): narrative + active trigger, to be added later.
 
     return changes;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Sync the actor's granted Eldritch Madness ability items with the current EM level.
+   * Items whose required level is met are created from the compendium; items that no longer
+   * meet the requirement (and were system-granted) are removed.
+   * @param {Actor5e} actor   The actor to sync.
+   * @param {number} level    The current Eldritch Madness level (0 = none).
+   * @returns {Promise<void>}
+   */
+  static async _syncEldritchMadnessAbilities(actor, level) {
+    const pack = game.packs.get("dnd5e.eldritch-madness");
+    if ( !pack ) return;
+    const abilities = [
+      { id: "EldEmpowerment01", requiredLevel: 1 },
+      { id: "EldAbyssalEcho01", requiredLevel: 2 },
+      { id: "EldVoidsGrasp001", requiredLevel: 3 },
+      { id: "EldPrescientDodge", requiredLevel: 3 },
+      { id: "EldResonance0001", requiredLevel: 4 },
+      { id: "EldChaoticSurge1", requiredLevel: 4 },
+      { id: "EldCosmicRev0001", requiredLevel: 5 }
+    ];
+    for ( const { id, requiredLevel } of abilities ) {
+      const existing = actor.items.find(i => i.getFlag("dnd5e", "eldritchMadnessGrantedId") === id);
+      const eligible = level >= requiredLevel;
+      if ( eligible && !existing ) {
+        const source = await pack.getDocument(id);
+        if ( !source ) continue;
+        const itemData = source.toObject();
+        delete itemData._id;
+        foundry.utils.setProperty(itemData, "flags.dnd5e.eldritchMadnessGrantedId", id);
+        await Item.implementation.create(itemData, { parent: actor });
+      } else if ( !eligible && existing ) {
+        await existing.delete();
+      }
+    }
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Roll the Eldritch Madness risk die for an activated ability and apply the result.
+   * Rolls 1d6, compares against the ability's threshold values, and if triggered
+   * increments the actor's eldritchMadness level by 1 (cascades through CME logic).
+   * @param {Actor5e} actor                    The actor invoking the ability.
+   * @param {object} config                    Risk configuration from the item's flag.
+   * @param {number[]} config.riskThresholds   d6 values that trigger an EM increase.
+   * @param {string} config.abilityName        Display name used in the chat message.
+   * @param {number} config.requiredLevel      Minimum EM level needed (for the warning).
+   * @returns {Promise<void>}
+   */
+  static async rollEldritchMadnessRisk(actor, { riskThresholds, abilityName, requiredLevel }) {
+    const emLevel = actor.system.attributes?.eldritchMadness ?? 0;
+    if ( emLevel < requiredLevel ) {
+      ui.notifications?.warn(
+        `${actor.name} does not meet the Eldritch Madness requirement for ${abilityName} (needs level ${requiredLevel}).`
+      );
+    }
+
+    const roll = await new Roll("1d6").evaluate();
+    const triggered = riskThresholds.includes(roll.total);
+
+    const sorted = [...riskThresholds].sort((a, b) => a - b);
+    const last = sorted.at(-1);
+    const thresholdStr = sorted.length === 1 ? `${last}`
+      : `${sorted.slice(0, -1).join(", ")} or ${last}`;
+
+    const resultLine = triggered
+      ? `<p><strong style="color: var(--color-level-error, #b10000)">Risk triggered!</strong> Eldritch Madness increases to level ${emLevel + 1}.</p>`
+      : `<p><strong style="color: var(--color-level-success, #2e6b2e)">Risk avoided.</strong></p>`;
+
+    await roll.toMessage({
+      flavor: `<strong>${abilityName} — Risk Roll</strong><br>Triggers on: ${thresholdStr}${resultLine}`,
+      speaker: ChatMessage.getSpeaker({ actor })
+    });
+
+    if ( triggered ) {
+      await actor.update({ "system.attributes.eldritchMadness": emLevel + 1 });
+    }
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Roll the Prescient Dodge consequence save (DC 15 Wisdom) and apply stun on failure.
+   * Fires automatically via postUseActivity when the Prescient Dodge item is used.
+   * @param {Actor5e} actor  The actor who invoked Prescient Dodge.
+   * @returns {Promise<void>}
+   */
+  static async rollPrescientDodgeConsequence(actor) {
+    const wisBonus = actor.system.abilities?.wis?.save?.value ?? 0;
+    const roll = await new Roll(`1d20 + ${wisBonus}`).evaluate();
+    const failed = roll.total < 15;
+
+    const resultLine = failed
+      ? `<p><strong style="color: var(--color-level-error, #b10000)">Failed (${roll.total} vs DC 15)</strong> — ${actor.name} is stunned until the end of their next turn.</p>`
+      : `<p><strong style="color: var(--color-level-success, #2e6b2e)">Succeeded (${roll.total} vs DC 15)</strong> — No ill effects.</p>`;
+
+    await roll.toMessage({
+      flavor: `<strong>Prescient Dodge — Consequence Save</strong> (DC 15 Wisdom)${resultLine}`,
+      speaker: ChatMessage.getSpeaker({ actor })
+    });
+
+    if ( failed ) {
+      const effect = await ActiveEffect.implementation.fromStatusEffect("stunned", { parent: actor });
+      if ( effect ) await ActiveEffect.implementation.create(effect, { parent: actor, keepId: true });
+    }
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Roll the Chaotic Surge d6 for a spell cast or weapon attack.
+   * Spells: auto-rolls and applies immediately (spells always resolve).
+   * Weapons: posts a chat card button the player clicks only if the attack hit,
+   * deferring the d6 roll until then so misses have no consequence.
+   * @param {Actor5e} actor      The actor with Chaotic Surge.
+   * @param {Activity} activity  The activity that triggered the check.
+   * @returns {Promise<void>}
+   */
+  static async rollChaoticSurge(actor, activity) {
+    const isSpell = activity.item?.type === "spell";
+    const isWeapon = activity.item?.type === "weapon" && activity.type === "attack";
+    if ( !isSpell && !isWeapon ) return;
+
+    const speaker = ChatMessage.getSpeaker({ actor });
+
+    if ( isSpell ) {
+      const d6 = await new Roll("1d6").evaluate();
+      if ( d6.total !== 6 ) return;
+      const baseLevel = activity.item.system.level ?? 1;
+      const newLevel = Math.max(1, baseLevel + 1);
+      await ChatMessage.create({
+        speaker,
+        content: `<p><strong>⚡ Chaotic Surge!</strong> (rolled 6)</p>
+          <p>Treat <em>${activity.item.name}</em> as a <strong>level ${newLevel}</strong> spell instead of level ${baseLevel}.</p>
+          <p>${actor.name} takes <strong>${newLevel} Vortex damage</strong> (applied automatically).</p>`
+      });
+      const currentHP = actor.system.attributes?.hp?.value ?? 0;
+      await actor.update({ "system.attributes.hp.value": Math.max(0, currentHP - newLevel) });
+    } else {
+      // Post a button card — the player only clicks it if the attack actually hit.
+      const tokenDoc = actor.token;
+      await ChatMessage.create({
+        speaker,
+        content: `<p><strong>⚡ Chaotic Surge</strong></p>
+          <p>If the attack hit, click below to roll for the surge.</p>
+          <button class="chaotic-surge-roll"
+            data-actor-id="${actor.id}"
+            data-scene-id="${tokenDoc?.parent?.id ?? ""}"
+            data-token-id="${tokenDoc?.id ?? ""}">Roll Surge (1d6)</button>`
+      });
+    }
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Resolve a weapon Chaotic Surge after the player confirms a hit.
+   * Rolls 1d6: on 6, rolls 1d6 extra Vortex damage for the target and applies
+   * half (min 1) as self-damage to the actor.
+   * @param {Actor5e} actor  The actor with Chaotic Surge.
+   * @returns {Promise<void>}
+   */
+  static async rollChaoticSurgeWeapon(actor) {
+    const speaker = ChatMessage.getSpeaker({ actor });
+    const d6 = await new Roll("1d6").evaluate();
+    if ( d6.total !== 6 ) {
+      await d6.toMessage({
+        flavor: "<strong>Chaotic Surge</strong> — No surge.",
+        speaker
+      });
+      return;
+    }
+    const extraRoll = await new Roll("1d6").evaluate();
+    const selfDamage = Math.max(1, Math.floor(extraRoll.total / 2));
+    await extraRoll.toMessage({
+      flavor: `<strong>⚡ Chaotic Surge!</strong> (rolled 6)<br>
+        Deal <strong>${extraRoll.total} Vortex damage</strong> to the target (apply manually).<br>
+        ${actor.name} takes <strong>${selfDamage} Vortex damage</strong> (applied automatically).`,
+      speaker
+    });
+    const currentHP = actor.system.attributes?.hp?.value ?? 0;
+    await actor.update({ "system.attributes.hp.value": Math.max(0, currentHP - selfDamage) });
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Register click listeners for Chaotic Surge weapon chat card buttons.
+   * Call this from renderChatLog and renderChatPopout hooks.
+   * @param {HTMLElement} html  The chat log or popout HTML element.
+   */
+  static chaoticSurgeChatListeners(html) {
+    html.addEventListener("click", async event => {
+      const button = event.target.closest(".chaotic-surge-roll");
+      if ( !button ) return;
+      event.preventDefault();
+      button.disabled = true;
+
+      const { actorId, sceneId, tokenId } = button.dataset;
+      const actor = (sceneId && tokenId)
+        ? game.scenes.get(sceneId)?.tokens.get(tokenId)?.actor
+        : game.actors.get(actorId);
+      if ( !actor ) return;
+
+      await Actor5e.rollChaoticSurgeWeapon(actor);
+    });
   }
 
   /* -------------------------------------------- */

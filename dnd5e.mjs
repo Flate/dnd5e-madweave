@@ -629,8 +629,12 @@ Hooks.on("getChatMessageContextOptions", documents.ChatMessage5e.addChatMessageC
 Hooks.on("renderChatLog", (app, html, data) => {
   documents.Item5e.chatListeners(html);
   documents.ChatMessage5e.onRenderChatLog(html);
+  documents.Actor5e.chaoticSurgeChatListeners(html);
 });
-Hooks.on("renderChatPopout", (app, html, data) => documents.Item5e.chatListeners(html));
+Hooks.on("renderChatPopout", (app, html, data) => {
+  documents.Item5e.chatListeners(html);
+  documents.Actor5e.chaoticSurgeChatListeners(html);
+});
 
 Hooks.on("chatMessage", (app, message, data) => applications.Award.chatMessage(message));
 Hooks.on("createChatMessage", dataModels.chatMessage.RequestMessageData.onCreateMessage);
@@ -646,6 +650,29 @@ Hooks.on("renderCompendiumDirectory", (app, html) => applications.CompendiumBrow
 Hooks.on("renderJournalEntryPageSheet", applications.journal.JournalEntrySheet5e.onRenderJournalPageSheet);
 
 Hooks.on("renderActiveEffectConfig", documents.ActiveEffect5e.onRenderActiveEffectConfig);
+
+// Eldritch Madness ability hooks: risk rolls, Prescient Dodge consequence, Chaotic Surge.
+Hooks.on("dnd5e.postUseActivity", (activity, usageConfig, results) => {
+  const actor = activity.item?.actor;
+  if ( !actor ) return;
+
+  // Risk roll for flagged abilities (Eldritch Empowerment, Abyssal Echo, etc.)
+  const riskConfig = activity.item.getFlag("dnd5e", "eldritchMadnessAbility");
+  if ( riskConfig ) {
+    documents.Actor5e.rollEldritchMadnessRisk(actor, riskConfig);
+    return;
+  }
+
+  // Prescient Dodge: auto-roll DC 15 Wisdom consequence save.
+  if ( activity.item.getFlag("dnd5e", "prescientDodgeConsequence") ) {
+    documents.Actor5e.rollPrescientDodgeConsequence(actor);
+    return;
+  }
+
+  // Chaotic Surge: auto-roll d6 on spell cast or weapon attack.
+  const hasChaoticSurge = actor.items.some(i => i.getFlag("dnd5e", "chaoticSurge"));
+  if ( hasChaoticSurge ) documents.Actor5e.rollChaoticSurge(actor, activity);
+});
 
 Hooks.on("renderDocumentSheetConfig", (app, html) => {
   const { document } = app.options;

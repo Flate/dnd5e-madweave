@@ -1,0 +1,54 @@
+_id: EldChaoticSurge1
+name: Chaotic Surge
+type: feat
+img: systems/dnd5e/icons/svg/statuses/eldritch-madness-4.svg
+system:
+  description:
+    value: >-
+      <p><strong>Requirement:</strong> Eldritch Madness level 4 or higher.</p>
+      <p><strong>Passive — triggers automatically.</strong> Whenever you cast a
+      spell or land a weapon attack, the system rolls 1d6 on your behalf. On a
+      6, the surge fires:</p>
+      <ul>
+        <li><strong>Spell:</strong> The spell is treated as one level higher.
+        You take Vortex damage equal to the new spell level.</li>
+        <li><strong>Weapon:</strong> Deal an extra 1d6 Vortex damage to the
+        target. You take half that amount as Vortex damage (minimum 1).</li>
+      </ul>
+      <p><em>No Eldritch Madness is gained from this ability. Consequences are
+      built into the surge itself.</em></p>
+    chat: ''
+  source:
+    custom: Madweave Campaign
+    rules: homebrew
+    book: ''
+    page: ''
+    license: ''
+  uses:
+    max: ''
+    spent: 0
+    recovery: []
+  type:
+    value: class
+    subtype: ''
+  prerequisites:
+    level: null
+    repeatable: false
+  properties: []
+  requirements: Eldritch Madness 4
+  activities: {}
+  enchant: {}
+  identifier: chaotic-surge
+  advancement: []
+  cover: null
+  crewed: false
+ownership:
+  default: 0
+flags:
+  dnd5e:
+    eldritchMadnessGrantedId: EldChaoticSurge1
+    chaoticSurge: true
+effects: []
+folder: null
+sort: 450000
+_key: '!items!EldChaoticSurge1'

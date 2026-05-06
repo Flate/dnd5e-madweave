@@ -1,0 +1,111 @@
+_id: EldPrescientDodge
+name: Prescient Dodge
+type: feat
+img: systems/dnd5e/icons/svg/statuses/eldritch-madness-3.svg
+system:
+  description:
+    value: >-
+      <p><strong>Requirement:</strong> Eldritch Madness level 3 or higher.</p>
+      <p>Once per long rest, you may evade an incoming attack (forcing the
+      attacker to reroll) or automatically succeed on a saving throw.</p>
+      <p><strong>Consequence:</strong> Immediately after invoking this ability,
+      you must make a DC 15 Wisdom saving throw (rolled automatically). On a
+      failure, you are <strong>stunned</strong> until the end of your next
+      turn.</p>
+      <p><em>No Eldritch Madness is gained from this ability.</em></p>
+    chat: ''
+  source:
+    custom: Madweave Campaign
+    rules: homebrew
+    book: ''
+    page: ''
+    license: ''
+  uses:
+    max: '1'
+    spent: 0
+    recovery:
+      - period: lr
+        type: recoverAll
+  type:
+    value: class
+    subtype: ''
+  prerequisites:
+    level: null
+    repeatable: false
+  properties: []
+  requirements: Eldritch Madness 3
+  activities:
+    dnd5eactivity000:
+      _id: dnd5eactivity000
+      type: utility
+      name: ''
+      activation:
+        type: special
+        value: null
+        condition: ''
+        override: false
+      consumption:
+        targets:
+          - type: itemUses
+            target: ''
+            value: '1'
+            scaling:
+              mode: ''
+              formula: ''
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: false
+      description:
+        chatFlavor: Invoke Prescient Dodge — consequence save will follow automatically.
+      duration:
+        concentration: false
+        value: ''
+        units: ''
+        special: ''
+        override: false
+      effects: []
+      range:
+        units: self
+        special: ''
+        override: false
+      target:
+        template:
+          count: ''
+          contiguous: false
+          type: ''
+          size: ''
+          width: ''
+          height: ''
+          units: ''
+        affects:
+          count: ''
+          type: self
+          choice: false
+          special: ''
+        prompt: true
+        override: false
+      roll:
+        formula: ''
+        name: ''
+        prompt: false
+        visible: false
+      uses:
+        spent: 0
+        recovery: []
+      sort: 0
+  enchant: {}
+  identifier: prescient-dodge
+  advancement: []
+  cover: null
+  crewed: false
+ownership:
+  default: 0
+flags:
+  dnd5e:
+    eldritchMadnessGrantedId: EldPrescientDodge
+    prescientDodgeConsequence: true
+effects: []
+folder: null
+sort: 350000
+_key: '!items!EldPrescientDodge'
