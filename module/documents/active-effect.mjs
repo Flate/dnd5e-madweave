@@ -31,7 +31,7 @@ export default class ActiveEffect5e extends DependentDocumentMixin(ActiveEffect)
    */
   static ID = {
     BLOODIED: staticID("dnd5ebloodied"),
-    ELDRITCH_MADNESS: staticID("dnd5eeldritchmadness"),
+    ELDRITCH_MADNESS: staticID("dnd5eeldritchMadness"),
     ENCUMBERED: staticID("dnd5eencumbered"),
     EXHAUSTION: staticID("dnd5eexhaustion")
   };
