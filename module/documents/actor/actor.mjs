@@ -3934,10 +3934,10 @@ export default class Actor5e extends SystemDocumentMixin(Actor) {
         — <em>${spellName}</em> (${levelLabel})</div>
         <div style="margin-bottom:6px;color:var(--color-text-dark-secondary,#555)">
           Roll Chance trigger: d20 ≥ ${threshold}</div>
-        <div style="display:flex;gap:4px;flex-wrap:wrap">
-          <button data-er-action="chance" data-pending-id="${pendingId}">🎲 Roll Chance</button>
-          <button data-er-action="force"  data-pending-id="${pendingId}">⚗ Force Roll</button>
-          <button data-er-action="ignore" data-pending-id="${pendingId}">✓ Ignore</button>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <button style="width:100%" data-er-action="chance" data-pending-id="${pendingId}">🎲 Roll Chance</button>
+          <button style="width:100%" data-er-action="force"  data-pending-id="${pendingId}">⚗ Force Roll</button>
+          <button style="width:100%" data-er-action="ignore" data-pending-id="${pendingId}">✓ Ignore</button>
         </div>`
     });
 
@@ -3947,10 +3947,10 @@ export default class Actor5e extends SystemDocumentMixin(Actor) {
       content: `<div style="margin-bottom:4px"><strong>⚗ Eldritch Resonance</strong>
         — <em>${spellName}</em></div>
         <div style="margin-bottom:6px;font-style:italic;color:var(--color-text-dark-secondary,#555)">
-          Roll on the table only if your GM asks you to.</div>
-        <div style="display:flex;gap:4px;flex-wrap:wrap">
-          <button data-er-action="force"  data-pending-id="${pendingId}">Roll Resonance Table</button>
-          <button data-er-action="ignore" data-pending-id="${pendingId}">Skip</button>
+          Roll on the table if your DM asks you to, or if you want to.</div>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <button style="width:100%" data-er-action="force"  data-pending-id="${pendingId}">Roll Resonance Table</button>
+          <button style="width:100%" data-er-action="ignore" data-pending-id="${pendingId}">Skip</button>
         </div>`
     });
   }
@@ -4038,8 +4038,16 @@ export default class Actor5e extends SystemDocumentMixin(Actor) {
     if ( result.tempHp ) {
       const amount = Math.max(1, spellLevel);
       const currentTemp = actor.system.attributes?.hp?.temp ?? 0;
-      if ( amount > currentTemp ) await actor.update({ "system.attributes.hp.temp": amount });
-      notes.push(`${actor.name} gains <strong>${amount} temporary HP</strong>.`);
+      if ( currentTemp === 0 ) {
+        await actor.update({ "system.attributes.hp.temp": amount });
+        notes.push(`${actor.name} gains <strong>${amount} temporary HP</strong> (Void's Caress).`);
+      } else if ( amount <= currentTemp ) {
+        notes.push(`Void's Caress offers <strong>${amount} temporary HP</strong>, but ${actor.name} already has ${currentTemp} — existing temp HP kept.`);
+      } else {
+        // New amount is higher than current: let the player decide whether to replace.
+        Actor5e._postVoidCaressCard(actor, amount, currentTemp); // fire-and-forget
+        notes.push(`Void's Caress offers <strong>${amount} temporary HP</strong> (currently ${currentTemp}) — awaiting player choice.`);
+      }
     }
 
     // Necrotic damage equal to 2× spell level (bypasses resistances for simplicity)
@@ -4103,9 +4111,9 @@ export default class Actor5e extends SystemDocumentMixin(Actor) {
       notes.push(`${actor.name} gains an <strong>extra action</strong> on this turn (Attack / Dash / Disengage / Hide / Use Object).`);
     }
 
-    // Abyssal Surge — set pending surge flag; damage is maximized via preRollDamageV2 hook
+    // Abyssal Surge — persist flag to actor so the hook fires on any client (not just GM)
     if ( result.abyssalSurge ) {
-      Actor5e._eldritchSurgePending.add(actor.id);
+      await actor.setFlag("dnd5e", "abyssalSurgePending", true);
       notes.push(`${actor.name}'s spell damage is <strong>maximized</strong> (Abyssal Surge).`);
     }
 
@@ -4157,6 +4165,37 @@ export default class Actor5e extends SystemDocumentMixin(Actor) {
   }
 
   /**
+   * Post a whispered card asking the player whether to accept Void's Caress temp HP.
+   * Only called when the new amount is higher than their current temp HP.
+   * @param {Actor5e} actor
+   * @param {number}  amount       The temp HP Void's Caress would grant.
+   * @param {number}  currentTemp  The temp HP the actor already has.
+   */
+  static async _postVoidCaressCard(actor, amount, currentTemp) {
+    const pendingId = foundry.utils.randomID();
+    Actor5e._eldritchResonancePending.set(pendingId, { pendingId, type: "voidCaress", actor, amount });
+
+    const nonGmOwners = Object.entries(actor.ownership)
+      .filter(([uid, level]) => uid !== "default"
+        && level >= CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER
+        && !game.users.get(uid)?.isGM)
+      .map(([uid]) => uid);
+
+    await ChatMessage.create({
+      whisper: nonGmOwners.length ? nonGmOwners : undefined,
+      speaker: ChatMessage.getSpeaker({ actor }),
+      content: `<div style="margin-bottom:4px"><strong>🌀 Void's Caress — Temporary HP</strong></div>
+        <div style="margin-bottom:6px">You have <strong>${currentTemp} temporary HP</strong> already.
+          Void's Caress would replace them with <strong>${amount}</strong>.
+          Temporary HP don't stack — you choose which source to keep.</div>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <button style="width:100%" data-er-action="accept"  data-pending-id="${pendingId}">Replace with ${amount} temp HP (Void's Caress)</button>
+          <button style="width:100%" data-er-action="decline" data-pending-id="${pendingId}">Keep existing ${currentTemp} temp HP</button>
+        </div>`
+    });
+  }
+
+  /**
    * Post a follow-up card asking the player to choose their Cosmic Favor boon.
    * @param {Actor5e} actor
    */
@@ -4174,9 +4213,9 @@ export default class Actor5e extends SystemDocumentMixin(Actor) {
       whisper: nonGmOwners.length ? nonGmOwners : undefined,
       speaker: ChatMessage.getSpeaker({ actor }),
       content: `<div style="margin-bottom:4px"><strong>⚗ Cosmic Favor — Choose Your Boon</strong></div>
-        <div style="display:flex;gap:4px;flex-wrap:wrap">
-          <button data-er-action="advAttack"  data-pending-id="${pendingId}">Advantage on next spell attack</button>
-          <button data-er-action="disadvSave" data-pending-id="${pendingId}">Impose disadvantage on next save vs. your spell</button>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <button style="width:100%" data-er-action="advAttack"  data-pending-id="${pendingId}">Advantage on next spell attack</button>
+          <button style="width:100%" data-er-action="disadvSave" data-pending-id="${pendingId}">Impose disadvantage on next save vs. your spell</button>
         </div>`
     });
   }
@@ -4234,6 +4273,23 @@ export default class Actor5e extends SystemDocumentMixin(Actor) {
       if ( pending.type === "cosmicFavor" ) {
         Actor5e._eldritchResonancePending.delete(pendingId);
         await Actor5e._applyCosmicFavorChoice(pending.actor, erAction);
+        return;
+      }
+
+      if ( pending.type === "voidCaress" ) {
+        Actor5e._eldritchResonancePending.delete(pendingId);
+        if ( erAction === "accept" ) {
+          await pending.actor.update({ "system.attributes.hp.temp": pending.amount });
+          await ChatMessage.create({
+            speaker: ChatMessage.getSpeaker({ actor: pending.actor }),
+            content: `<p>${pending.actor.name} accepts <strong>${pending.amount} temporary HP</strong> from Void's Caress.</p>`
+          });
+        } else {
+          await ChatMessage.create({
+            speaker: ChatMessage.getSpeaker({ actor: pending.actor }),
+            content: `<p>${pending.actor.name} keeps their existing temporary HP.</p>`
+          });
+        }
         return;
       }
 

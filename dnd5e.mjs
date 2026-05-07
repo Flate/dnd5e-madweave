@@ -662,13 +662,14 @@ Hooks.on("dnd5e.preUseActivity", (activity, usageConfig, dialogConfig, messageCo
   return false;
 });
 
-// Abyssal Surge: maximize all damage dice for the flagged actor's next EA spell roll.
+// Abyssal Surge: maximize all damage dice for the next EA spell roll.
+// The flag is stored on the actor document so the hook fires correctly on any client.
 Hooks.on("dnd5e.preRollDamageV2", (config, dialog, message) => {
   const actor = config.subject?.actor;
   if ( !actor ) return;
-  if ( !documents.Actor5e._eldritchSurgePending?.has(actor.id) ) return;
+  if ( !actor.getFlag("dnd5e", "abyssalSurgePending") ) return;
   if ( config.subject?.item?.system?.school !== "ela" ) return;
-  documents.Actor5e._eldritchSurgePending.delete(actor.id);
+  actor.unsetFlag("dnd5e", "abyssalSurgePending");
   if ( config.rolls ) {
     for ( const roll of config.rolls ) {
       roll.options ??= {};
