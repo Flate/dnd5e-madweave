@@ -3872,21 +3872,36 @@ export default class Actor5e extends SystemDocumentMixin(Actor) {
 
   /** Table of all 15 Eldritch Resonance results (d100). */
   static _ELDRITCH_RESONANCE_RESULTS = [
-    { range: [1,   1],   name: "Abyssal Consumption", spellSucceeds: false, emDelta: 3,  stun: true },
-    { range: [2,   10],  name: "Abyssal Whispers",     spellSucceeds: false, emDelta: 1 },
-    { range: [11,  20],  name: "Void's Caress",         spellSucceeds: true,  tempHp: true },
-    { range: [21,  30],  name: "Reality Fracture",      spellSucceeds: false, realityFracture: true },
-    { range: [31,  35],  name: "Eldritch Echo",          spellSucceeds: true,  echoNext: true },
-    { range: [36,  37],  name: "Cosmic Comedy",          spellSucceeds: true,  rubberChicken: true },
-    { range: [38,  47],  name: "Soul Erosion",           spellSucceeds: true,  necroticMult: 2 },
-    { range: [48,  49],  name: "Eldritch Quackery",     spellSucceeds: true,  quackery: true },
-    { range: [50,  59],  name: "Cosmic Favor",           spellSucceeds: true,  cosmicFavor: true },
-    { range: [60,  69],  name: "Eldritch Backlash",      spellSucceeds: false, emDelta: 2 },
-    { range: [70,  79],  name: "Temporal Distortion",   spellSucceeds: true,  extraAction: true },
-    { range: [80,  89],  name: "Abyssal Surge",          spellSucceeds: true,  abyssalSurge: true },
-    { range: [90,  98],  name: "Cosmic Alignment",       spellSucceeds: true,  emDelta: -1 },
-    { range: [99,  99],  name: "Eldritch Ascendance",    spellSucceeds: true,  emDelta: -2, ethereal: true },
-    { range: [100, 100], name: "Cosmic Reckoning",       spellSucceeds: false, emDelta: 3, spellcastingBoost: true, cosmicReckoning: true }
+    { range: [1,   1],   name: "Abyssal Consumption", spellSucceeds: false, emDelta: 3,  stun: true,
+      description: "You are stunned until the end of your next turn. You gain 3 Eldritch Madness levels (maximum 5). The spell fails and its slot is expended." },
+    { range: [2,   10],  name: "Abyssal Whispers",     spellSucceeds: false, emDelta: 1,
+      description: "You gain 1 Eldritch Madness level (maximum 5). The spell fails and its slot is expended." },
+    { range: [11,  20],  name: "Void's Caress",         spellSucceeds: true,  tempHp: true,
+      description: "You gain temporary hit points equal to the spell's level. The spell succeeds normally." },
+    { range: [21,  30],  name: "Reality Fracture",      spellSucceeds: false, realityFracture: true,
+      description: "You teleport up to 30 feet to an unoccupied space you can see. Each creature within 10 feet of your original position is teleported to a random unoccupied space within 30 feet of that position (DM determines destination). The spell fails and its slot is expended." },
+    { range: [31,  35],  name: "Eldritch Echo",          spellSucceeds: true,  echoNext: true,
+      description: "The next Eldritch Arcanum spell you cast is treated as one level higher (maximum 9th level), with no additional slot cost. The current spell succeeds normally." },
+    { range: [36,  37],  name: "Cosmic Comedy",          spellSucceeds: true,  rubberChicken: true,
+      description: "A rubber chicken materializes in your free hand (or falls to your feet if both hands are full). It vanishes after 1 minute. You have advantage on your next Charisma ability check. The spell succeeds normally." },
+    { range: [38,  47],  name: "Soul Erosion",           spellSucceeds: true,  necroticMult: 2,
+      description: "You take necrotic damage equal to twice the spell's level (e.g. a 3rd-level spell deals 6 necrotic damage). The spell succeeds normally." },
+    { range: [48,  49],  name: "Eldritch Quackery",     spellSucceeds: true,  quackery: true,
+      description: "A spectral duck appears atop your head for 1 hour (it can't be removed by mundane means). While the duck is present, you have disadvantage on Stealth checks and advantage on Intimidation checks. The spell succeeds normally." },
+    { range: [50,  59],  name: "Cosmic Favor",           spellSucceeds: true,  cosmicFavor: true,
+      description: "Choose one: you have advantage on your next spell attack roll, OR the next creature that must make a saving throw against one of your spells does so with disadvantage. The spell succeeds normally." },
+    { range: [60,  69],  name: "Eldritch Backlash",      spellSucceeds: false, emDelta: 2,
+      description: "You gain 2 Eldritch Madness levels (maximum 5). The spell fails and its slot is expended." },
+    { range: [70,  79],  name: "Temporal Distortion",   spellSucceeds: true,  extraAction: true,
+      description: "Time bends around you. You gain one additional action on your next turn (this action can only be used to take the Attack, Dash, Disengage, Hide, or Use an Object action). The spell succeeds normally." },
+    { range: [80,  89],  name: "Abyssal Surge",          spellSucceeds: true,  abyssalSurge: true,
+      description: "Raw void energy amplifies your magic. All damage dice for this spell are treated as their maximum value. The spell succeeds normally." },
+    { range: [90,  98],  name: "Cosmic Alignment",       spellSucceeds: true,  emDelta: -1,
+      description: "The eldritch forces work in your favor — you lose 1 Eldritch Madness level. The spell succeeds normally." },
+    { range: [99,  99],  name: "Eldritch Ascendance",    spellSucceeds: true,  emDelta: -2, ethereal: true,
+      description: "You partially slip into the Void. You become ethereal for 1 minute (as the Etherealness spell), and you lose 2 Eldritch Madness levels. The spell succeeds normally." },
+    { range: [100, 100], name: "Cosmic Reckoning",       spellSucceeds: false, emDelta: 3, spellcastingBoost: true, cosmicReckoning: true,
+      description: "Reality shatters around you. All creatures within 30 feet must make a Wisdom saving throw (DC = 8 + your proficiency bonus + your Intelligence modifier) or gain 3 Eldritch Madness levels. You gain 3 Eldritch Madness levels (maximum 5) and permanently increase your primary spellcasting ability score by 1. The spell fails and its slot is expended." }
   ];
 
   /**
@@ -3993,7 +4008,8 @@ export default class Actor5e extends SystemDocumentMixin(Actor) {
     if ( !result ) return;
 
     await d100.toMessage({
-      flavor: `<strong>⚗ Eldritch Resonance Table</strong> — <strong>${result.name}</strong>`,
+      flavor: `<strong>⚗ Eldritch Resonance Table</strong> — <strong>${result.name}</strong>
+        <div style="margin-top:4px;font-style:italic;color:var(--color-text-dark-secondary,#555)">${result.description}</div>`,
       speaker: ChatMessage.getSpeaker({ actor })
     });
 

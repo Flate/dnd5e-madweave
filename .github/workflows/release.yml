@@ -69,8 +69,8 @@ jobs:
         echo "TAG_NAME=$TAG" >> $GITHUB_ENV
         echo "PACKAGE_ID=$PACKAGE_ID" >> $GITHUB_ENV
         echo "PACKAGE_TYPE=$PACKAGE_TYPE" >> $GITHUB_ENV
-        echo "ZIP_NAME=$PACKAGE_ID-$TAG.zip" >> $GITHUB_ENV
-        echo "RELEASE_DOWNLOAD_URL=https://github.com/${{ github.repository }}/releases/download/$TAG/$PACKAGE_ID-$TAG.zip" >> $GITHUB_ENV
+        echo "ZIP_NAME=$PACKAGE_ID.zip" >> $GITHUB_ENV
+        echo "RELEASE_DOWNLOAD_URL=https://github.com/${{ github.repository }}/releases/download/$TAG/$PACKAGE_ID.zip" >> $GITHUB_ENV
         echo "RELEASE_INSTALL_URL=https://github.com/${{ github.repository }}/releases/download/$TAG/$PACKAGE_TYPE.json" >> $GITHUB_ENV
 
 

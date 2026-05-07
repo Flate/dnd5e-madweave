@@ -663,18 +663,16 @@ Hooks.on("dnd5e.preUseActivity", (activity, usageConfig, dialogConfig, messageCo
 });
 
 // Abyssal Surge: maximize all damage dice for the next EA spell roll.
-// The flag is stored on the actor document so the hook fires correctly on any client.
-Hooks.on("dnd5e.preRollDamageV2", (config, dialog, message) => {
+// Uses postDamageRollConfiguration which fires after any dialog, with actual Roll instances
+// before evaluation — so the maximize option is applied regardless of dialog path.
+Hooks.on("dnd5e.postDamageRollConfiguration", (rolls, config, dialog, message) => {
   const actor = config.subject?.actor;
   if ( !actor ) return;
   if ( !actor.getFlag("dnd5e", "abyssalSurgePending") ) return;
   if ( config.subject?.item?.system?.school !== "ela" ) return;
   actor.unsetFlag("dnd5e", "abyssalSurgePending");
-  if ( config.rolls ) {
-    for ( const roll of config.rolls ) {
-      roll.options ??= {};
-      roll.options.maximize = true;
-    }
+  for ( const roll of rolls ) {
+    roll.options.maximize = true;
   }
 });
 

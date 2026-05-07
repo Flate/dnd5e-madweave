@@ -2,14 +2,14 @@
   "id": "dnd5e",
   "title": "Dungeons & Dragons Fifth Edition",
   "description": "A system for playing the fifth edition of the world's most popular role-playing game in the Foundry Virtual Tabletop environment.",
-  "version": "5.3.2.5-mw",
+  "version": "5.3.2.6-mw",
   "compatibility": {
     "minimum": "13.347",
     "verified": "14"
   },
   "url": "https://github.com/Flate/dnd5e-madweave/",
   "manifest": "https://raw.githubusercontent.com/Flate/dnd5e-madweave/5.3.x-mw/system.json",
-  "download": "https://github.com/Flate/dnd5e-madweave/releases/download/release-5.3.2.5-mw/dnd5e-release-5.3.2.5-mw.zip",
+  "download": "https://github.com/Flate/dnd5e-madweave/releases/latest/download/dnd5e-release.zip",
   "authors": [
     {
       "name": "Atropos",
