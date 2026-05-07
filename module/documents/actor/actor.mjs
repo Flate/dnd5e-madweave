@@ -3374,16 +3374,21 @@ export default class Actor5e extends SystemDocumentMixin(Actor) {
     // Intercept Eldritch Madness 5→6: accumulate Critical Madness Events instead.
     // Only triggers when an effect would push a character at exactly EM 5 beyond level 5.
     const newEM = foundry.utils.getProperty(changed, "system.attributes.eldritchMadness");
-    if ( Number.isFinite(newEM) && newEM > 5 && (this.system.attributes?.eldritchMadness ?? 0) === 5 ) {
-      const currentCME = this.system.attributes?.criticalMadnessEvents ?? 0;
-      const newCME = currentCME + 1;
-      if ( newCME >= 3 ) {
-        // Third Critical Madness Event: progress to EM 6 and reset counter.
+    if ( Number.isFinite(newEM) ) {
+      if ( newEM > 5 && (this.system.attributes?.eldritchMadness ?? 0) === 5 ) {
+        const currentCME = this.system.attributes?.criticalMadnessEvents ?? 0;
+        const newCME = currentCME + 1;
+        if ( newCME >= 3 ) {
+          // Third Critical Madness Event: progress to EM 6 and reset counter.
+          foundry.utils.setProperty(changed, "system.attributes.criticalMadnessEvents", 0);
+        } else {
+          // Accumulate the event but hold EM at 5.
+          foundry.utils.setProperty(changed, "system.attributes.eldritchMadness", 5);
+          foundry.utils.setProperty(changed, "system.attributes.criticalMadnessEvents", newCME);
+        }
+      } else if ( newEM < 5 && (this.system.attributes?.criticalMadnessEvents ?? 0) > 0 ) {
+        // CME only applies at EM 5; clear it whenever EM drops below that threshold.
         foundry.utils.setProperty(changed, "system.attributes.criticalMadnessEvents", 0);
-      } else {
-        // Accumulate the event but hold EM at 5.
-        foundry.utils.setProperty(changed, "system.attributes.eldritchMadness", 5);
-        foundry.utils.setProperty(changed, "system.attributes.criticalMadnessEvents", newCME);
       }
     }
   }

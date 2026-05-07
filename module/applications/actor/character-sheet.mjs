@@ -567,8 +567,20 @@ export default class CharacterActorSheet extends BaseActorSheet {
       }, { left: [], right: [] });
     }
 
-    // Critical Madness Events (visible only at EM level 5)
-    if ( (attributes.eldritchMadness ?? 0) >= 5 ) {
+    // Eldritch Madness pips
+    if ( CONFIG.DND5E.conditionTypes.eldritchMadness && (context.editable || (attributes.eldritchMadness ?? 0) > 0) ) {
+      const max = CONFIG.DND5E.conditionTypes.eldritchMadness.levels;
+      const emLevel = attributes.eldritchMadness ?? 0;
+      context.eldritchMadnessPips = Array.fromRange(max, 1).map(n => {
+        const filled = emLevel >= n;
+        const classes = ["pip"];
+        if ( filled ) classes.push("filled");
+        return { n, label: `Eldritch Madness Level ${n}`, filled, tooltip: `Eldritch Madness Level ${n}`, classes: classes.join(" ") };
+      });
+    }
+
+    // Critical Madness Events (visible only at exactly EM level 5)
+    if ( (attributes.eldritchMadness ?? 0) === 5 ) {
       const cme = attributes.criticalMadnessEvents ?? 0;
       context.criticalMadnessEvents = [1, 2].map(n => {
         const filled = cme >= n;

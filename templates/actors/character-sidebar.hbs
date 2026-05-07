@@ -189,7 +189,17 @@
             </div>
             {{/with}}
 
-            {{!-- Critical Madness Events --}}
+            {{!-- Eldritch Madness --}}
+            {{#if eldritchMadnessPips}}
+            <div class="meter-group">
+                <div class="label roboto-condensed-upper"><span>Eldritch Madness</span></div>
+                <div class="pips" data-prop="system.attributes.eldritchMadness">
+                    {{#each eldritchMadnessPips}}{{> ".pip"}}{{/each}}
+                </div>
+            </div>
+            {{/if}}
+
+            {{!-- Critical Madness Events (only at EM 5) --}}
             {{#if criticalMadnessEvents}}
             <div class="meter-group">
                 <div class="label roboto-condensed-upper"><span>Critical Madness Events</span></div>
