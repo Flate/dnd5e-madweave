@@ -3428,6 +3428,7 @@ export default class Actor5e extends SystemDocumentMixin(Actor) {
 
   /** @inheritDoc */
   async _onCreateDescendantDocuments(parent, collection, documents, data, options, userId) {
+    super._onCreateDescendantDocuments(parent, collection, documents, data, options, userId);
     if ( userId === game.userId ) {
       if ( (collection === "effects") && documents.find(d => d.id === ActiveEffect5e.ID.ELDRITCH_MADNESS)
         && !this._source.system.attributes?.eldritchMadness ) {
@@ -3439,16 +3440,14 @@ export default class Actor5e extends SystemDocumentMixin(Actor) {
       }
       if ( collection === "items" ) await this.updateEncumbrance(options);
     }
-    super._onCreateDescendantDocuments(parent, collection, documents, data, options, userId);
   }
 
   /* -------------------------------------------- */
 
   /** @inheritDoc */
   async _onUpdateDescendantDocuments(parent, collection, documents, changes, options, userId) {
-    if ( (userId === game.userId) && (collection === "items") ) await this.updateEncumbrance(options);
     super._onUpdateDescendantDocuments(parent, collection, documents, changes, options, userId);
-
+    if ( (userId === game.userId) && (collection === "items") ) await this.updateEncumbrance(options);
     if ( collection === "items" ) {
       const refreshBars = documents.some((doc, index) => {
         return doc.hasLimitedUses && foundry.utils.hasProperty(changes[index], "system.uses.spent");
@@ -3461,6 +3460,7 @@ export default class Actor5e extends SystemDocumentMixin(Actor) {
 
   /** @inheritDoc */
   async _onDeleteDescendantDocuments(parent, collection, documents, ids, options, userId) {
+    super._onDeleteDescendantDocuments(parent, collection, documents, ids, options, userId);
     if ( userId === game.userId ) {
       if ( (collection === "effects") && ids.includes(ActiveEffect5e.ID.EXHAUSTION) ) {
         await this.update({ "system.attributes.exhaustion": 0 });
@@ -3468,7 +3468,6 @@ export default class Actor5e extends SystemDocumentMixin(Actor) {
       if ( collection === "items" ) await this.updateEncumbrance(options);
       await this._clearFavorites(documents);
     }
-    super._onDeleteDescendantDocuments(parent, collection, documents, ids, options, userId);
   }
 
   /* -------------------------------------------- */
