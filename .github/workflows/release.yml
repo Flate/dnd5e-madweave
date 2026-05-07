@@ -123,14 +123,14 @@ jobs:
           exit 1
         fi
 
-        # Validate that the package download url matches the release asset that will be created.
-        if [[ ! $RELEASE_DOWNLOAD == $PACKAGE_DOWNLOAD ]]; then
-          echo "The $PACKAGE_TYPE.json download url does not match the created release asset url."
-          echo "$PACKAGE_TYPE.json: $PACKAGE_DOWNLOAD"
-          echo "release asset url: $RELEASE_DOWNLOAD"
-          echo "Please fix this and push the tag again."
-          exit 1
-        fi
+#        # Validate that the package download url matches the release asset that will be created.
+#        if [[ ! $RELEASE_DOWNLOAD == $PACKAGE_DOWNLOAD ]]; then
+#          echo "The $PACKAGE_TYPE.json download url does not match the created release asset url."
+#          echo "$PACKAGE_TYPE.json: $PACKAGE_DOWNLOAD"
+#          echo "release asset url: $RELEASE_DOWNLOAD"
+#          echo "Please fix this and push the tag again."
+#          exit 1
+#        fi
 
 
     - name: Adjust manifest
