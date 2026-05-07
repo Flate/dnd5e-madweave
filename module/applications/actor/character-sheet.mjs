@@ -567,6 +567,18 @@ export default class CharacterActorSheet extends BaseActorSheet {
       }, { left: [], right: [] });
     }
 
+    // Critical Madness Events (visible only at EM level 5)
+    if ( (attributes.eldritchMadness ?? 0) >= 5 ) {
+      const cme = attributes.criticalMadnessEvents ?? 0;
+      context.criticalMadnessEvents = [1, 2].map(n => {
+        const filled = cme >= n;
+        const label = `Critical Madness Event ${n}`;
+        const classes = ["pip"];
+        if ( filled ) classes.push("filled");
+        return { n, label, filled, tooltip: label, classes: classes.join(" ") };
+      });
+    }
+
     // Favorites
     context.favorites = await this._prepareFavorites();
 

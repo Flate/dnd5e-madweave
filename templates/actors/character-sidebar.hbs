@@ -188,6 +188,16 @@
                 </div>
             </div>
             {{/with}}
+
+            {{!-- Critical Madness Events --}}
+            {{#if criticalMadnessEvents}}
+            <div class="meter-group">
+                <div class="label roboto-condensed-upper"><span>Critical Madness Events</span></div>
+                <div class="pips" data-prop="system.attributes.criticalMadnessEvents">
+                    {{#each criticalMadnessEvents}}{{> ".pip"}}{{/each}}
+                </div>
+            </div>
+            {{/if}}
         </div>
 
         {{!-- Death Saves --}}
