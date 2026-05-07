@@ -3856,6 +3856,399 @@ export default class Actor5e extends SystemDocumentMixin(Actor) {
   }
 
   /* -------------------------------------------- */
+  /*  Eldritch Resonance Table                    */
+  /* -------------------------------------------- */
+
+  /** Pending gateway entries keyed by random ID. */
+  static _eldritchResonancePending = new Map();
+
+  /** Actor IDs awaiting Abyssal Surge damage maximization on next EA spell roll. */
+  static _eldritchSurgePending = new Set();
+
+  /** Table of all 15 Eldritch Resonance results (d100). */
+  static _ELDRITCH_RESONANCE_RESULTS = [
+    { range: [1,   1],   name: "Abyssal Consumption", spellSucceeds: false, emDelta: 3,  stun: true },
+    { range: [2,   10],  name: "Abyssal Whispers",     spellSucceeds: false, emDelta: 1 },
+    { range: [11,  20],  name: "Void's Caress",         spellSucceeds: true,  tempHp: true },
+    { range: [21,  30],  name: "Reality Fracture",      spellSucceeds: false, realityFracture: true },
+    { range: [31,  35],  name: "Eldritch Echo",          spellSucceeds: true,  echoNext: true },
+    { range: [36,  37],  name: "Cosmic Comedy",          spellSucceeds: true,  rubberChicken: true },
+    { range: [38,  47],  name: "Soul Erosion",           spellSucceeds: true,  necroticMult: 2 },
+    { range: [48,  49],  name: "Eldritch Quackery",     spellSucceeds: true,  quackery: true },
+    { range: [50,  59],  name: "Cosmic Favor",           spellSucceeds: true,  cosmicFavor: true },
+    { range: [60,  69],  name: "Eldritch Backlash",      spellSucceeds: false, emDelta: 2 },
+    { range: [70,  79],  name: "Temporal Distortion",   spellSucceeds: true,  extraAction: true },
+    { range: [80,  89],  name: "Abyssal Surge",          spellSucceeds: true,  abyssalSurge: true },
+    { range: [90,  98],  name: "Cosmic Alignment",       spellSucceeds: true,  emDelta: -1 },
+    { range: [99,  99],  name: "Eldritch Ascendance",    spellSucceeds: true,  emDelta: -2, ethereal: true },
+    { range: [100, 100], name: "Cosmic Reckoning",       spellSucceeds: false, emDelta: 3, spellcastingBoost: true, cosmicReckoning: true }
+  ];
+
+  /**
+   * Return true if the activity is a non-cantrip Eldritch Arcanum spell.
+   * @param {Activity} activity
+   * @returns {boolean}
+   */
+  static _isEldritchArcanumSpell(activity) {
+    return activity.item?.type === "spell" && activity.item?.system?.school === "ela";
+  }
+
+  /**
+   * Called from preUseActivity. Stores the pending activity and posts the gateway cards.
+   * @param {Activity} activity
+   * @param {ActivityUseConfiguration} usageConfig
+   * @param {BasicRollDialogConfiguration} dialogConfig
+   * @param {ActivityMessageConfiguration} messageConfig
+   */
+  static async _handleEldritchResonancePreUse(activity, usageConfig, dialogConfig, messageConfig) {
+    const actor = activity.item?.actor;
+    if ( !actor ) return;
+
+    const spellLevel = activity.item.system.level ?? 0;
+    const spellName = activity.item.name;
+    const pendingId = foundry.utils.randomID();
+
+    Actor5e._eldritchResonancePending.set(pendingId, {
+      pendingId, activity, usageConfig, dialogConfig, messageConfig, actor, spellLevel, spellName
+    });
+
+    const gmIds = game.users.filter(u => u.isGM).map(u => u.id);
+    const nonGmOwners = Object.entries(actor.ownership)
+      .filter(([uid, level]) => uid !== "default"
+        && level >= CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER
+        && !game.users.get(uid)?.isGM)
+      .map(([uid]) => uid);
+
+    const levelLabel = spellLevel === 0 ? "Cantrip" : `Level ${spellLevel}`;
+    const threshold = spellLevel <= 3 ? "20" : spellLevel <= 6 ? "19–20" : "18–20";
+
+    await ChatMessage.create({
+      whisper: gmIds,
+      speaker: ChatMessage.getSpeaker({ actor }),
+      content: `<div style="margin-bottom:4px"><strong>⚗ Eldritch Resonance</strong>
+        — <em>${spellName}</em> (${levelLabel})</div>
+        <div style="margin-bottom:6px;color:var(--color-text-dark-secondary,#555)">
+          Roll Chance trigger: d20 ≥ ${threshold}</div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap">
+          <button data-er-action="chance" data-pending-id="${pendingId}">🎲 Roll Chance</button>
+          <button data-er-action="force"  data-pending-id="${pendingId}">⚗ Force Roll</button>
+          <button data-er-action="ignore" data-pending-id="${pendingId}">✓ Ignore</button>
+        </div>`
+    });
+
+    await ChatMessage.create({
+      whisper: nonGmOwners.length ? nonGmOwners : undefined,
+      speaker: ChatMessage.getSpeaker({ actor }),
+      content: `<div style="margin-bottom:4px"><strong>⚗ Eldritch Resonance</strong>
+        — <em>${spellName}</em></div>
+        <div style="margin-bottom:6px;font-style:italic;color:var(--color-text-dark-secondary,#555)">
+          Roll on the table only if your GM asks you to.</div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap">
+          <button data-er-action="force"  data-pending-id="${pendingId}">Roll Resonance Table</button>
+          <button data-er-action="ignore" data-pending-id="${pendingId}">Skip</button>
+        </div>`
+    });
+  }
+
+  /**
+   * Roll the d20 chance check. Fires the table if the threshold is met.
+   * @param {object} pending
+   */
+  static async _rollEldritchResonanceChance(pending) {
+    const { actor, spellLevel } = pending;
+    const threshold = spellLevel <= 3 ? 20 : spellLevel <= 6 ? 19 : 18;
+    const d20 = await new Roll("1d20").evaluate();
+    const triggered = d20.total >= threshold;
+
+    await d20.toMessage({
+      flavor: `<strong>⚗ Eldritch Resonance Chance</strong> (need ${threshold}+) — `
+        + (triggered ? `<strong style="color:var(--color-level-success,#2e6b2e)">Triggered!</strong>`
+          : `<span style="color:var(--color-text-dark-secondary,#555)">No resonance.</span>`),
+      speaker: ChatMessage.getSpeaker({ actor })
+    });
+
+    if ( triggered ) {
+      await Actor5e._rollEldritchResonanceTable(pending);
+    } else {
+      Actor5e._eldritchResonancePending.delete(pending.pendingId);
+      await Actor5e._refireEldritchArcanumSpell(pending);
+    }
+  }
+
+  /**
+   * Roll d100 on the Eldritch Resonance Table and apply the result.
+   * @param {object} pending
+   */
+  static async _rollEldritchResonanceTable(pending) {
+    const { actor, spellLevel } = pending;
+    Actor5e._eldritchResonancePending.delete(pending.pendingId);
+
+    const d100 = await new Roll("1d100").evaluate();
+    const result = Actor5e._ELDRITCH_RESONANCE_RESULTS.find(r => d100.total >= r.range[0] && d100.total <= r.range[1]);
+    if ( !result ) return;
+
+    await d100.toMessage({
+      flavor: `<strong>⚗ Eldritch Resonance Table</strong> — <strong>${result.name}</strong>`,
+      speaker: ChatMessage.getSpeaker({ actor })
+    });
+
+    await Actor5e._applyEldritchResonanceEffect(actor, result, spellLevel, pending);
+  }
+
+  /**
+   * Apply all mechanical effects from an Eldritch Resonance result, then re-fire or suppress the spell.
+   * @param {Actor5e} actor
+   * @param {object} result        Entry from _ELDRITCH_RESONANCE_RESULTS
+   * @param {number} spellLevel    Base spell level (0 for cantrips)
+   * @param {object} pending       The pending gateway entry
+   */
+  static async _applyEldritchResonanceEffect(actor, result, spellLevel, pending) {
+    const speaker = ChatMessage.getSpeaker({ actor });
+    const notes = [];
+
+    // EM level adjustment (emDelta may be positive or negative)
+    if ( result.emDelta ) {
+      const current = actor.system.attributes?.eldritchMadness ?? 0;
+      const next = result.emDelta > 0 ? Math.min(5, current + result.emDelta) : Math.max(0, current + result.emDelta);
+      if ( next !== current ) await actor.update({ "system.attributes.eldritchMadness": next });
+      const dir = result.emDelta > 0 ? `+${result.emDelta}` : `${result.emDelta}`;
+      notes.push(`Eldritch Madness ${current} → ${next} (${dir})`);
+    }
+
+    // Stunned until end of next turn
+    if ( result.stun ) {
+      try {
+        const eff = await ActiveEffect.implementation.fromStatusEffect("stunned", { parent: actor });
+        if ( eff ) await ActiveEffect.implementation.create(eff, { parent: actor, keepId: true });
+      } catch(e) {
+        await ActiveEffect.implementation.create({
+          name: "Stunned", icon: "icons/svg/stunned.svg", statuses: ["stunned"],
+          duration: { turns: 1 }
+        }, { parent: actor });
+      }
+      notes.push(`${actor.name} is <strong>stunned</strong> until end of next turn.`);
+    }
+
+    // Temporary hit points equal to spell level
+    if ( result.tempHp ) {
+      const amount = Math.max(1, spellLevel);
+      const currentTemp = actor.system.attributes?.hp?.temp ?? 0;
+      if ( amount > currentTemp ) await actor.update({ "system.attributes.hp.temp": amount });
+      notes.push(`${actor.name} gains <strong>${amount} temporary HP</strong>.`);
+    }
+
+    // Necrotic damage equal to 2× spell level (bypasses resistances for simplicity)
+    if ( result.necroticMult ) {
+      const dmg = result.necroticMult * Math.max(1, spellLevel);
+      const hp = actor.system.attributes?.hp?.value ?? 0;
+      await actor.update({ "system.attributes.hp.value": Math.max(0, hp - dmg) });
+      notes.push(`${actor.name} takes <strong>${dmg} necrotic damage</strong> (Soul Erosion).`);
+    }
+
+    // Reality Fracture — manual GM action required
+    if ( result.realityFracture ) {
+      notes.push(`<strong>GM:</strong> Teleport ${actor.name} up to 30 ft. Creatures within 10 ft of original position are scattered to random spaces within 30 ft.`);
+    }
+
+    // Eldritch Echo — flag for +1 level on next EA spell
+    if ( result.echoNext ) {
+      await actor.setFlag("dnd5e", "eldritchResonance.echoNextSpell", true);
+      notes.push(`${actor.name}'s <strong>next Eldritch Arcanum spell</strong> is cast at one level higher (max 9th).`);
+    }
+
+    // Cosmic Comedy — tracking AE for advantage on next Charisma check
+    if ( result.rubberChicken ) {
+      await ActiveEffect.implementation.create({
+        name: "Cosmic Comedy — Adv. next Charisma check",
+        img: "icons/svg/d20-grey.svg",
+        duration: { rounds: 10 },
+        description: "Remove after using advantage on one Charisma check."
+      }, { parent: actor });
+      notes.push(`A rubber chicken appears! ${actor.name} has <strong>advantage on their next Charisma check</strong>. (Remove the AE after use.)`);
+    }
+
+    // Eldritch Quackery — AE with Stealth disadvantage and Intimidation advantage
+    if ( result.quackery ) {
+      await ActiveEffect.implementation.create({
+        name: "Eldritch Quackery — Spectral Duck",
+        img: "icons/svg/d20-grey.svg",
+        duration: { seconds: 3600 },
+        changes: [
+          { key: "flags.dnd5e.disadvantage.skill.ste", mode: 5, value: "true", priority: 20 },
+          { key: "flags.dnd5e.advantage.skill.itm",    mode: 5, value: "true", priority: 20 }
+        ],
+        description: "Spectral duck on head for 1 hour. Disadvantage Stealth, Advantage Intimidation."
+      }, { parent: actor });
+      notes.push(`A spectral duck perches on ${actor.name}'s head for 1 hour. <strong>Disadvantage on Stealth, Advantage on Intimidation.</strong>`);
+    }
+
+    // Cosmic Favor — player chooses effect (posted as a separate card)
+    if ( result.cosmicFavor ) {
+      Actor5e._postCosmicFavorCard(actor); // fire-and-forget
+    }
+
+    // Temporal Distortion — 1-turn tracking AE for the extra action
+    if ( result.extraAction ) {
+      await ActiveEffect.implementation.create({
+        name: "Temporal Distortion — Extra Action",
+        img: "icons/magic/time/hourglass-tilted-blue.webp",
+        duration: { turns: 1 },
+        description: "One extra action this turn: Attack, Dash, Disengage, Hide, or Use an Object."
+      }, { parent: actor });
+      notes.push(`${actor.name} gains an <strong>extra action</strong> on this turn (Attack / Dash / Disengage / Hide / Use Object).`);
+    }
+
+    // Abyssal Surge — set pending surge flag; damage is maximized via preRollDamageV2 hook
+    if ( result.abyssalSurge ) {
+      Actor5e._eldritchSurgePending.add(actor.id);
+      notes.push(`${actor.name}'s spell damage is <strong>maximized</strong> (Abyssal Surge).`);
+    }
+
+    // Ethereal — 1-minute ethereal effect
+    if ( result.ethereal ) {
+      try {
+        const eff = await ActiveEffect.implementation.fromStatusEffect("ethereal", { parent: actor });
+        await ActiveEffect.implementation.create(eff, { parent: actor, keepId: true });
+      } catch(e) {
+        await ActiveEffect.implementation.create({
+          name: "Eldritch Ascendance — Ethereal",
+          img: "icons/magic/air/fog-gas-smoke-swirling-blue.webp",
+          duration: { seconds: 60 }
+        }, { parent: actor });
+      }
+      notes.push(`${actor.name} becomes <strong>ethereal</strong> for 1 minute.`);
+    }
+
+    // Cosmic Reckoning — permanent spellcasting boost + area save reminder
+    if ( result.cosmicReckoning ) {
+      const castKey = actor.system.attributes?.spellcasting;
+      if ( castKey ) {
+        const current = actor.system.abilities?.[castKey]?.value ?? 10;
+        await actor.update({ [`system.abilities.${castKey}.value`]: current + 1 });
+        notes.push(`${actor.name}'s ${castKey.toUpperCase()} permanently increases by 1 (${current} → ${current + 1}).`);
+      }
+      const prof = actor.system.attributes?.prof ?? 2;
+      const intMod = actor.system.abilities?.int?.mod ?? 0;
+      const dc = 8 + prof + intMod;
+      notes.push(`<strong>GM:</strong> All creatures within 30 ft make a DC ${dc} Wisdom save or gain 3 Eldritch Madness levels.`);
+    }
+
+    // Post effects summary
+    if ( notes.length ) {
+      await ChatMessage.create({
+        speaker,
+        content: `<p><strong>⚗ ${result.name} — Effects</strong></p>
+          <ul style="margin:4px 0 4px 16px;padding:0">${notes.map(n => `<li>${n}</li>`).join("")}</ul>
+          ${!result.spellSucceeds ? `<p><em>The spell fails — the slot is expended.</em></p>` : ""}`
+      });
+    }
+
+    if ( result.spellSucceeds ) {
+      await Actor5e._refireEldritchArcanumSpell(pending);
+    }
+    // If the spell fails, we simply don't re-fire. The slot is NOT auto-consumed here
+    // because preUseActivity cancelled before any consumption. The effects summary card
+    // reminds the player to mark the slot as expended manually.
+  }
+
+  /**
+   * Post a follow-up card asking the player to choose their Cosmic Favor boon.
+   * @param {Actor5e} actor
+   */
+  static async _postCosmicFavorCard(actor) {
+    const pendingId = foundry.utils.randomID();
+    Actor5e._eldritchResonancePending.set(pendingId, { pendingId, type: "cosmicFavor", actor });
+
+    const nonGmOwners = Object.entries(actor.ownership)
+      .filter(([uid, level]) => uid !== "default"
+        && level >= CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER
+        && !game.users.get(uid)?.isGM)
+      .map(([uid]) => uid);
+
+    await ChatMessage.create({
+      whisper: nonGmOwners.length ? nonGmOwners : undefined,
+      speaker: ChatMessage.getSpeaker({ actor }),
+      content: `<div style="margin-bottom:4px"><strong>⚗ Cosmic Favor — Choose Your Boon</strong></div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap">
+          <button data-er-action="advAttack"  data-pending-id="${pendingId}">Advantage on next spell attack</button>
+          <button data-er-action="disadvSave" data-pending-id="${pendingId}">Impose disadvantage on next save vs. your spell</button>
+        </div>`
+    });
+  }
+
+  /**
+   * Apply the chosen Cosmic Favor effect to the actor.
+   * @param {Actor5e} actor
+   * @param {string}  action   "advAttack" or "disadvSave"
+   */
+  static async _applyCosmicFavorChoice(actor, action) {
+    const speaker = ChatMessage.getSpeaker({ actor });
+    if ( action === "advAttack" ) {
+      await actor.setFlag("dnd5e", "eldritchResonance.advNextSpellAttack", true);
+      await ChatMessage.create({ speaker, content: `<p>⚗ <strong>Cosmic Favor</strong> — ${actor.name} has advantage on their next spell attack roll.</p>` });
+    } else if ( action === "disadvSave" ) {
+      await actor.setFlag("dnd5e", "eldritchResonance.disadvNextEnemySave", true);
+      await ChatMessage.create({ speaker, content: `<p>⚗ <strong>Cosmic Favor</strong> — The next creature saving against ${actor.name}'s spell does so with disadvantage.</p>` });
+    }
+  }
+
+  /**
+   * Re-fire the stored activity after the gateway resolves in favor of the spell proceeding.
+   * The bypass flag prevents this from triggering the ER gateway again.
+   * @param {object} pending
+   */
+  static async _refireEldritchArcanumSpell(pending) {
+    const { activity, usageConfig, dialogConfig, messageConfig } = pending;
+    await activity.use(
+      { ...usageConfig, _eldritchResonanceResolved: true },
+      dialogConfig,
+      messageConfig
+    );
+  }
+
+  /**
+   * Register click listeners for all Eldritch Resonance chat buttons.
+   * @param {HTMLElement} html
+   */
+  static eldritchResonanceChatListeners(html) {
+    html.addEventListener("click", async event => {
+      const btn = event.target.closest("[data-er-action]");
+      if ( !btn ) return;
+      event.preventDefault();
+
+      const { erAction, pendingId } = btn.dataset;
+      const pending = Actor5e._eldritchResonancePending.get(pendingId);
+      if ( !pending ) {
+        ui.notifications.warn("This Eldritch Resonance prompt is no longer active.");
+        return;
+      }
+
+      // Disable all ER buttons in this message immediately to prevent double-clicks.
+      btn.closest(".message-content")?.querySelectorAll("[data-er-action]").forEach(b => b.disabled = true);
+
+      if ( pending.type === "cosmicFavor" ) {
+        Actor5e._eldritchResonancePending.delete(pendingId);
+        await Actor5e._applyCosmicFavorChoice(pending.actor, erAction);
+        return;
+      }
+
+      switch ( erAction ) {
+        case "chance":
+          await Actor5e._rollEldritchResonanceChance(pending);
+          break;
+        case "force":
+          Actor5e._eldritchResonancePending.delete(pendingId);
+          await Actor5e._rollEldritchResonanceTable(pending);
+          break;
+        case "ignore":
+          Actor5e._eldritchResonancePending.delete(pendingId);
+          await Actor5e._refireEldritchArcanumSpell(pending);
+          break;
+      }
+    });
+  }
+
+  /* -------------------------------------------- */
 
   /**
    * Handle applying/removing the bloodied status.

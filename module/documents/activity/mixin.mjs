@@ -533,6 +533,24 @@ export default function ActivityMixin(Base) {
         }
       }
 
+      // Eldritch Echo: if the caster has a pending echo from a previous ER roll, apply +1 cast level
+      // to the next non-cantrip EA spell they cast. Clears the flag on use.
+      if ( this.isSpell && this.actor && (item.system.level ?? 0) > 0
+        && this.item.system.school === "ela" ) {
+        const echoFlag = this.actor.getFlag("dnd5e", "eldritchResonance.echoNextSpell");
+        if ( echoFlag ) {
+          await this.actor.unsetFlag("dnd5e", "eldritchResonance.echoNextSpell");
+          const echoEffective = item.system.level + (usageConfig.scaling ?? 0);
+          if ( echoEffective < 9 ) {
+            usageConfig.scaling = (usageConfig.scaling ?? 0) + 1;
+            await ChatMessage.create({
+              speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+              content: `<p><strong>⚗ Eldritch Echo</strong> — ${this.actor.name}'s spell is cast at level ${echoEffective + 1}.</p>`
+            });
+          }
+        }
+      }
+
       if ( usageConfig.scaling ) {
         foundry.utils.setProperty(messageConfig, "data.system.scaling", usageConfig.scaling);
         if ( usageConfig.scaling !== item.flags.dnd5e?.scaling ) {

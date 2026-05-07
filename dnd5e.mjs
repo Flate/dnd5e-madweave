@@ -630,10 +630,12 @@ Hooks.on("renderChatLog", (app, html, data) => {
   documents.Item5e.chatListeners(html);
   documents.ChatMessage5e.onRenderChatLog(html);
   documents.Actor5e.chaoticSurgeChatListeners(html);
+  documents.Actor5e.eldritchResonanceChatListeners(html);
 });
 Hooks.on("renderChatPopout", (app, html, data) => {
   documents.Item5e.chatListeners(html);
   documents.Actor5e.chaoticSurgeChatListeners(html);
+  documents.Actor5e.eldritchResonanceChatListeners(html);
 });
 
 Hooks.on("chatMessage", (app, message, data) => applications.Award.chatMessage(message));
@@ -650,6 +652,30 @@ Hooks.on("renderCompendiumDirectory", (app, html) => applications.CompendiumBrow
 Hooks.on("renderJournalEntryPageSheet", applications.journal.JournalEntrySheet5e.onRenderJournalPageSheet);
 
 Hooks.on("renderActiveEffectConfig", documents.ActiveEffect5e.onRenderActiveEffectConfig);
+
+// Eldritch Resonance Table: intercept EA spell casts before any card is posted.
+// Returns false to cancel the activity; async gateway is fired without awaiting.
+Hooks.on("dnd5e.preUseActivity", (activity, usageConfig, dialogConfig, messageConfig) => {
+  if ( !documents.Actor5e._isEldritchArcanumSpell(activity) ) return;
+  if ( usageConfig._eldritchResonanceResolved ) return;
+  documents.Actor5e._handleEldritchResonancePreUse(activity, usageConfig, dialogConfig, messageConfig);
+  return false;
+});
+
+// Abyssal Surge: maximize all damage dice for the flagged actor's next EA spell roll.
+Hooks.on("dnd5e.preRollDamageV2", (config, dialog, message) => {
+  const actor = config.subject?.actor;
+  if ( !actor ) return;
+  if ( !documents.Actor5e._eldritchSurgePending?.has(actor.id) ) return;
+  if ( config.subject?.item?.system?.school !== "ela" ) return;
+  documents.Actor5e._eldritchSurgePending.delete(actor.id);
+  if ( config.rolls ) {
+    for ( const roll of config.rolls ) {
+      roll.options ??= {};
+      roll.options.maximize = true;
+    }
+  }
+});
 
 // Eldritch Madness ability hooks: risk rolls, Prescient Dodge consequence, Chaotic Surge.
 Hooks.on("dnd5e.postUseActivity", (activity, usageConfig, results) => {
