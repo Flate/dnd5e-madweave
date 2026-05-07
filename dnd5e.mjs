@@ -672,7 +672,9 @@ Hooks.on("dnd5e.postDamageRollConfiguration", (rolls, config, dialog, message) =
   if ( config.subject?.item?.system?.school !== "ela" ) return;
   actor.unsetFlag("dnd5e", "abyssalSurgePending");
   for ( const roll of rolls ) {
-    roll.options.maximize = true;
+    const maxValue = Roll.create(roll.formula).evaluateSync({ maximize: true }).total;
+    roll.terms = [new foundry.dice.terms.NumericTerm({ number: maxValue })];
+    roll.resetFormula();
   }
 });
 
