@@ -4084,15 +4084,16 @@ export default class Actor5e extends SystemDocumentMixin(Actor) {
       notes.push(`${actor.name}'s <strong>next Eldritch Arcanum spell</strong> is cast at one level higher (max 9th).`);
     }
 
-    // Cosmic Comedy — tracking AE for advantage on next Charisma check
+    // Cosmic Comedy — advantage on next Charisma ability check (automated via flag + visual AE)
     if ( result.rubberChicken ) {
+      await actor.setFlag("dnd5e", "eldritchResonance.advNextChaCheck", true);
       await ActiveEffect.implementation.create({
         name: "Cosmic Comedy — Adv. next Charisma check",
         img: "icons/svg/d20-grey.svg",
         duration: { rounds: 10 },
-        description: "Remove after using advantage on one Charisma check."
+        description: "Advantage on your next Charisma ability check (automated — removed after use)."
       }, { parent: actor });
-      notes.push(`A rubber chicken appears! ${actor.name} has <strong>advantage on their next Charisma check</strong>. (Remove the AE after use.)`);
+      notes.push(`A rubber chicken appears! ${actor.name} has <strong>advantage on their next Charisma check</strong>.`);
     }
 
     // Eldritch Quackery — AE with Stealth disadvantage and Intimidation advantage

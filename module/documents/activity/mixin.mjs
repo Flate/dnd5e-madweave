@@ -551,6 +551,27 @@ export default function ActivityMixin(Base) {
         }
       }
 
+      // Eldritch Echo (cantrip): cantrip scaling is based on cantripLevel, not usageConfig.scaling,
+      // so usageConfig.scaling has no effect here. Instead, set cantripEchoActive flag so the
+      // postDamageRollConfiguration hook can replace formulas via getDamageConfig at the next tier.
+      // Tiers: lvl 1-4 → 5 scaling, lvl 5-10 → 11 scaling, lvl 11-16 → 17 scaling, 17+ → no bump.
+      if ( this.isSpell && this.actor && (item.system.level ?? 0) === 0
+        && this.item.system.school === "ela" ) {
+        const echoFlag = this.actor.getFlag("dnd5e", "eldritchResonance.echoNextSpell");
+        if ( echoFlag ) {
+          await this.actor.unsetFlag("dnd5e", "eldritchResonance.echoNextSpell");
+          const charLevel = this.actor.system.details?.level ?? 1;
+          if ( charLevel < 17 ) {
+            await this.actor.setFlag("dnd5e", "eldritchResonance.cantripEchoActive", true);
+            const nextTierLevel = charLevel < 5 ? 5 : charLevel < 11 ? 11 : 17;
+            await ChatMessage.create({
+              speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+              content: `<p><strong>⚗ Eldritch Echo</strong> — ${this.actor.name}'s cantrip uses level ${nextTierLevel} scaling.</p>`
+            });
+          }
+        }
+      }
+
       if ( usageConfig.scaling ) {
         foundry.utils.setProperty(messageConfig, "data.system.scaling", usageConfig.scaling);
         if ( usageConfig.scaling !== item.flags.dnd5e?.scaling ) {

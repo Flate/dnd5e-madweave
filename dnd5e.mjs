@@ -678,6 +678,33 @@ Hooks.on("dnd5e.postDamageRollConfiguration", (rolls, config, dialog, message) =
   }
 });
 
+// Eldritch Echo (cantrip): replace damage formulas with the next scaling tier.
+// Cantrip scaling uses scaledFormula(increase) with a tier-index, not usageConfig.scaling.
+// We call getDamageConfig at the bumped tier so all formula modes (whole/half/custom) are handled
+// correctly regardless of the cantrip type. The flag is set in _prepareUsageScaling (mixin.mjs).
+Hooks.on("dnd5e.postDamageRollConfiguration", (rolls, config, dialog, message) => {
+  const actor = config.subject?.actor;
+  if ( !actor ) return;
+  if ( !actor.getFlag("dnd5e", "eldritchResonance.cantripEchoActive") ) return;
+  actor.unsetFlag("dnd5e", "eldritchResonance.cantripEchoActive");
+
+  const charLevel = actor.system.details?.level ?? 1;
+  if ( charLevel >= 17 ) return;
+
+  // scalingIncrease for cantrips = Math.floor((charLevel+1)/6): 0 at 1-4, 1 at 5-10, 2 at 11-16.
+  // getDamageConfig accepts a plain number for scaling; scaledFormula unwraps Scaling instances.
+  const currentScaling = Math.floor((charLevel + 1) / 6);
+  const bumpedConfig = config.subject.getDamageConfig({ scaling: currentScaling + 1 });
+
+  for ( let i = 0; i < rolls.length; i++ ) {
+    const parts = bumpedConfig.rolls?.[i]?.parts;
+    if ( !parts?.length ) continue;
+    const newRoll = new Roll(parts.join(" + "), bumpedConfig.rolls[i]?.data ?? {});
+    rolls[i].terms = newRoll.terms;
+    rolls[i].resetFormula();
+  }
+});
+
 // Cosmic Favor: advantage on next spell attack roll.
 // preRollAttackV2 is synchronous — set the option, then consume the flag asynchronously in rollAttackV2.
 Hooks.on("dnd5e.preRollAttackV2", (config, dialog, message) => {
@@ -705,6 +732,32 @@ Hooks.on("dnd5e.preRollSavingThrowV2", (config, dialog, message) => {
   if ( !caster ) return;
   if ( config.rolls?.[0] ) config.rolls[0].options.disadvantage = true;
   caster.unsetFlag("dnd5e", "eldritchResonance.disadvNextEnemySave");
+});
+
+// Cosmic Comedy: advantage on next Charisma-based ability or skill check.
+// preRollAbilityCheckV2 fires for both plain checks and skill checks via the shared "abilityCheck" hookName.
+Hooks.on("dnd5e.preRollAbilityCheckV2", (config, dialog, message) => {
+  const actor = config.subject;
+  if ( !actor ) return;
+  if ( !actor.getFlag("dnd5e", "eldritchResonance.advNextChaCheck") ) return;
+  if ( config.ability !== "cha" ) return;
+  if ( config.rolls?.[0] ) config.rolls[0].options.advantage = true;
+});
+
+// Consume after a plain Charisma ability check.
+Hooks.on("dnd5e.rollAbilityCheck", (rolls, { ability, subject }) => {
+  if ( ability !== "cha" ) return;
+  if ( !subject?.getFlag("dnd5e", "eldritchResonance.advNextChaCheck") ) return;
+  subject.unsetFlag("dnd5e", "eldritchResonance.advNextChaCheck");
+  subject.effects.find(e => e.name === "Cosmic Comedy — Adv. next Charisma check")?.delete();
+});
+
+// Consume after a Charisma-based skill check.
+Hooks.on("dnd5e.rollSkillV2", (rolls, { ability, subject }) => {
+  if ( ability !== "cha" ) return;
+  if ( !subject?.getFlag("dnd5e", "eldritchResonance.advNextChaCheck") ) return;
+  subject.unsetFlag("dnd5e", "eldritchResonance.advNextChaCheck");
+  subject.effects.find(e => e.name === "Cosmic Comedy — Adv. next Charisma check")?.delete();
 });
 
 // Temporal Distortion: outside combat, the extra-action AE expires after any activity is used.
