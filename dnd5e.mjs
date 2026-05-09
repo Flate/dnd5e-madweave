@@ -678,6 +678,46 @@ Hooks.on("dnd5e.postDamageRollConfiguration", (rolls, config, dialog, message) =
   }
 });
 
+// Cosmic Favor: advantage on next spell attack roll.
+// preRollAttackV2 is synchronous — set the option, then consume the flag asynchronously in rollAttackV2.
+Hooks.on("dnd5e.preRollAttackV2", (config, dialog, message) => {
+  const actor = config.subject?.actor;
+  if ( !actor ) return;
+  if ( !actor.getFlag("dnd5e", "eldritchResonance.advNextSpellAttack") ) return;
+  if ( config.subject?.item?.type !== "spell" ) return;
+  if ( config.rolls?.[0] ) config.rolls[0].options.advantage = true;
+});
+
+Hooks.on("dnd5e.rollAttackV2", (rolls, { subject }) => {
+  const actor = subject?.actor;
+  if ( !actor ) return;
+  if ( !actor.getFlag("dnd5e", "eldritchResonance.advNextSpellAttack") ) return;
+  if ( subject?.item?.type !== "spell" ) return;
+  actor.unsetFlag("dnd5e", "eldritchResonance.advNextSpellAttack");
+});
+
+// Cosmic Favor: disadvantage on the next NPC saving throw (fire-and-forget flag removal).
+Hooks.on("dnd5e.preRollSavingThrowV2", (config, dialog, message) => {
+  const rollingActor = config.subject;
+  if ( !rollingActor || rollingActor.type === "character" ) return;
+  const caster = game.actors.find(a => a.type === "character"
+    && a.getFlag("dnd5e", "eldritchResonance.disadvNextEnemySave"));
+  if ( !caster ) return;
+  if ( config.rolls?.[0] ) config.rolls[0].options.disadvantage = true;
+  caster.unsetFlag("dnd5e", "eldritchResonance.disadvNextEnemySave");
+});
+
+// Temporal Distortion: outside combat, the extra-action AE expires after any activity is used.
+// In combat it expires naturally after 1 turn; outside combat duration never ticks.
+// Skip the ER-resolved refire itself (which is what grants the effect, not what consumes it).
+Hooks.on("dnd5e.postUseActivity", (activity, usageConfig, results) => {
+  const actor = activity.item?.actor;
+  if ( !actor || actor.inCombat ) return;
+  if ( usageConfig._eldritchResonanceResolved ) return;
+  const tdEffects = actor.effects.filter(e => e.name === "Temporal Distortion — Extra Action");
+  for ( const eff of tdEffects ) eff.delete();
+});
+
 // Eldritch Madness ability hooks: risk rolls, Prescient Dodge consequence, Chaotic Surge.
 Hooks.on("dnd5e.postUseActivity", (activity, usageConfig, results) => {
   const actor = activity.item?.actor;
