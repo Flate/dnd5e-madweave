@@ -794,6 +794,169 @@ Hooks.on("dnd5e.postUseActivity", (activity, usageConfig, results) => {
   if ( hasChaoticSurge ) documents.Actor5e.rollChaoticSurge(actor, activity);
 });
 
+// --- Vortex Damage Effects: Mental Echo + Soul Erosion ---
+
+// Per-round vortex damage tracker for Soul Erosion: actorUuid → { round, total, triggered }.
+const _vortexRoundTracker = new Map();
+
+/**
+ * Resolve the Mental Echo save DC from the originating chat message.
+ *
+ * Resolution order:
+ *  1. Item-level override — `dnd5e.vortexDC` flag on the used item (e.g., a magical weapon with its own DC).
+ *  2. Spell — caster's spell save DC (`system.attributes.spell.dc`).
+ *  3. NPC / monster — 8 + proficiency bonus + max(Wis mod, Cha mod).
+ *  4. PC using a non-spell item — falls back to the PC's spell save DC.
+ *  5. No resolvable attacker → returns null (Mental Echo is skipped).
+ *
+ * @param {ChatMessage|null} origin  The originating damage chat message from `options.origin`.
+ * @returns {number|null}            Resolved DC, or null if Mental Echo should not apply.
+ */
+function _resolveVortexDC(origin) {
+  if ( !origin ) return null;
+  const msgFlags = origin.flags?.dnd5e ?? {};
+  const attacker = ChatMessage.getSpeakerActor(origin.speaker);
+  if ( !attacker ) return null;
+
+  // Item-level fixed DC override (set via `dnd5e.vortexDC` flag on the item, e.g. Blade of the Eldritch King).
+  const item = msgFlags.item?.uuid ? fromUuidSync(msgFlags.item.uuid) : null;
+  const fixedDC = item?.getFlag("dnd5e", "vortexDC");
+  if ( fixedDC ) return Number(fixedDC);
+
+  // Spell: use caster's configured spell save DC.
+  if ( msgFlags.item?.type === "spell" ) return attacker.system.attributes.spell.dc ?? null;
+
+  // NPC / monster: 8 + proficiency + max(Wis, Cha) — eldritch ability for extraplanar creatures.
+  if ( attacker.type !== "character" ) {
+    const prof = attacker.system.attributes.prof ?? 0;
+    const wisMod = attacker.system.abilities?.wis?.mod ?? 0;
+    const chaMod = attacker.system.abilities?.cha?.mod ?? 0;
+    return 8 + prof + Math.max(wisMod, chaMod);
+  }
+
+  // PC with a non-spell item (weapon, feat, etc.): fall back to spell save DC.
+  return attacker.system.attributes.spell.dc ?? null;
+}
+
+// After damage is calculated (post-resistance), store vortex subtotal and resolved DC in options
+// so the applyDamage hook can act on them without re-walking the damages array.
+Hooks.on("dnd5e.calculateDamage", (actor, damages, options) => {
+  const vortexTotal = damages
+    .filter(d => d.type === "vortex")
+    .reduce((sum, d) => sum + (d.value ?? 0), 0);
+  if ( vortexTotal <= 0 ) return;
+  options._vortexAmount = Math.trunc(vortexTotal);
+  options._vortexDC = _resolveVortexDC(options.origin ?? null);
+});
+
+// After vortex damage is applied: run Soul Erosion and prompt Mental Echo WIS save.
+Hooks.on("dnd5e.applyDamage", async (actor, amount, options) => {
+  const vortexAmount = options._vortexAmount;
+  if ( !vortexAmount || vortexAmount <= 0 ) return;
+
+  // Soul Erosion: only tracks in active combat; one trigger per actor per round.
+  if ( game.combat?.active ) {
+    const round = game.combat.round;
+    const key = actor.uuid;
+    const existing = _vortexRoundTracker.get(key);
+    const roundTotal = (existing?.round === round ? existing.total : 0) + vortexAmount;
+    const triggered = existing?.round === round ? existing.triggered : false;
+    _vortexRoundTracker.set(key, { round, total: roundTotal, triggered });
+    if ( !triggered && roundTotal > Math.floor(actor.system.attributes.hp.max / 2) ) {
+      _vortexRoundTracker.set(key, { round, total: roundTotal, triggered: true });
+      const currentMadness = actor.system.attributes.eldritchMadness ?? 0;
+      const maxMadness = CONFIG.DND5E.conditionTypes.eldritchMadness?.levels ?? 6;
+      if ( currentMadness < maxMadness ) {
+        await actor.update({ "system.attributes.eldritchMadness": currentMadness + 1 });
+        ChatMessage.create({
+          content: `<p><strong>${actor.name}</strong> gains a level of Eldritch Madness from Soul Erosion! (Level ${currentMadness + 1})</p>`,
+          speaker: ChatMessage.getSpeaker({ actor })
+        });
+      }
+    }
+  }
+
+  // Mental Echo: auto-roll WIS saving throw, DC = caster's spell save DC.
+  const dc = options._vortexDC;
+  if ( !dc ) return;
+  const saveRolls = await actor.rollSavingThrow({ ability: "wis", target: dc }, { configure: false });
+  const saveRoll = saveRolls?.[0];
+  if ( !saveRoll || saveRoll.total >= dc ) return;
+
+  // Failed save: impose disadvantage on the next WIS or INT check or save before end of next turn.
+  await actor.setFlag("dnd5e", "mentalEchoPending", true);
+  await actor.createEmbeddedDocuments("ActiveEffect", [{
+    name: "Mental Echo — Disadv. next Wis/Int check or save",
+    img: "systems/dnd5e/icons/svg/statuses/eldritch-madness.svg",
+    origin: options.origin?.uuid,
+    duration: { turns: 1 },
+    "flags.dnd5e.mentalEcho": true
+  }]);
+});
+
+// Mental Echo: apply disadvantage to the next WIS or INT saving throw.
+Hooks.on("dnd5e.preRollSavingThrowV2", (config, dialog, message) => {
+  const actor = config.subject;
+  if ( !actor || !["wis", "int"].includes(config.ability) ) return;
+  if ( !actor.getFlag("dnd5e", "mentalEchoPending") ) return;
+  if ( config.rolls?.[0] ) config.rolls[0].options.disadvantage = true;
+});
+
+// Mental Echo: apply disadvantage to the next WIS or INT ability or skill check.
+Hooks.on("dnd5e.preRollAbilityCheckV2", (config, dialog, message) => {
+  const actor = config.subject;
+  if ( !actor || !["wis", "int"].includes(config.ability) ) return;
+  if ( !actor.getFlag("dnd5e", "mentalEchoPending") ) return;
+  if ( config.rolls?.[0] ) config.rolls[0].options.disadvantage = true;
+});
+
+// Consume Mental Echo after WIS or INT saving throw.
+Hooks.on("dnd5e.rollSavingThrow", (rolls, { ability, subject }) => {
+  if ( !["wis", "int"].includes(ability) ) return;
+  if ( !subject?.getFlag("dnd5e", "mentalEchoPending") ) return;
+  subject.unsetFlag("dnd5e", "mentalEchoPending");
+  subject.effects.find(e => e.getFlag("dnd5e", "mentalEcho"))?.delete();
+});
+
+// Consume Mental Echo after WIS or INT plain ability check.
+Hooks.on("dnd5e.rollAbilityCheck", (rolls, { ability, subject }) => {
+  if ( !["wis", "int"].includes(ability) ) return;
+  if ( !subject?.getFlag("dnd5e", "mentalEchoPending") ) return;
+  subject.unsetFlag("dnd5e", "mentalEchoPending");
+  subject.effects.find(e => e.getFlag("dnd5e", "mentalEcho"))?.delete();
+});
+
+// Consume Mental Echo after WIS or INT skill check.
+Hooks.on("dnd5e.rollSkillV2", (rolls, { ability, subject }) => {
+  if ( !["wis", "int"].includes(ability) ) return;
+  if ( !subject?.getFlag("dnd5e", "mentalEchoPending") ) return;
+  subject.unsetFlag("dnd5e", "mentalEchoPending");
+  subject.effects.find(e => e.getFlag("dnd5e", "mentalEcho"))?.delete();
+});
+
+// Eldritch Madness sentinel: any AE with flag dnd5e.eldritchMadnessSentinel = true is a signal to
+// increment system.attributes.eldritchMadness by dnd5e.eldritchMadnessGain levels (default 1),
+// then self-delete. AE name is kept descriptive (spell name + "— Gain EM Level") for debugging.
+// This generalises across all EM-granting spells — add the flag to any effect that should trigger it.
+Hooks.on("createActiveEffect", (effect, options, userId) => {
+  if ( !effect.getFlag("dnd5e", "eldritchMadnessSentinel") ) return;
+  const actor = effect.parent;
+  if ( !(actor instanceof Actor) ) return;
+  if ( game.user.id !== userId ) return;
+  const gain = effect.getFlag("dnd5e", "eldritchMadnessGain") ?? 1;
+  const current = actor.system.attributes.eldritchMadness ?? 0;
+  const max = CONFIG.DND5E.conditionTypes.eldritchMadness?.levels ?? 6;
+  const newLevel = Math.min(current + gain, max);
+  if ( newLevel > current ) {
+    actor.update({ "system.attributes.eldritchMadness": newLevel });
+    ChatMessage.create({
+      content: `<p><strong>${actor.name}</strong> gains ${newLevel - current} level(s) of Eldritch Madness! (Now level ${newLevel})</p>`,
+      speaker: ChatMessage.getSpeaker({ actor })
+    });
+  }
+  effect.delete();
+});
+
 Hooks.on("renderDocumentSheetConfig", (app, html) => {
   const { document } = app.options;
   if ( (document instanceof Actor) && document.system.isGroup ) {

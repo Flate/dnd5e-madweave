@@ -1,0 +1,66 @@
+_id: EldArcClass0001
+name: Eldritch Arcanum
+type: class
+img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
+system:
+  description:
+    value: '<p>The Eldritch Arcanum class for the Madweave campaign.</p>'
+    chat: ''
+  source:
+    custom: Madweave Campaign
+    rules: homebrew
+    book: ''
+    page: ''
+    license: ''
+  identifier: eldritch-arcanum
+  levels: 1
+  hitDice: d8
+  hitDiceUsed: 0
+  advancement:
+    - type: HitPoints
+      configuration: {}
+      value: {}
+      title: Hit Points
+      icon: systems/dnd5e/icons/svg/hit-points.svg
+      _id: EldArcHitPts001
+    - type: ScaleValue
+      configuration:
+        identifier: void-spark
+        type: string
+        distance:
+          units: ''
+        scale:
+          '1':
+            value: '0'
+          '5':
+            value: 1d8
+          '11':
+            value: 1d8 + 1d10
+          '17':
+            value: 1d8 + 1d10 + 1d12
+      value: {}
+      title: Void Spark Bonus Dice
+      _id: VoidSparkScale001
+  spellcasting:
+    progression: full
+    ability: int
+    preparation:
+      formula: ''
+  bonuses:
+    additional: ''
+sort: 0
+flags: {}
+ownership:
+  default: 0
+folder: null
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+  coreVersion: '13.351'
+  systemId: dnd5e
+  systemVersion: 5.3.0
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+_key: '!items!EldArcClass0001'
