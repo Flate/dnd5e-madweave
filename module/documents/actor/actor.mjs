@@ -3371,23 +3371,26 @@ export default class Actor5e extends SystemDocumentMixin(Actor) {
       foundry.utils.setProperty(options, "dnd5e.originalExhaustion", this.system.attributes.exhaustion);
     }
 
-    // Intercept Eldritch Madness 5→6: accumulate Critical Madness Events instead.
-    // Only triggers when an effect would push a character at exactly EM 5 beyond level 5.
+    // Intercept Eldritch Madness →6: accumulate Critical Madness Events instead.
+    // Each level of overflow past 5 counts as one CME. Fires whenever the new value
+    // exceeds 5 from any starting point below 5 (not just from exactly 5).
     const newEM = foundry.utils.getProperty(changed, "system.attributes.eldritchMadness");
     if ( Number.isFinite(newEM) ) {
-      if ( newEM > 5 && (this.system.attributes?.eldritchMadness ?? 0) === 5 ) {
+      const currentEM = this.system.attributes?.eldritchMadness ?? 0;
+      if ( newEM > 5 && currentEM <= 5 ) {
+        const overflow = newEM - 5;
         const currentCME = this.system.attributes?.criticalMadnessEvents ?? 0;
-        const newCME = currentCME + 1;
+        const newCME = currentCME + overflow;
         if ( newCME >= 3 ) {
-          // Third Critical Madness Event: progress to EM 6 and reset counter.
+          // Enough Critical Madness Events accumulated: progress to EM 6 and reset counter.
           foundry.utils.setProperty(changed, "system.attributes.criticalMadnessEvents", 0);
         } else {
-          // Accumulate the event but hold EM at 5.
+          // Accumulate the events but hold EM at 5.
           foundry.utils.setProperty(changed, "system.attributes.eldritchMadness", 5);
           foundry.utils.setProperty(changed, "system.attributes.criticalMadnessEvents", newCME);
         }
       } else if ( newEM < 5 && (this.system.attributes?.criticalMadnessEvents ?? 0) > 0 ) {
-        // CME only applies at EM 5; clear it whenever EM drops below that threshold.
+        // CME counter only applies at EM 5; clear it whenever EM drops below that threshold.
         foundry.utils.setProperty(changed, "system.attributes.criticalMadnessEvents", 0);
       }
     }
