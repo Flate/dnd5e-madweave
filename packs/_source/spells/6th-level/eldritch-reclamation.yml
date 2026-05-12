@@ -1,0 +1,168 @@
+_id: EldReclmSpell001
+name: Eldritch Reclamation
+type: spell
+img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
+system:
+  description:
+    value: >-
+      <p>You resurrect a dead creature you touch. The creature returns to life
+      with all of its hit points restored and gains two permanent levels of
+      Eldritch Madness. The resurrected creature cannot have died due to effects
+      of Eldritch Madness.</p>
+    chat: ''
+  source:
+    custom: Madweave Campaign
+    rules: homebrew
+    book: ''
+    page: ''
+    license: ''
+  activation:
+    type: action
+    condition: ''
+    value: 1
+  duration:
+    value: ''
+    units: inst
+  target:
+    affects:
+      type: creature
+      count: '1'
+      choice: false
+      special: ''
+    template:
+      units: ''
+      contiguous: false
+      type: ''
+  range:
+    units: touch
+    special: ''
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 6
+  school: ela
+  materials:
+    value: a personal belonging of the deceased
+    consumed: false
+    cost: 0
+    supply: 0
+  preparation:
+    mode: prepared
+    prepared: false
+  properties:
+    - vocal
+    - somatic
+    - material
+  activities:
+    dnd5eactivity000:
+      _id: dnd5eactivity000
+      type: heal
+      activation:
+        type: action
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects:
+        - _id: EldReclmEff00001
+          level:
+            min: null
+            max: null
+      range:
+        override: false
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+        affects:
+          choice: false
+        override: false
+      healing:
+        number: null
+        denomination: null
+        bonus: ''
+        types:
+          - healing
+        custom:
+          enabled: true
+          formula: '@attributes.hp.max'
+        scaling:
+          mode: ''
+          number: null
+          formula: ''
+      uses:
+        spent: 0
+        recovery: []
+      sort: 0
+      name: Cast
+      img: ''
+      visibility:
+        level:
+          min: null
+          max: null
+  identifier: eldritch-reclamation
+sort: 0
+flags: {}
+effects:
+  - name: Eldritch Reclamation — Gain 2 EM Levels
+    img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
+    origin: Compendium.dnd5e.spells.Item.EldReclmSpell001
+    transfer: false
+    _id: EldReclmEff00001
+    type: base
+    system: {}
+    changes: []
+    disabled: true
+    duration:
+      startTime: null
+      combat: null
+      seconds: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: >-
+      <p>Sentinel — increments Eldritch Madness by 2 and self-deletes
+      immediately.</p>
+    tint: '#ffffff'
+    statuses: []
+    sort: 0
+    flags:
+      dnd5e:
+        eldritchMadnessSentinel: true
+        eldritchMadnessGain: 2
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+    _key: '!items.effects!EldReclmSpell001.EldReclmEff00001'
+folder: 0pdesvXqKd55VOh2
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+  coreVersion: '13.351'
+  systemId: dnd5e
+  systemVersion: 5.3.0
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+_key: '!items!EldReclmSpell001'

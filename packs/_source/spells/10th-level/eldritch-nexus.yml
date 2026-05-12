@@ -1,0 +1,116 @@
+_id: EldNexusSpell001
+name: Eldritch Nexus
+type: spell
+img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
+system:
+  description:
+    value: >-
+      <p>The details of this spell are unknown.</p>
+    chat: ''
+  source:
+    custom: Madweave Campaign
+    rules: homebrew
+    book: ''
+    page: ''
+    license: ''
+  activation:
+    type: hour
+    condition: ''
+    value: 8
+  duration:
+    value: ''
+    units: inst
+  target:
+    affects:
+      choice: false
+    template:
+      units: ''
+      contiguous: false
+      type: ''
+  range:
+    units: any
+    special: ''
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 10
+  school: ela
+  materials:
+    value: >-
+      an artifact from the abyss, the tears of a celestial, and the heart of an
+      elder dragon, all of which are consumed by the spell
+    consumed: true
+    cost: 0
+    supply: 0
+  preparation:
+    mode: prepared
+    prepared: false
+  properties:
+    - vocal
+    - somatic
+    - material
+    - ritual
+  activities:
+    dnd5eactivity000:
+      _id: dnd5eactivity000
+      type: utility
+      activation:
+        type: hour
+        value: 8
+        override: true
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: false
+      description:
+        chatFlavor: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects: []
+      range:
+        override: false
+      target:
+        prompt: false
+        template:
+          contiguous: false
+          units: ''
+        affects:
+          choice: false
+        override: false
+      roll:
+        formula: ''
+        name: ''
+        prompt: false
+        visible: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      name: Cast
+      img: ''
+      visibility:
+        level:
+          min: null
+          max: null
+  identifier: eldritch-nexus
+sort: 0
+flags: {}
+effects: []
+folder: xSp10thLvlFld001
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+  coreVersion: '13.351'
+  systemId: dnd5e
+  systemVersion: 5.3.0
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+_key: '!items!EldNexusSpell001'

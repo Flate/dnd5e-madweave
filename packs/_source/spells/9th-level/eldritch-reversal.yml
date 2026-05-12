@@ -1,0 +1,340 @@
+_id: EldRevrsSpell001
+name: Eldritch Reversal
+type: spell
+img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
+system:
+  description:
+    value: >-
+      <p>You attempt to reverse the flow of eldritch energies within a targeted
+      area, affecting all creatures within a 30-foot radius sphere. Each
+      creature in the area can make a Wisdom saving throw. On a failed save,
+      the creature loses all levels of Eldritch Madness but gains one level of
+      exhaustion. On a successful save, the creature loses half of their
+      Eldritch Madness levels (rounded down) without gaining exhaustion.</p>
+      <p>After the save, apply the result using <em>Reversal: Save Failed</em>
+      or <em>Reversal: Save Succeeded</em>.</p>
+    chat: ''
+  source:
+    custom: Madweave Campaign
+    rules: homebrew
+    book: ''
+    page: ''
+    license: ''
+  activation:
+    type: hour
+    condition: ''
+    value: 1
+  duration:
+    value: ''
+    units: inst
+  target:
+    affects:
+      choice: false
+    template:
+      units: ft
+      type: sphere
+      size: '30'
+      contiguous: false
+  range:
+    value: '60'
+    units: ft
+    special: ''
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 9
+  school: ela
+  materials:
+    value: a shattered obsidian mirror
+    consumed: false
+    cost: 0
+    supply: 0
+  preparation:
+    mode: prepared
+    prepared: false
+  properties:
+    - vocal
+    - somatic
+    - material
+  activities:
+    dnd5eactivity000:
+      _id: dnd5eactivity000
+      type: save
+      activation:
+        type: action
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects: []
+      range:
+        override: false
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+        affects:
+          choice: false
+        override: false
+      damage:
+        onSave: none
+        parts: []
+      save:
+        ability: wis
+        dc:
+          calculation: spellcasting
+          formula: ''
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      name: Save
+      img: ''
+      visibility:
+        level:
+          min: null
+          max: null
+    dnd5eactivity100:
+      _id: dnd5eactivity100
+      type: utility
+      activation:
+        type: special
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: false
+      description:
+        chatFlavor: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects:
+        - _id: EldRevrsClrEff01
+          level:
+            min: null
+            max: null
+        - _id: EldRevrsExhEff01
+          level:
+            min: null
+            max: null
+      range:
+        override: false
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+        affects:
+          choice: false
+        override: false
+      roll:
+        formula: ''
+        name: ''
+        prompt: false
+        visible: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      name: 'Reversal: Save Failed'
+      img: ''
+      visibility:
+        level:
+          min: null
+          max: null
+    dnd5eactivity200:
+      _id: dnd5eactivity200
+      type: utility
+      activation:
+        type: special
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: false
+      description:
+        chatFlavor: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects:
+        - _id: EldRevrsHlfEff01
+          level:
+            min: null
+            max: null
+      range:
+        override: false
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+        affects:
+          choice: false
+        override: false
+      roll:
+        formula: ''
+        name: ''
+        prompt: false
+        visible: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      name: 'Reversal: Save Succeeded'
+      img: ''
+      visibility:
+        level:
+          min: null
+          max: null
+  identifier: eldritch-reversal
+sort: 0
+flags: {}
+effects:
+  - name: Eldritch Reversal — Clear All EM
+    img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
+    origin: Compendium.dnd5e.spells.Item.EldRevrsSpell001
+    transfer: false
+    _id: EldRevrsClrEff01
+    type: base
+    system: {}
+    changes: []
+    disabled: true
+    duration:
+      startTime: null
+      combat: null
+      seconds: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: >-
+      <p>Sentinel — sets Eldritch Madness to 0 and self-deletes
+      immediately.</p>
+    tint: '#ffffff'
+    statuses: []
+    sort: 0
+    flags:
+      dnd5e:
+        eldritchMadnessClearAll: true
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+    _key: '!items.effects!EldRevrsSpell001.EldRevrsClrEff01'
+  - name: Eldritch Reversal — Gain Exhaustion
+    img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
+    origin: Compendium.dnd5e.spells.Item.EldRevrsSpell001
+    transfer: false
+    _id: EldRevrsExhEff01
+    type: base
+    system: {}
+    changes: []
+    disabled: true
+    duration:
+      startTime: null
+      combat: null
+      seconds: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: >-
+      <p>Sentinel — increments exhaustion by 1 and self-deletes
+      immediately.</p>
+    tint: '#ffffff'
+    statuses: []
+    sort: 0
+    flags:
+      dnd5e:
+        exhaustionGain: 1
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+    _key: '!items.effects!EldRevrsSpell001.EldRevrsExhEff01'
+  - name: Eldritch Reversal — Halve EM
+    img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
+    origin: Compendium.dnd5e.spells.Item.EldRevrsSpell001
+    transfer: false
+    _id: EldRevrsHlfEff01
+    type: base
+    system: {}
+    changes: []
+    disabled: true
+    duration:
+      startTime: null
+      combat: null
+      seconds: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: >-
+      <p>Sentinel — halves Eldritch Madness (rounded down) and self-deletes
+      immediately.</p>
+    tint: '#ffffff'
+    statuses: []
+    sort: 0
+    flags:
+      dnd5e:
+        eldritchMadnessHalve: true
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+    _key: '!items.effects!EldRevrsSpell001.EldRevrsHlfEff01'
+folder: KL6ZY4VRMjojGrL4
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+  coreVersion: '13.351'
+  systemId: dnd5e
+  systemVersion: 5.3.0
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+_key: '!items!EldRevrsSpell001'

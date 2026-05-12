@@ -1,0 +1,220 @@
+_id: MindsAbysspl0001
+name: Mind's Abyss
+type: spell
+img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
+system:
+  description:
+    value: >-
+      <p>Target creature must make an Intelligence saving throw or be stunned
+      for 1 minute, take 5d10 Vortex damage, and gain one level of Eldritch
+      Madness. On a successful save, none of these effects apply.</p>
+      <p><strong>At Higher Levels.</strong> When you cast this spell using a
+      spell slot of 8th level or higher, the damage increases by 2d10 for each
+      slot level above 7th.</p>
+    chat: ''
+  source:
+    custom: Madweave Campaign
+    rules: homebrew
+    book: ''
+    page: ''
+    license: ''
+  activation:
+    type: action
+    condition: ''
+    value: 1
+  duration:
+    value: '1'
+    units: minute
+  target:
+    affects:
+      type: creature
+      count: '1'
+      choice: false
+      special: ''
+    template:
+      units: ''
+      contiguous: false
+      type: ''
+  range:
+    value: '60'
+    units: ft
+    special: ''
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 7
+  school: ela
+  materials:
+    value: ''
+    consumed: false
+    cost: 0
+    supply: 0
+  preparation:
+    mode: prepared
+    prepared: false
+  properties:
+    - vocal
+    - somatic
+    - concentration
+  activities:
+    dnd5eactivity000:
+      _id: dnd5eactivity000
+      type: save
+      activation:
+        type: action
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects:
+        - _id: MindAbyssEff0001
+          onSave: false
+          level:
+            min: null
+            max: null
+        - _id: MindAbyssEff0002
+          onSave: false
+          level:
+            min: null
+            max: null
+      range:
+        override: false
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+        affects:
+          choice: false
+        override: false
+      damage:
+        onSave: none
+        parts:
+          - number: 5
+            denomination: 10
+            bonus: ''
+            types:
+              - vortex
+            custom:
+              enabled: false
+              formula: ''
+            scaling:
+              mode: whole
+              number: 2
+              formula: ''
+      save:
+        ability: int
+        dc:
+          calculation: spellcasting
+          formula: ''
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      name: Cast
+      img: ''
+      visibility:
+        level:
+          min: null
+          max: null
+  identifier: minds-abyss
+sort: 0
+flags: {}
+effects:
+  - name: Mind's Abyss — Stunned
+    img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
+    origin: Compendium.dnd5e.spells.Item.MindsAbysspl0001
+    transfer: false
+    _id: MindAbyssEff0001
+    type: base
+    system: {}
+    changes: []
+    disabled: true
+    duration:
+      startTime: null
+      combat: null
+      seconds: 60
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: >-
+      <p>You are stunned for 1 minute.</p>
+    tint: '#ffffff'
+    statuses:
+      - stunned
+      - incapacitated
+    flags: {}
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+    _key: '!items.effects!MindsAbysspl0001.MindAbyssEff0001'
+  - name: Mind's Abyss — Gain EM Level
+    img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
+    origin: Compendium.dnd5e.spells.Item.MindsAbysspl0001
+    transfer: false
+    _id: MindAbyssEff0002
+    type: base
+    system: {}
+    changes: []
+    disabled: true
+    duration:
+      startTime: null
+      combat: null
+      seconds: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: >-
+      <p>Sentinel — increments Eldritch Madness by 1 and self-deletes
+      immediately.</p>
+    tint: '#ffffff'
+    statuses: []
+    sort: 0
+    flags:
+      dnd5e:
+        eldritchMadnessSentinel: true
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+    _key: '!items.effects!MindsAbysspl0001.MindAbyssEff0002'
+folder: irCSpQWIMtp978TA
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+  coreVersion: '13.351'
+  systemId: dnd5e
+  systemVersion: 5.3.0
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+_key: '!items!MindsAbysspl0001'

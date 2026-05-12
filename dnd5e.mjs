@@ -934,27 +934,65 @@ Hooks.on("dnd5e.rollSkillV2", (rolls, { ability, subject }) => {
   subject.effects.find(e => e.getFlag("dnd5e", "mentalEcho"))?.delete();
 });
 
-// Eldritch Madness sentinel: any AE with flag dnd5e.eldritchMadnessSentinel = true is a signal to
-// increment system.attributes.eldritchMadness by dnd5e.eldritchMadnessGain levels (default 1),
-// then self-delete. AE name is kept descriptive (spell name + "— Gain EM Level") for debugging.
-// This generalises across all EM-granting spells — add the flag to any effect that should trigger it.
+// EM sentinel family: any AE with one of the following dnd5e flags fires immediately, updates
+// system.attributes.eldritchMadness (or exhaustion), then self-deletes. Flags:
+//   eldritchMadnessSentinel: true   — add eldritchMadnessGain (default 1, negative = remove)
+//   eldritchMadnessClearAll: true   — set EM to 0 (full cleanse, e.g. Eldritch Reversal fail)
+//   eldritchMadnessHalve: true      — set EM to floor(current / 2) (Reversal success)
+//   exhaustionGain: N               — add N levels of exhaustion (capped at 6)
 Hooks.on("createActiveEffect", (effect, options, userId) => {
-  if ( !effect.getFlag("dnd5e", "eldritchMadnessSentinel") ) return;
   const actor = effect.parent;
   if ( !(actor instanceof Actor) ) return;
   if ( game.user.id !== userId ) return;
-  const gain = effect.getFlag("dnd5e", "eldritchMadnessGain") ?? 1;
-  const current = actor.system.attributes.eldritchMadness ?? 0;
-  const max = CONFIG.DND5E.conditionTypes.eldritchMadness?.levels ?? 6;
-  const newLevel = Math.min(current + gain, max);
-  if ( newLevel > current ) {
-    actor.update({ "system.attributes.eldritchMadness": newLevel });
-    ChatMessage.create({
-      content: `<p><strong>${actor.name}</strong> gains ${newLevel - current} level(s) of Eldritch Madness! (Now level ${newLevel})</p>`,
-      speaker: ChatMessage.getSpeaker({ actor })
-    });
+
+  if ( effect.getFlag("dnd5e", "eldritchMadnessSentinel") ) {
+    const gain = effect.getFlag("dnd5e", "eldritchMadnessGain") ?? 1;
+    const current = actor.system.attributes.eldritchMadness ?? 0;
+    const max = CONFIG.DND5E.conditionTypes.eldritchMadness?.levels ?? 6;
+    const newLevel = Math.min(Math.max(0, current + gain), max);
+    if ( newLevel !== current ) {
+      actor.update({ "system.attributes.eldritchMadness": newLevel });
+      const delta = newLevel - current;
+      const msg = delta > 0
+        ? `gains ${delta} level(s) of Eldritch Madness! (Now level ${newLevel})`
+        : `loses ${Math.abs(delta)} level(s) of Eldritch Madness. (Now level ${newLevel})`;
+      ChatMessage.create({ content: `<p><strong>${actor.name}</strong> ${msg}</p>`, speaker: ChatMessage.getSpeaker({ actor }) });
+    }
+    effect.delete();
+    return;
   }
-  effect.delete();
+
+  if ( effect.getFlag("dnd5e", "eldritchMadnessClearAll") ) {
+    const current = actor.system.attributes.eldritchMadness ?? 0;
+    if ( current > 0 ) {
+      actor.update({ "system.attributes.eldritchMadness": 0 });
+      ChatMessage.create({ content: `<p><strong>${actor.name}</strong> loses all ${current} level(s) of Eldritch Madness!</p>`, speaker: ChatMessage.getSpeaker({ actor }) });
+    }
+    effect.delete();
+    return;
+  }
+
+  if ( effect.getFlag("dnd5e", "eldritchMadnessHalve") ) {
+    const current = actor.system.attributes.eldritchMadness ?? 0;
+    const newLevel = Math.floor(current / 2);
+    if ( newLevel < current ) {
+      actor.update({ "system.attributes.eldritchMadness": newLevel });
+      ChatMessage.create({ content: `<p><strong>${actor.name}</strong> loses ${current - newLevel} level(s) of Eldritch Madness. (Now level ${newLevel})</p>`, speaker: ChatMessage.getSpeaker({ actor }) });
+    }
+    effect.delete();
+    return;
+  }
+
+  if ( effect.getFlag("dnd5e", "exhaustionGain") ) {
+    const gain = effect.getFlag("dnd5e", "exhaustionGain");
+    const current = actor.system.attributes.exhaustion ?? 0;
+    const newLevel = Math.min(current + gain, 6);
+    if ( newLevel > current ) {
+      actor.update({ "system.attributes.exhaustion": newLevel });
+      ChatMessage.create({ content: `<p><strong>${actor.name}</strong> gains ${newLevel - current} level(s) of exhaustion. (Now level ${newLevel})</p>`, speaker: ChatMessage.getSpeaker({ actor }) });
+    }
+    effect.delete();
+  }
 });
 
 Hooks.on("renderDocumentSheetConfig", (app, html) => {

@@ -1,0 +1,142 @@
+_id: RealFractSpll001
+name: Reality Fracture
+type: spell
+img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
+system:
+  description:
+    value: >-
+      <p>You create a rift in reality at a point you choose within range that
+      is the size of a 20-foot diameter circle. Any creature that steps into or
+      starts its turn in the rift takes 4d12 Vortex damage and must make a
+      Wisdom saving throw. On a failed save, the creature takes full damage and
+      is teleported to a random, unoccupied location within 60 feet of the
+      rift's center (including potentially inside the rift itself). On a
+      successful save, the creature takes half damage and is not teleported.</p>
+      <p>While concentrating on this spell, you can use your action on each
+      subsequent turn to move the rift up to 60 feet in any direction.</p>
+      <p><strong>At Higher Levels.</strong> When you cast this spell using a
+      spell slot of 6th level or higher, the damage increases by 1d12 for each
+      slot level above 5th.</p>
+    chat: ''
+  source:
+    custom: Madweave Campaign
+    rules: homebrew
+    book: ''
+    page: ''
+    license: ''
+  activation:
+    type: action
+    condition: ''
+    value: 1
+  duration:
+    value: '10'
+    units: minute
+  target:
+    affects:
+      choice: false
+    template:
+      units: ft
+      type: sphere
+      size: '10'
+      contiguous: false
+  range:
+    value: '60'
+    units: ft
+    special: ''
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 5
+  school: ela
+  materials:
+    value: chaotic essence
+    consumed: false
+    cost: 0
+    supply: 0
+  preparation:
+    mode: prepared
+    prepared: false
+  properties:
+    - vocal
+    - somatic
+    - material
+    - concentration
+  activities:
+    dnd5eactivity000:
+      _id: dnd5eactivity000
+      type: save
+      activation:
+        type: action
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects: []
+      range:
+        override: false
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+        affects:
+          choice: false
+        override: false
+      damage:
+        onSave: half
+        parts:
+          - number: 4
+            denomination: 12
+            bonus: ''
+            types:
+              - vortex
+            custom:
+              enabled: false
+              formula: ''
+            scaling:
+              mode: whole
+              number: 1
+              formula: ''
+      save:
+        ability: wis
+        dc:
+          calculation: spellcasting
+          formula: ''
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      name: Cast
+      img: ''
+      visibility:
+        level:
+          min: null
+          max: null
+  identifier: reality-fracture
+sort: 0
+flags: {}
+effects: []
+folder: bG9QTayc46rfNkv2
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+  coreVersion: '13.351'
+  systemId: dnd5e
+  systemVersion: 5.3.0
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+_key: '!items!RealFractSpll001'

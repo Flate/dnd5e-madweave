@@ -3268,7 +3268,8 @@ DND5E.spellLevels = {
   6: "DND5E.SpellLevel6",
   7: "DND5E.SpellLevel7",
   8: "DND5E.SpellLevel8",
-  9: "DND5E.SpellLevel9"
+  9: "DND5E.SpellLevel9",
+  10: "DND5E.SpellLevel10"
 };
 preLocalize("spellLevels");
 

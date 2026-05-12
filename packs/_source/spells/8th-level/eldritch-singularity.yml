@@ -1,0 +1,190 @@
+_id: EldSinglSpell001
+name: Eldritch Singularity
+type: spell
+img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
+system:
+  description:
+    value: >-
+      <p>You create a point of eldritch energy, an unstable singularity, at a
+      location you choose within range. The singularity has a 10-foot radius
+      and pulls everything toward it. Any creature that starts its turn within
+      30 feet of the singularity or enters the area for the first time on its
+      turn must make a Strength saving throw. On a failed save, the creature is
+      pulled 10 feet toward the singularity, takes 5d10 Vortex damage, and
+      gains two levels of Eldritch Madness. On a successful save, the creature
+      is not pulled and takes half damage.</p>
+      <p>Objects within 30 feet of the singularity that are not being worn or
+      carried are automatically pulled 10 feet toward it.</p>
+      <p>While concentrating on this spell, you can use your action to move the
+      singularity up to 60 feet in any direction.</p>
+      <p><em>Note: the 10-foot pull on a failed save must be applied
+      manually.</em></p>
+      <p><strong>At Higher Levels.</strong> When you cast this spell using a
+      9th-level spell slot, the damage increases to 6d10 and the radius of the
+      singularity expands to 15 feet.</p>
+    chat: ''
+  source:
+    custom: Madweave Campaign
+    rules: homebrew
+    book: ''
+    page: ''
+    license: ''
+  activation:
+    type: action
+    condition: ''
+    value: 1
+  duration:
+    value: '1'
+    units: minute
+  target:
+    affects:
+      choice: false
+    template:
+      units: ft
+      type: sphere
+      size: '30'
+      contiguous: false
+  range:
+    value: '150'
+    units: ft
+    special: ''
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 8
+  school: ela
+  materials:
+    value: a black gemstone infused with eldritch energy
+    consumed: false
+    cost: 0
+    supply: 0
+  preparation:
+    mode: prepared
+    prepared: false
+  properties:
+    - vocal
+    - somatic
+    - material
+    - concentration
+  activities:
+    dnd5eactivity000:
+      _id: dnd5eactivity000
+      type: save
+      activation:
+        type: action
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects:
+        - _id: EldSinglEff00001
+          onSave: false
+          level:
+            min: null
+            max: null
+      range:
+        override: false
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+        affects:
+          choice: false
+        override: false
+      damage:
+        onSave: half
+        parts:
+          - number: 5
+            denomination: 10
+            bonus: ''
+            types:
+              - vortex
+            custom:
+              enabled: false
+              formula: ''
+            scaling:
+              mode: whole
+              number: 1
+              formula: ''
+      save:
+        ability: str
+        dc:
+          calculation: spellcasting
+          formula: ''
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      name: Cast
+      img: ''
+      visibility:
+        level:
+          min: null
+          max: null
+  identifier: eldritch-singularity
+sort: 0
+flags: {}
+effects:
+  - name: Eldritch Singularity — Gain 2 EM Levels
+    img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
+    origin: Compendium.dnd5e.spells.Item.EldSinglSpell001
+    transfer: false
+    _id: EldSinglEff00001
+    type: base
+    system: {}
+    changes: []
+    disabled: true
+    duration:
+      startTime: null
+      combat: null
+      seconds: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: >-
+      <p>Sentinel — increments Eldritch Madness by 2 and self-deletes
+      immediately.</p>
+    tint: '#ffffff'
+    statuses: []
+    sort: 0
+    flags:
+      dnd5e:
+        eldritchMadnessSentinel: true
+        eldritchMadnessGain: 2
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+    _key: '!items.effects!EldSinglSpell001.EldSinglEff00001'
+folder: x1XTiOgx4DJ34wc5
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+  coreVersion: '13.351'
+  systemId: dnd5e
+  systemVersion: 5.3.0
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+_key: '!items!EldSinglSpell001'

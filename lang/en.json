@@ -4210,6 +4210,7 @@
 "DND5E.SpellLevel7": "7th Level",
 "DND5E.SpellLevel8": "8th Level",
 "DND5E.SpellLevel9": "9th Level",
+"DND5E.SpellLevel10": "10th Level",
 "DND5E.SpellLevelSpell": "{level} ({n} Slots)",
 "DND5E.SpellLevelPact": "Pact Slot [Level {level}] ({n} Slots)",
 "DND5E.SpellMaterials": "Spellcasting Materials",

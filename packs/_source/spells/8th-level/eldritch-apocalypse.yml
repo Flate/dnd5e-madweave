@@ -1,0 +1,263 @@
+_id: EldApocSpell0001
+name: Eldritch Apocalypse
+type: spell
+img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
+system:
+  description:
+    value: >-
+      <p>You unleash a devastating wave of eldritch energy that reaches all
+      creatures within 1 mile. Each creature in range takes 10d12 Vortex
+      damage and gains one level of Eldritch Madness. Additionally, you
+      yourself gain three levels of Eldritch Madness.</p>
+      <p>After casting, use <em>Self-inflict EM</em> to apply the three levels
+      of Eldritch Madness to yourself.</p>
+      <p><strong>At Higher Levels.</strong> When you cast this spell using a
+      9th-level spell slot, the damage increases to 12d12 Vortex damage.</p>
+    chat: ''
+  source:
+    custom: Madweave Campaign
+    rules: homebrew
+    book: ''
+    page: ''
+    license: ''
+  activation:
+    type: minute
+    condition: ''
+    value: 5
+  duration:
+    value: ''
+    units: inst
+  target:
+    affects:
+      choice: false
+    template:
+      units: ft
+      type: sphere
+      size: '5280'
+      contiguous: false
+  range:
+    value: '5280'
+    units: ft
+    special: ''
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 8
+  school: ela
+  materials:
+    value: an eldritch artifact
+    consumed: false
+    cost: 0
+    supply: 0
+  preparation:
+    mode: prepared
+    prepared: false
+  properties:
+    - vocal
+    - somatic
+    - material
+  activities:
+    dnd5eactivity000:
+      _id: dnd5eactivity000
+      type: damage
+      activation:
+        type: action
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects:
+        - _id: EldApocEff000001
+          level:
+            min: null
+            max: null
+      range:
+        override: false
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+        affects:
+          choice: false
+        override: false
+      damage:
+        critical:
+          allow: false
+          bonus: ''
+        parts:
+          - number: 10
+            denomination: 12
+            bonus: ''
+            types:
+              - vortex
+            custom:
+              enabled: false
+              formula: ''
+            scaling:
+              mode: whole
+              number: 2
+              formula: ''
+      uses:
+        spent: 0
+        recovery: []
+      sort: 0
+      name: Cast
+      img: ''
+      visibility:
+        level:
+          min: null
+          max: null
+    dnd5eactivity100:
+      _id: dnd5eactivity100
+      type: utility
+      activation:
+        type: special
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: false
+      description:
+        chatFlavor: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects:
+        - _id: EldApocSlfEff001
+          level:
+            min: null
+            max: null
+      range:
+        override: false
+      target:
+        prompt: false
+        template:
+          contiguous: false
+          units: ft
+        affects:
+          choice: false
+          type: self
+        override: false
+      roll:
+        formula: ''
+        name: ''
+        prompt: false
+        visible: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      name: Self-inflict EM
+      img: ''
+      visibility:
+        level:
+          min: null
+          max: null
+  identifier: eldritch-apocalypse
+sort: 0
+flags: {}
+effects:
+  - name: Eldritch Apocalypse — Gain EM Level
+    img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
+    origin: Compendium.dnd5e.spells.Item.EldApocSpell0001
+    transfer: false
+    _id: EldApocEff000001
+    type: base
+    system: {}
+    changes: []
+    disabled: true
+    duration:
+      startTime: null
+      combat: null
+      seconds: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: >-
+      <p>Sentinel — increments Eldritch Madness by 1 and self-deletes
+      immediately.</p>
+    tint: '#ffffff'
+    statuses: []
+    sort: 0
+    flags:
+      dnd5e:
+        eldritchMadnessSentinel: true
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+    _key: '!items.effects!EldApocSpell0001.EldApocEff000001'
+  - name: Eldritch Apocalypse — Caster Gains 3 EM Levels
+    img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
+    origin: Compendium.dnd5e.spells.Item.EldApocSpell0001
+    transfer: false
+    _id: EldApocSlfEff001
+    type: base
+    system: {}
+    changes: []
+    disabled: true
+    duration:
+      startTime: null
+      combat: null
+      seconds: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: >-
+      <p>Sentinel — increments Eldritch Madness by 3 and self-deletes
+      immediately.</p>
+    tint: '#ffffff'
+    statuses: []
+    sort: 0
+    flags:
+      dnd5e:
+        eldritchMadnessSentinel: true
+        eldritchMadnessGain: 3
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+    _key: '!items.effects!EldApocSpell0001.EldApocSlfEff001'
+folder: x1XTiOgx4DJ34wc5
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+  coreVersion: '13.351'
+  systemId: dnd5e
+  systemVersion: 5.3.0
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+_key: '!items!EldApocSpell0001'

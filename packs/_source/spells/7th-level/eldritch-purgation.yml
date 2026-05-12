@@ -1,0 +1,303 @@
+_id: EldPurgtnSpll001
+name: Eldritch Purgation
+type: spell
+img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
+system:
+  description:
+    value: >-
+      <p>You channel a wave of purifying energy into a creature you touch,
+      attempting to cleanse it of eldritch taint. The target must make a
+      Wisdom saving throw. On a successful save, they lose two levels of
+      Eldritch Madness. On a failed save, they lose one level.</p>
+      <p>After rolling the save, use <em>Purgation: Success</em> or
+      <em>Purgation: Fail</em> to apply the appropriate EM reduction.</p>
+      <p><strong>At Higher Levels.</strong> When you cast this spell using a
+      spell slot of 8th level or higher, you can target one additional creature
+      for each slot level above 7th.</p>
+    chat: ''
+  source:
+    custom: Madweave Campaign
+    rules: homebrew
+    book: ''
+    page: ''
+    license: ''
+  activation:
+    type: minute
+    condition: ''
+    value: 10
+  duration:
+    value: ''
+    units: inst
+  target:
+    affects:
+      type: creature
+      count: '1'
+      choice: false
+      special: ''
+    template:
+      units: ''
+      contiguous: false
+      type: ''
+  range:
+    units: touch
+    special: ''
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 7
+  school: ela
+  materials:
+    value: a drop of holy water and a crystal vial containing tears of joy
+    consumed: false
+    cost: 0
+    supply: 0
+  preparation:
+    mode: prepared
+    prepared: false
+  properties:
+    - vocal
+    - somatic
+    - material
+  activities:
+    dnd5eactivity000:
+      _id: dnd5eactivity000
+      type: save
+      activation:
+        type: action
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects: []
+      range:
+        override: false
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+        affects:
+          choice: false
+        override: false
+      damage:
+        onSave: none
+        parts: []
+      save:
+        ability: wis
+        dc:
+          calculation: spellcasting
+          formula: ''
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      name: Save
+      img: ''
+      visibility:
+        level:
+          min: null
+          max: null
+    dnd5eactivity100:
+      _id: dnd5eactivity100
+      type: utility
+      activation:
+        type: special
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: false
+      description:
+        chatFlavor: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects:
+        - _id: EldPurgSuccEff01
+          level:
+            min: null
+            max: null
+      range:
+        override: false
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+        affects:
+          choice: false
+        override: false
+      roll:
+        formula: ''
+        name: ''
+        prompt: false
+        visible: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      name: 'Purgation: Success'
+      img: ''
+      visibility:
+        level:
+          min: null
+          max: null
+    dnd5eactivity200:
+      _id: dnd5eactivity200
+      type: utility
+      activation:
+        type: special
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: false
+      description:
+        chatFlavor: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects:
+        - _id: EldPurgFailEff01
+          level:
+            min: null
+            max: null
+      range:
+        override: false
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+        affects:
+          choice: false
+        override: false
+      roll:
+        formula: ''
+        name: ''
+        prompt: false
+        visible: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      name: 'Purgation: Fail'
+      img: ''
+      visibility:
+        level:
+          min: null
+          max: null
+  identifier: eldritch-purgation
+sort: 0
+flags: {}
+effects:
+  - name: Eldritch Purgation — Remove 2 EM Levels
+    img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
+    origin: Compendium.dnd5e.spells.Item.EldPurgtnSpll001
+    transfer: false
+    _id: EldPurgSuccEff01
+    type: base
+    system: {}
+    changes: []
+    disabled: true
+    duration:
+      startTime: null
+      combat: null
+      seconds: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: >-
+      <p>Sentinel — decrements Eldritch Madness by 2 and self-deletes
+      immediately.</p>
+    tint: '#ffffff'
+    statuses: []
+    sort: 0
+    flags:
+      dnd5e:
+        eldritchMadnessSentinel: true
+        eldritchMadnessGain: -2
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+    _key: '!items.effects!EldPurgtnSpll001.EldPurgSuccEff01'
+  - name: Eldritch Purgation — Remove 1 EM Level
+    img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
+    origin: Compendium.dnd5e.spells.Item.EldPurgtnSpll001
+    transfer: false
+    _id: EldPurgFailEff01
+    type: base
+    system: {}
+    changes: []
+    disabled: true
+    duration:
+      startTime: null
+      combat: null
+      seconds: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: >-
+      <p>Sentinel — decrements Eldritch Madness by 1 and self-deletes
+      immediately.</p>
+    tint: '#ffffff'
+    statuses: []
+    sort: 0
+    flags:
+      dnd5e:
+        eldritchMadnessSentinel: true
+        eldritchMadnessGain: -1
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+    _key: '!items.effects!EldPurgtnSpll001.EldPurgFailEff01'
+folder: irCSpQWIMtp978TA
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+  coreVersion: '13.351'
+  systemId: dnd5e
+  systemVersion: 5.3.0
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+_key: '!items!EldPurgtnSpll001'

@@ -1,0 +1,119 @@
+_id: WardOfMadness001
+name: Ward of Madness
+type: spell
+img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
+system:
+  description:
+    value: >-
+      <p>You create a 30-foot-radius sphere centered on you. Within the sphere,
+      creatures gain advantage on saving throws against gaining levels of
+      Eldritch Madness. Additionally, the area within the sphere is difficult
+      terrain for creatures trying to cross it that suffer from Eldritch
+      Madness.</p>
+    chat: ''
+  source:
+    custom: Madweave Campaign
+    rules: homebrew
+    book: ''
+    page: ''
+    license: ''
+  activation:
+    type: minute
+    condition: ''
+    value: 10
+  duration:
+    value: '8'
+    units: hour
+  target:
+    affects:
+      choice: false
+    template:
+      units: ft
+      type: sphere
+      size: '30'
+      contiguous: false
+  range:
+    units: self
+    special: ''
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 4
+  school: ela
+  materials:
+    value: an eldritch relic
+    consumed: false
+    cost: 0
+    supply: 0
+  preparation:
+    mode: prepared
+    prepared: false
+  properties:
+    - vocal
+    - somatic
+    - material
+    - ritual
+  activities:
+    dnd5eactivity000:
+      _id: dnd5eactivity000
+      type: utility
+      activation:
+        type: action
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects: []
+      range:
+        override: false
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+        affects:
+          choice: false
+        override: false
+      roll:
+        formula: ''
+        name: ''
+        prompt: false
+        visible: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      name: Cast
+      img: ''
+      visibility:
+        level:
+          min: null
+          max: null
+  identifier: ward-of-madness
+sort: 0
+flags: {}
+effects: []
+folder: 5auWSClKMDUIV5Ni
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+  coreVersion: '13.351'
+  systemId: dnd5e
+  systemVersion: 5.3.0
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+_key: '!items!WardOfMadness001'

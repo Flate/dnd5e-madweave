@@ -1,0 +1,176 @@
+_id: CorrWaveSpell001
+name: Corrupting Wave
+type: spell
+img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
+system:
+  description:
+    value: >-
+      <p>You release a wave of dark, eldritch energy in a 20-foot radius
+      centered on you. Each creature in the area must make a Wisdom saving
+      throw. On a failed save, the creature takes 4d8 Vortex damage and is
+      frightened until the end of their next turn. On a successful save, the
+      creature takes half damage and is not frightened.</p>
+      <p><strong>At Higher Levels.</strong> When you cast this spell using a
+      spell slot of 5th level or higher, the damage increases by 1d8 for each
+      slot level above 4th.</p>
+    chat: ''
+  source:
+    custom: Madweave Campaign
+    rules: homebrew
+    book: ''
+    page: ''
+    license: ''
+  activation:
+    type: action
+    condition: ''
+    value: 1
+  duration:
+    value: ''
+    units: inst
+  target:
+    affects:
+      choice: false
+    template:
+      units: ft
+      type: sphere
+      size: '20'
+      contiguous: false
+  range:
+    units: self
+    special: ''
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 4
+  school: ela
+  materials:
+    value: tears of a lost soul
+    consumed: false
+    cost: 0
+    supply: 0
+  preparation:
+    mode: prepared
+    prepared: false
+  properties:
+    - vocal
+    - somatic
+    - material
+  activities:
+    dnd5eactivity000:
+      _id: dnd5eactivity000
+      type: save
+      activation:
+        type: action
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: ''
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects:
+        - _id: CorrWaveEff00001
+          onSave: false
+          level:
+            min: null
+            max: null
+      range:
+        override: false
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+        affects:
+          choice: false
+        override: false
+      damage:
+        onSave: half
+        parts:
+          - number: 4
+            denomination: 8
+            bonus: ''
+            types:
+              - vortex
+            custom:
+              enabled: false
+              formula: ''
+            scaling:
+              mode: whole
+              number: 1
+              formula: ''
+      save:
+        ability: wis
+        dc:
+          calculation: spellcasting
+          formula: ''
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      name: Cast
+      img: ''
+      visibility:
+        level:
+          min: null
+          max: null
+  identifier: corrupting-wave
+sort: 0
+flags: {}
+effects:
+  - name: Corrupting Wave — Frightened
+    img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
+    origin: Compendium.dnd5e.spells.Item.CorrWaveSpell001
+    transfer: false
+    _id: CorrWaveEff00001
+    type: base
+    system: {}
+    changes: []
+    disabled: true
+    duration:
+      startTime: null
+      combat: null
+      seconds: null
+      rounds: 1
+      turns: null
+      startRound: null
+      startTurn: null
+    description: >-
+      <p>You are frightened until the end of your next turn.</p>
+    tint: '#ffffff'
+    statuses:
+      - frightened
+    flags: {}
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+    _key: '!items.effects!CorrWaveSpell001.CorrWaveEff00001'
+folder: 5auWSClKMDUIV5Ni
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+  coreVersion: '13.351'
+  systemId: dnd5e
+  systemVersion: 5.3.0
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+_key: '!items!CorrWaveSpell001'
