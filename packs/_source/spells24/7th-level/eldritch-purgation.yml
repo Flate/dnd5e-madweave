@@ -215,7 +215,7 @@ flags: {}
 effects:
   - name: Eldritch Purgation — Remove 2 EM Levels
     img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
-    origin: Compendium.dnd5e.spells.Item.EldPurgtnSpll001
+    origin: Compendium.dnd5e.spells24.Item.EldPurgtnSpll001
     transfer: false
     _id: EldPurgSuccEff01
     type: base
@@ -253,7 +253,7 @@ effects:
     _key: '!items.effects!EldPurgtnSpll001.EldPurgSuccEff01'
   - name: Eldritch Purgation — Remove 1 EM Level
     img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
-    origin: Compendium.dnd5e.spells.Item.EldPurgtnSpll001
+    origin: Compendium.dnd5e.spells24.Item.EldPurgtnSpll001
     transfer: false
     _id: EldPurgFailEff01
     type: base

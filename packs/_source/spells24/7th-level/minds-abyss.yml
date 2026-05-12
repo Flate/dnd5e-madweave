@@ -1,17 +1,16 @@
-_id: EldWsprCant00001
-name: Eldritch Whisper
+_id: MindsAbysspl0001
+name: Mind's Abyss
 type: spell
 img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
 system:
   description:
     value: >-
-      <p>You whisper a message infused with eldritch energy to a creature within
-      range. The target hears the message and can reply in a whisper that only
-      you can hear. If the target does not have at least one level of Eldritch
-      Madness, it must make a Wisdom saving throw or gain a level of Eldritch
-      Madness.</p>
-      <p><em>This spell may only be used by creatures that are affected by at
-      least two levels of Eldritch Madness.</em></p>
+      <p>Target creature must make an Intelligence saving throw or be stunned
+      for 1 minute, take 5d10 Vortex damage, and gain one level of Eldritch
+      Madness. On a successful save, none of these effects apply.</p>
+      <p><strong>At Higher Levels.</strong> When you cast this spell using a
+      spell slot of 8th level or higher, the damage increases by 2d10 for each
+      slot level above 7th.</p>
     chat: ''
   source:
     custom: Madweave Campaign
@@ -24,8 +23,8 @@ system:
     condition: ''
     value: 1
   duration:
-    value: ''
-    units: inst
+    value: '1'
+    units: minute
   target:
     affects:
       type: creature
@@ -44,7 +43,7 @@ system:
     max: ''
     recovery: []
     spent: 0
-  level: 0
+  level: 7
   school: ela
   materials:
     value: ''
@@ -57,6 +56,7 @@ system:
   properties:
     - vocal
     - somatic
+    - concentration
   activities:
     dnd5eactivity000:
       _id: dnd5eactivity000
@@ -78,7 +78,12 @@ system:
         concentration: false
         override: false
       effects:
-        - _id: EldWsprEff000001
+        - _id: MindAbyssEff0001
+          onSave: false
+          level:
+            min: null
+            max: null
+        - _id: MindAbyssEff0002
           onSave: false
           level:
             min: null
@@ -95,9 +100,21 @@ system:
         override: false
       damage:
         onSave: none
-        parts: []
+        parts:
+          - number: 5
+            denomination: 10
+            bonus: ''
+            types:
+              - vortex
+            custom:
+              enabled: false
+              formula: ''
+            scaling:
+              mode: whole
+              number: 2
+              formula: ''
       save:
-        ability: wis
+        ability: int
         dc:
           calculation: spellcasting
           formula: ''
@@ -112,19 +129,55 @@ system:
         level:
           min: null
           max: null
-  identifier: eldritch-whisper
+  identifier: minds-abyss
 sort: 0
 flags: {}
 effects:
-  - name: Eldritch Whisper — Gain EM Level
+  - name: Mind's Abyss — Stunned
     img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
-    origin: Compendium.dnd5e.spells.Item.EldWsprCant00001
+    origin: Compendium.dnd5e.spells24.Item.MindsAbysspl0001
     transfer: false
-    _id: EldWsprEff000001
+    _id: MindAbyssEff0001
     type: base
     system: {}
     changes: []
-    disabled: false
+    disabled: true
+    duration:
+      startTime: null
+      combat: null
+      seconds: 60
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: >-
+      <p>You are stunned for 1 minute.</p>
+    tint: '#ffffff'
+    statuses:
+      - stunned
+      - incapacitated
+    flags: {}
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+    _key: '!items.effects!MindsAbysspl0001.MindAbyssEff0001'
+  - name: Mind's Abyss — Gain EM Level
+    img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
+    origin: Compendium.dnd5e.spells24.Item.MindsAbysspl0001
+    transfer: false
+    _id: MindAbyssEff0002
+    type: base
+    system: {}
+    changes: []
+    disabled: true
     duration:
       startTime: null
       combat: null
@@ -134,7 +187,8 @@ effects:
       startRound: null
       startTurn: null
     description: >-
-      <p>Sentinel — increments Eldritch Madness by 1 and self-deletes immediately.</p>
+      <p>Sentinel — increments Eldritch Madness by 1 and self-deletes
+      immediately.</p>
     tint: '#ffffff'
     statuses: []
     sort: 0
@@ -151,8 +205,8 @@ effects:
       createdTime: null
       modifiedTime: null
       lastModifiedBy: null
-    _key: '!items.effects!EldWsprCant00001.EldWsprEff000001'
-folder: Z8kZlnggh1PtuF3Y
+    _key: '!items.effects!MindsAbysspl0001.MindAbyssEff0002'
+folder: irCSpQWIMtp978TA
 _stats:
   compendiumSource: null
   duplicateSource: null
@@ -163,4 +217,4 @@ _stats:
   createdTime: null
   modifiedTime: null
   lastModifiedBy: null
-_key: '!items!EldWsprCant00001'
+_key: '!items!MindsAbysspl0001'

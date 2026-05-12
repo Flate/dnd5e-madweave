@@ -140,7 +140,7 @@ flags: {}
 effects:
   - name: Eldritch Singularity — Gain 2 EM Levels
     img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
-    origin: Compendium.dnd5e.spells.Item.EldSinglSpell001
+    origin: Compendium.dnd5e.spells24.Item.EldSinglSpell001
     transfer: false
     _id: EldSinglEff00001
     type: base

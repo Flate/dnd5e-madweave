@@ -217,7 +217,7 @@ flags: {}
 effects:
   - name: Eldritch Reversal — Clear All EM
     img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
-    origin: Compendium.dnd5e.spells.Item.EldRevrsSpell001
+    origin: Compendium.dnd5e.spells24.Item.EldRevrsSpell001
     transfer: false
     _id: EldRevrsClrEff01
     type: base
@@ -254,7 +254,7 @@ effects:
     _key: '!items.effects!EldRevrsSpell001.EldRevrsClrEff01'
   - name: Eldritch Reversal — Gain Exhaustion
     img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
-    origin: Compendium.dnd5e.spells.Item.EldRevrsSpell001
+    origin: Compendium.dnd5e.spells24.Item.EldRevrsSpell001
     transfer: false
     _id: EldRevrsExhEff01
     type: base
@@ -291,7 +291,7 @@ effects:
     _key: '!items.effects!EldRevrsSpell001.EldRevrsExhEff01'
   - name: Eldritch Reversal — Halve EM
     img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
-    origin: Compendium.dnd5e.spells.Item.EldRevrsSpell001
+    origin: Compendium.dnd5e.spells24.Item.EldRevrsSpell001
     transfer: false
     _id: EldRevrsHlfEff01
     type: base

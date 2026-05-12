@@ -1,18 +1,29 @@
-_id: EldApocSpell0001
-name: Eldritch Apocalypse
+_id: AvatarAbysspl001
+name: Avatar of the Abyss
 type: spell
 img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
 system:
   description:
     value: >-
-      <p>You unleash a devastating wave of eldritch energy that reaches all
-      creatures within 1 mile. Each creature in range takes 10d12 Vortex
-      damage and gains one level of Eldritch Madness. Additionally, you
-      yourself gain three levels of Eldritch Madness.</p>
-      <p>After casting, use <em>Self-inflict EM</em> to apply the three levels
-      of Eldritch Madness to yourself.</p>
-      <p><strong>At Higher Levels.</strong> When you cast this spell using a
-      9th-level spell slot, the damage increases to 12d12 Vortex damage.</p>
+      <p>You transform into an Eldritch Entity for 1 minute and gain three
+      levels of Eldritch Madness.</p>
+      <p><strong>Eldritch Entity.</strong> Your size becomes Large, and you
+      gain a flying speed of 60 feet. You gain immunity to Vortex, psychic,
+      and necrotic damage, and your AC equals 16 + your Dexterity modifier.
+      Your hit points double (adjust current HP manually to match).</p>
+      <p>You gain the following actions:</p>
+      <ul>
+        <li><strong>Eldritch Claw.</strong> <em>Melee Attack:</em> +11 to hit,
+        reach 10 ft., one target. Hit: 2d10 + 5 slashing damage plus 2d8
+        Vortex damage.</li>
+        <li><strong>Mind Blast.</strong> <em>Ranged Spell Attack:</em> +13 to
+        hit, range 60 ft., one target. Hit: 4d10 Vortex damage, and the target
+        must make a Wisdom saving throw or gain two levels of Eldritch
+        Madness.</li>
+      </ul>
+      <p><em>Size change, HP doubling, and special attacks must be managed
+      manually. The transformation AE automates speed, immunities, and
+      AC.</em></p>
     chat: ''
   source:
     custom: Madweave Campaign
@@ -21,34 +32,35 @@ system:
     page: ''
     license: ''
   activation:
-    type: minute
+    type: action
     condition: ''
-    value: 5
+    value: 1
   duration:
-    value: ''
-    units: inst
+    value: '1'
+    units: minute
   target:
     affects:
+      type: self
+      count: ''
       choice: false
+      special: ''
     template:
-      units: ft
-      type: sphere
-      size: '5280'
+      units: ''
       contiguous: false
+      type: ''
   range:
-    value: '5280'
-    units: ft
+    units: self
     special: ''
   uses:
     max: ''
     recovery: []
     spent: 0
-  level: 8
+  level: 9
   school: ela
   materials:
-    value: an eldritch artifact
+    value: a relic from the abyss worth at least 5,000 gp
     consumed: false
-    cost: 0
+    cost: 5000
     supply: 0
   preparation:
     mode: prepared
@@ -60,7 +72,7 @@ system:
   activities:
     dnd5eactivity000:
       _id: dnd5eactivity000
-      type: damage
+      type: utility
       activation:
         type: action
         value: null
@@ -78,68 +90,11 @@ system:
         concentration: false
         override: false
       effects:
-        - _id: EldApocEff000001
+        - _id: AvatarAbyssEf001
           level:
             min: null
             max: null
-      range:
-        override: false
-      target:
-        prompt: true
-        template:
-          contiguous: false
-          units: ft
-        affects:
-          choice: false
-        override: false
-      damage:
-        critical:
-          allow: false
-          bonus: ''
-        parts:
-          - number: 10
-            denomination: 12
-            bonus: ''
-            types:
-              - vortex
-            custom:
-              enabled: false
-              formula: ''
-            scaling:
-              mode: whole
-              number: 2
-              formula: ''
-      uses:
-        spent: 0
-        recovery: []
-      sort: 0
-      name: Cast
-      img: ''
-      visibility:
-        level:
-          min: null
-          max: null
-    dnd5eactivity100:
-      _id: dnd5eactivity100
-      type: utility
-      activation:
-        type: special
-        value: null
-        override: false
-      consumption:
-        targets: []
-        scaling:
-          allowed: false
-          max: ''
-        spellSlot: false
-      description:
-        chatFlavor: ''
-      duration:
-        units: inst
-        concentration: false
-        override: false
-      effects:
-        - _id: EldApocSlfEff001
+        - _id: AvatarAbyssEf002
           level:
             min: null
             max: null
@@ -152,7 +107,6 @@ system:
           units: ft
         affects:
           choice: false
-          type: self
         override: false
       roll:
         formula: ''
@@ -164,42 +118,70 @@ system:
         recovery: []
         max: ''
       sort: 0
-      name: Self-inflict EM
+      name: Transform
       img: ''
       visibility:
         level:
           min: null
           max: null
-  identifier: eldritch-apocalypse
+  identifier: avatar-of-the-abyss
 sort: 0
 flags: {}
 effects:
-  - name: Eldritch Apocalypse — Gain EM Level
+  - name: Avatar of the Abyss — Transformation
     img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
-    origin: Compendium.dnd5e.spells.Item.EldApocSpell0001
+    origin: Compendium.dnd5e.spells24.Item.AvatarAbysspl001
     transfer: false
-    _id: EldApocEff000001
+    _id: AvatarAbyssEf001
     type: base
     system: {}
-    changes: []
-    disabled: true
+    changes:
+      - key: system.attributes.movement.fly
+        mode: 5
+        value: '60'
+        priority: null
+      - key: system.traits.di.value
+        mode: 2
+        value: vortex
+        priority: null
+      - key: system.traits.di.value
+        mode: 2
+        value: psychic
+        priority: null
+      - key: system.traits.di.value
+        mode: 2
+        value: necrotic
+        priority: null
+      - key: system.attributes.ac.calc
+        mode: 5
+        value: custom
+        priority: null
+      - key: system.attributes.ac.formula
+        mode: 5
+        value: 16 + @abilities.dex.mod
+        priority: null
+      - key: system.attributes.hp.bonuses.overall
+        mode: 0
+        value: '@attributes.hp.max'
+        priority: null
+    disabled: false
     duration:
       startTime: null
       combat: null
-      seconds: null
+      seconds: 60
       rounds: null
       turns: null
       startRound: null
       startTurn: null
     description: >-
-      <p>Sentinel — increments Eldritch Madness by 1 and self-deletes
-      immediately.</p>
-    tint: '#ffffff'
+      <p>You have transformed into an Eldritch Entity. You gain a flying speed
+      of 60 feet, immunity to Vortex, psychic, and necrotic damage, and your
+      AC equals 16 + your Dexterity modifier. Your maximum hit points are
+      doubled.</p>
+    tint: '#6A0DAD'
     statuses: []
     sort: 0
-    flags:
-      dnd5e:
-        eldritchMadnessSentinel: true
+    flags: {}
     _stats:
       compendiumSource: null
       duplicateSource: null
@@ -210,12 +192,12 @@ effects:
       createdTime: null
       modifiedTime: null
       lastModifiedBy: null
-    _key: '!items.effects!EldApocSpell0001.EldApocEff000001'
-  - name: Eldritch Apocalypse — Caster Gains 3 EM Levels
+    _key: '!items.effects!AvatarAbysspl001.AvatarAbyssEf001'
+  - name: Avatar of the Abyss — Gain 3 EM Levels
     img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
-    origin: Compendium.dnd5e.spells.Item.EldApocSpell0001
+    origin: Compendium.dnd5e.spells24.Item.AvatarAbysspl001
     transfer: false
-    _id: EldApocSlfEff001
+    _id: AvatarAbyssEf002
     type: base
     system: {}
     changes: []
@@ -248,8 +230,8 @@ effects:
       createdTime: null
       modifiedTime: null
       lastModifiedBy: null
-    _key: '!items.effects!EldApocSpell0001.EldApocSlfEff001'
-folder: x1XTiOgx4DJ34wc5
+    _key: '!items.effects!AvatarAbysspl001.AvatarAbyssEf002'
+folder: KL6ZY4VRMjojGrL4
 _stats:
   compendiumSource: null
   duplicateSource: null
@@ -260,4 +242,4 @@ _stats:
   createdTime: null
   modifiedTime: null
   lastModifiedBy: null
-_key: '!items!EldApocSpell0001'
+_key: '!items!AvatarAbysspl001'

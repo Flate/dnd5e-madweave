@@ -1,14 +1,17 @@
-_id: EldWardCant00001
-name: Eldritch Ward
+_id: VoidSparkCant001
+name: Void Spark
 type: spell
 img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
 system:
   description:
     value: >-
-      <p>You touch a creature and imbue it with a minor eldritch ward. The next
-      time the creature takes Vortex damage, it can use its reaction to gain
-      resistance to that damage. The ward disappears after it is triggered or
-      after 1 minute.</p>
+      <p>You hurl a mote of crackling void energy at a creature within range.
+      Make a ranged spell attack against the target. On a hit, the target takes
+      1d6 Vortex damage and has disadvantage on the next Wisdom saving throw it
+      makes before the end of its next turn.</p>
+      <p>This spell's damage increases as you gain levels. At 5th level, the hit
+      deals an extra 1d8 Vortex damage. At 11th level, the extra damage increases
+      by 1d10. At 17th level, the extra damage increases by 1d12.</p>
     chat: ''
   source:
     custom: Madweave Campaign
@@ -21,8 +24,8 @@ system:
     condition: ''
     value: 1
   duration:
-    value: '1'
-    units: minute
+    value: ''
+    units: inst
   target:
     affects:
       type: creature
@@ -34,7 +37,8 @@ system:
       contiguous: false
       type: ''
   range:
-    units: touch
+    value: '60'
+    units: ft
     special: ''
   uses:
     max: ''
@@ -56,7 +60,7 @@ system:
   activities:
     dnd5eactivity000:
       _id: dnd5eactivity000
-      type: utility
+      type: attack
       activation:
         type: action
         value: null
@@ -74,7 +78,7 @@ system:
         concentration: false
         override: false
       effects:
-        - _id: EldWardEff000001
+        - _id: VoidSparkEff0001
           level:
             min: null
             max: null
@@ -88,11 +92,32 @@ system:
         affects:
           choice: false
         override: false
-      roll:
-        formula: ''
-        name: ''
-        prompt: false
-        visible: false
+      attack:
+        ability: ''
+        bonus: ''
+        critical:
+          threshold: null
+        flat: false
+        type:
+          value: ranged
+          classification: ''
+      damage:
+        critical:
+          bonus: ''
+        includeBase: true
+        parts:
+          - number: 1
+            denomination: 6
+            bonus: '@scale.eldritch-arcanum.void-spark'
+            types:
+              - vortex
+            custom:
+              enabled: false
+              formula: ''
+            scaling:
+              mode: ''
+              number: 0
+              formula: ''
       uses:
         spent: 0
         recovery: []
@@ -104,34 +129,34 @@ system:
         level:
           min: null
           max: null
-  identifier: eldritch-ward
+  identifier: void-spark
 sort: 0
 flags: {}
 effects:
-  - name: Eldritch Ward
+  - name: Void Spark — Disadv. next WIS save
     img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
-    origin: Compendium.dnd5e.spells.Item.EldWardCant00001
+    origin: Compendium.dnd5e.spells24.Item.VoidSparkCant001
     transfer: false
-    _id: EldWardEff000001
+    _id: VoidSparkEff0001
     type: base
     system: {}
     changes:
-      - key: system.traits.dr.value
+      - key: system.abilities.wis.save.roll.mode
         mode: 2
-        value: vortex
+        value: '-1'
         priority: null
     disabled: false
     duration:
       startTime: null
       combat: null
-      seconds: 60
-      rounds: null
+      seconds: null
+      rounds: 1
       turns: null
       startRound: null
       startTurn: null
     description: >-
-      <p>This creature has resistance to Vortex damage. Remove this effect after
-      it absorbs one hit (when the ward triggers).</p>
+      <p>This creature has disadvantage on the next Wisdom saving throw it makes
+      before the end of its next turn (automated — removed after use).</p>
     tint: '#ffffff'
     statuses: []
     sort: 0
@@ -146,7 +171,7 @@ effects:
       createdTime: null
       modifiedTime: null
       lastModifiedBy: null
-    _key: '!items.effects!EldWardCant00001.EldWardEff000001'
+    _key: '!items.effects!VoidSparkCant001.VoidSparkEff0001'
 folder: Z8kZlnggh1PtuF3Y
 _stats:
   compendiumSource: null
@@ -158,4 +183,4 @@ _stats:
   createdTime: null
   modifiedTime: null
   lastModifiedBy: null
-_key: '!items!EldWardCant00001'
+_key: '!items!VoidSparkCant001'

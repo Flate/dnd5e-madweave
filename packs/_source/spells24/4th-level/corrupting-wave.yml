@@ -1,17 +1,18 @@
-_id: EldGraspSpell001
-name: Eldritch Grasp
+_id: CorrWaveSpell001
+name: Corrupting Wave
 type: spell
 img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
 system:
   description:
     value: >-
-      <p>You unleash a shadowy tendril from your hand that reaches for a
-      creature you can see within range. Make a ranged spell attack against the
-      target. On a hit, the target takes 2d8 Vortex damage and is restrained by
-      the tendrils until the end of your next turn.</p>
+      <p>You release a wave of dark, eldritch energy in a 20-foot radius
+      centered on you. Each creature in the area must make a Wisdom saving
+      throw. On a failed save, the creature takes 4d8 Vortex damage and is
+      frightened until the end of their next turn. On a successful save, the
+      creature takes half damage and is not frightened.</p>
       <p><strong>At Higher Levels.</strong> When you cast this spell using a
-      spell slot of 3rd level or higher, the damage increases by 1d8 for each
-      slot level above 2nd.</p>
+      spell slot of 5th level or higher, the damage increases by 1d8 for each
+      slot level above 4th.</p>
     chat: ''
   source:
     custom: Madweave Campaign
@@ -24,30 +25,27 @@ system:
     condition: ''
     value: 1
   duration:
-    value: '1'
-    units: round
+    value: ''
+    units: inst
   target:
     affects:
-      type: creature
-      count: '1'
       choice: false
-      special: ''
     template:
-      units: ''
+      units: ft
+      type: sphere
+      size: '20'
       contiguous: false
-      type: ''
   range:
-    value: '60'
-    units: ft
+    units: self
     special: ''
   uses:
     max: ''
     recovery: []
     spent: 0
-  level: 2
+  level: 4
   school: ela
   materials:
-    value: a shadowy tendril from a creature of the Abyss
+    value: tears of a lost soul
     consumed: false
     cost: 0
     supply: 0
@@ -61,7 +59,7 @@ system:
   activities:
     dnd5eactivity000:
       _id: dnd5eactivity000
-      type: attack
+      type: save
       activation:
         type: action
         value: null
@@ -79,7 +77,8 @@ system:
         concentration: false
         override: false
       effects:
-        - _id: EldGraspEff00001
+        - _id: CorrWaveEff00001
+          onSave: false
           level:
             min: null
             max: null
@@ -93,21 +92,10 @@ system:
         affects:
           choice: false
         override: false
-      attack:
-        ability: ''
-        bonus: ''
-        critical:
-          threshold: null
-        flat: false
-        type:
-          value: ranged
-          classification: spell
       damage:
-        critical:
-          bonus: ''
-        includeBase: true
+        onSave: half
         parts:
-          - number: 2
+          - number: 4
             denomination: 8
             bonus: ''
             types:
@@ -119,9 +107,15 @@ system:
               mode: whole
               number: 1
               formula: ''
+      save:
+        ability: wis
+        dc:
+          calculation: spellcasting
+          formula: ''
       uses:
         spent: 0
         recovery: []
+        max: ''
       sort: 0
       name: Cast
       img: ''
@@ -129,15 +123,15 @@ system:
         level:
           min: null
           max: null
-  identifier: eldritch-grasp
+  identifier: corrupting-wave
 sort: 0
 flags: {}
 effects:
-  - name: Eldritch Grasp — Restrained
+  - name: Corrupting Wave — Frightened
     img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
-    origin: Compendium.dnd5e.spells.Item.EldGraspSpell001
+    origin: Compendium.dnd5e.spells24.Item.CorrWaveSpell001
     transfer: false
-    _id: EldGraspEff00001
+    _id: CorrWaveEff00001
     type: base
     system: {}
     changes: []
@@ -151,11 +145,10 @@ effects:
       startRound: null
       startTurn: null
     description: >-
-      <p>You are restrained by shadowy tendrils until the end of the caster's
-      next turn.</p>
+      <p>You are frightened until the end of your next turn.</p>
     tint: '#ffffff'
     statuses:
-      - restrained
+      - frightened
     flags: {}
     sort: 0
     _stats:
@@ -168,8 +161,8 @@ effects:
       createdTime: null
       modifiedTime: null
       lastModifiedBy: null
-    _key: '!items.effects!EldGraspSpell001.EldGraspEff00001'
-folder: Qi4Se3we69ukl2V9
+    _key: '!items.effects!CorrWaveSpell001.CorrWaveEff00001'
+folder: 5auWSClKMDUIV5Ni
 _stats:
   compendiumSource: null
   duplicateSource: null
@@ -180,4 +173,4 @@ _stats:
   createdTime: null
   modifiedTime: null
   lastModifiedBy: null
-_key: '!items!EldGraspSpell001'
+_key: '!items!CorrWaveSpell001'

@@ -1,18 +1,14 @@
-_id: CorrWaveSpell001
-name: Corrupting Wave
+_id: EldReclmSpell001
+name: Eldritch Reclamation
 type: spell
 img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
 system:
   description:
     value: >-
-      <p>You release a wave of dark, eldritch energy in a 20-foot radius
-      centered on you. Each creature in the area must make a Wisdom saving
-      throw. On a failed save, the creature takes 4d8 Vortex damage and is
-      frightened until the end of their next turn. On a successful save, the
-      creature takes half damage and is not frightened.</p>
-      <p><strong>At Higher Levels.</strong> When you cast this spell using a
-      spell slot of 5th level or higher, the damage increases by 1d8 for each
-      slot level above 4th.</p>
+      <p>You resurrect a dead creature you touch. The creature returns to life
+      with all of its hit points restored and gains two permanent levels of
+      Eldritch Madness. The resurrected creature cannot have died due to effects
+      of Eldritch Madness.</p>
     chat: ''
   source:
     custom: Madweave Campaign
@@ -29,23 +25,25 @@ system:
     units: inst
   target:
     affects:
+      type: creature
+      count: '1'
       choice: false
+      special: ''
     template:
-      units: ft
-      type: sphere
-      size: '20'
+      units: ''
       contiguous: false
+      type: ''
   range:
-    units: self
+    units: touch
     special: ''
   uses:
     max: ''
     recovery: []
     spent: 0
-  level: 4
+  level: 6
   school: ela
   materials:
-    value: tears of a lost soul
+    value: a personal belonging of the deceased
     consumed: false
     cost: 0
     supply: 0
@@ -59,7 +57,7 @@ system:
   activities:
     dnd5eactivity000:
       _id: dnd5eactivity000
-      type: save
+      type: heal
       activation:
         type: action
         value: null
@@ -77,8 +75,7 @@ system:
         concentration: false
         override: false
       effects:
-        - _id: CorrWaveEff00001
-          onSave: false
+        - _id: EldReclmEff00001
           level:
             min: null
             max: null
@@ -92,30 +89,22 @@ system:
         affects:
           choice: false
         override: false
-      damage:
-        onSave: half
-        parts:
-          - number: 4
-            denomination: 8
-            bonus: ''
-            types:
-              - vortex
-            custom:
-              enabled: false
-              formula: ''
-            scaling:
-              mode: whole
-              number: 1
-              formula: ''
-      save:
-        ability: wis
-        dc:
-          calculation: spellcasting
+      healing:
+        number: null
+        denomination: null
+        bonus: ''
+        types:
+          - healing
+        custom:
+          enabled: true
+          formula: '@attributes.hp.max'
+        scaling:
+          mode: ''
+          number: null
           formula: ''
       uses:
         spent: 0
         recovery: []
-        max: ''
       sort: 0
       name: Cast
       img: ''
@@ -123,15 +112,15 @@ system:
         level:
           min: null
           max: null
-  identifier: corrupting-wave
+  identifier: eldritch-reclamation
 sort: 0
 flags: {}
 effects:
-  - name: Corrupting Wave — Frightened
+  - name: Eldritch Reclamation — Gain 2 EM Levels
     img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
-    origin: Compendium.dnd5e.spells.Item.CorrWaveSpell001
+    origin: Compendium.dnd5e.spells24.Item.EldReclmSpell001
     transfer: false
-    _id: CorrWaveEff00001
+    _id: EldReclmEff00001
     type: base
     system: {}
     changes: []
@@ -140,17 +129,20 @@ effects:
       startTime: null
       combat: null
       seconds: null
-      rounds: 1
+      rounds: null
       turns: null
       startRound: null
       startTurn: null
     description: >-
-      <p>You are frightened until the end of your next turn.</p>
+      <p>Sentinel — increments Eldritch Madness by 2 and self-deletes
+      immediately.</p>
     tint: '#ffffff'
-    statuses:
-      - frightened
-    flags: {}
+    statuses: []
     sort: 0
+    flags:
+      dnd5e:
+        eldritchMadnessSentinel: true
+        eldritchMadnessGain: 2
     _stats:
       compendiumSource: null
       duplicateSource: null
@@ -161,8 +153,8 @@ effects:
       createdTime: null
       modifiedTime: null
       lastModifiedBy: null
-    _key: '!items.effects!CorrWaveSpell001.CorrWaveEff00001'
-folder: 5auWSClKMDUIV5Ni
+    _key: '!items.effects!EldReclmSpell001.EldReclmEff00001'
+folder: 0pdesvXqKd55VOh2
 _stats:
   compendiumSource: null
   duplicateSource: null
@@ -173,4 +165,4 @@ _stats:
   createdTime: null
   modifiedTime: null
   lastModifiedBy: null
-_key: '!items!CorrWaveSpell001'
+_key: '!items!EldReclmSpell001'

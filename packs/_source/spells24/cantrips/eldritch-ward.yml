@@ -1,22 +1,14 @@
-_id: EldMaelstSpll001
-name: Eldritch Maelstrom
+_id: EldWardCant00001
+name: Eldritch Ward
 type: spell
 img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
 system:
   description:
     value: >-
-      <p>You conjure a swirling vortex of eldritch energy at a point you choose
-      within range. The vortex has a 20-foot radius and 40-foot height. Any
-      creature that starts its turn within the vortex or enters it for the first
-      time on its turn must make a Wisdom saving throw. On a failed save, the
-      creature takes 3d8 Vortex damage and gains one level of Eldritch Madness.
-      On a successful save, the creature takes half damage and doesn't gain
-      Eldritch Madness.</p>
-      <p>While concentrating on this spell, you can use your action to move the
-      vortex up to 30 feet in any direction.</p>
-      <p><strong>At Higher Levels.</strong> When you cast this spell using a
-      spell slot of 6th level or higher, the damage increases by 1d8 for each
-      slot level above 5th.</p>
+      <p>You touch a creature and imbue it with a minor eldritch ward. The next
+      time the creature takes Vortex damage, it can use its reaction to gain
+      resistance to that damage. The ward disappears after it is triggered or
+      after 1 minute.</p>
     chat: ''
   source:
     custom: Madweave Campaign
@@ -33,24 +25,25 @@ system:
     units: minute
   target:
     affects:
+      type: creature
+      count: '1'
       choice: false
+      special: ''
     template:
-      units: ft
-      type: sphere
-      size: '20'
+      units: ''
       contiguous: false
+      type: ''
   range:
-    value: '120'
-    units: ft
+    units: touch
     special: ''
   uses:
     max: ''
     recovery: []
     spent: 0
-  level: 5
+  level: 0
   school: ela
   materials:
-    value: a shard of a shattered reality
+    value: ''
     consumed: false
     cost: 0
     supply: 0
@@ -60,12 +53,10 @@ system:
   properties:
     - vocal
     - somatic
-    - material
-    - concentration
   activities:
     dnd5eactivity000:
       _id: dnd5eactivity000
-      type: save
+      type: utility
       activation:
         type: action
         value: null
@@ -83,8 +74,7 @@ system:
         concentration: false
         override: false
       effects:
-        - _id: EldMaelstEff0001
-          onSave: false
+        - _id: EldWardEff000001
           level:
             min: null
             max: null
@@ -98,26 +88,11 @@ system:
         affects:
           choice: false
         override: false
-      damage:
-        onSave: half
-        parts:
-          - number: 3
-            denomination: 8
-            bonus: ''
-            types:
-              - vortex
-            custom:
-              enabled: false
-              formula: ''
-            scaling:
-              mode: whole
-              number: 1
-              formula: ''
-      save:
-        ability: wis
-        dc:
-          calculation: spellcasting
-          formula: ''
+      roll:
+        formula: ''
+        name: ''
+        prompt: false
+        visible: false
       uses:
         spent: 0
         recovery: []
@@ -129,36 +104,38 @@ system:
         level:
           min: null
           max: null
-  identifier: eldritch-maelstrom
+  identifier: eldritch-ward
 sort: 0
 flags: {}
 effects:
-  - name: Eldritch Maelstrom — Gain EM Level
+  - name: Eldritch Ward
     img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
-    origin: Compendium.dnd5e.spells.Item.EldMaelstSpll001
+    origin: Compendium.dnd5e.spells24.Item.EldWardCant00001
     transfer: false
-    _id: EldMaelstEff0001
+    _id: EldWardEff000001
     type: base
     system: {}
-    changes: []
-    disabled: true
+    changes:
+      - key: system.traits.dr.value
+        mode: 2
+        value: vortex
+        priority: null
+    disabled: false
     duration:
       startTime: null
       combat: null
-      seconds: null
+      seconds: 60
       rounds: null
       turns: null
       startRound: null
       startTurn: null
     description: >-
-      <p>Sentinel — increments Eldritch Madness by 1 and self-deletes
-      immediately.</p>
+      <p>This creature has resistance to Vortex damage. Remove this effect after
+      it absorbs one hit (when the ward triggers).</p>
     tint: '#ffffff'
     statuses: []
     sort: 0
-    flags:
-      dnd5e:
-        eldritchMadnessSentinel: true
+    flags: {}
     _stats:
       compendiumSource: null
       duplicateSource: null
@@ -169,8 +146,8 @@ effects:
       createdTime: null
       modifiedTime: null
       lastModifiedBy: null
-    _key: '!items.effects!EldMaelstSpll001.EldMaelstEff0001'
-folder: bG9QTayc46rfNkv2
+    _key: '!items.effects!EldWardCant00001.EldWardEff000001'
+folder: Z8kZlnggh1PtuF3Y
 _stats:
   compendiumSource: null
   duplicateSource: null
@@ -181,4 +158,4 @@ _stats:
   createdTime: null
   modifiedTime: null
   lastModifiedBy: null
-_key: '!items!EldMaelstSpll001'
+_key: '!items!EldWardCant00001'
