@@ -1,0 +1,1664 @@
+_id: mwMawWastes00001
+name: Maw of the Wastes
+type: npc
+img: null
+system:
+  currency:
+    pp: 0
+    gp: 0
+    ep: 0
+    sp: 0
+    cp: 0
+  abilities:
+    str:
+      value: 20
+      proficient: 1
+      max: null
+      bonuses:
+        check: ''
+        save: ''
+      check:
+        roll:
+          min: null
+          max: null
+          mode: 0
+      save:
+        roll:
+          min: null
+          max: null
+          mode: 0
+    dex:
+      value: 8
+      proficient: 0
+      max: null
+      bonuses:
+        check: ''
+        save: ''
+      check:
+        roll:
+          min: null
+          max: null
+          mode: 0
+      save:
+        roll:
+          min: null
+          max: null
+          mode: 0
+    con:
+      value: 20
+      proficient: 1
+      max: null
+      bonuses:
+        check: ''
+        save: ''
+      check:
+        roll:
+          min: null
+          max: null
+          mode: 0
+      save:
+        roll:
+          min: null
+          max: null
+          mode: 0
+    int:
+      value: 2
+      proficient: 0
+      max: null
+      bonuses:
+        check: ''
+        save: ''
+      check:
+        roll:
+          min: null
+          max: null
+          mode: 0
+      save:
+        roll:
+          min: null
+          max: null
+          mode: 0
+    wis:
+      value: 14
+      proficient: 0
+      max: null
+      bonuses:
+        check: ''
+        save: ''
+      check:
+        roll:
+          min: null
+          max: null
+          mode: 0
+      save:
+        roll:
+          min: null
+          max: null
+          mode: 0
+    cha:
+      value: 3
+      proficient: 0
+      max: null
+      bonuses:
+        check: ''
+        save: ''
+      check:
+        roll:
+          min: null
+          max: null
+          mode: 0
+      save:
+        roll:
+          min: null
+          max: null
+          mode: 0
+  bonuses:
+    mwak:
+      attack: ''
+      damage: ''
+    rwak:
+      attack: ''
+      damage: ''
+    msak:
+      attack: ''
+      damage: ''
+    rsak:
+      attack: ''
+      damage: ''
+    abilities:
+      check: ''
+      save: ''
+      skill: ''
+    spell:
+      dc: ''
+  skills:
+    acr:
+      ability: dex
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 0
+      bonuses:
+        check: ''
+        passive: ''
+    ani:
+      ability: wis
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 0
+      bonuses:
+        check: ''
+        passive: ''
+    arc:
+      ability: int
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 0
+      bonuses:
+        check: ''
+        passive: ''
+    ath:
+      ability: str
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 0
+      bonuses:
+        check: ''
+        passive: ''
+    dec:
+      ability: cha
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 0
+      bonuses:
+        check: ''
+        passive: ''
+    his:
+      ability: int
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 0
+      bonuses:
+        check: ''
+        passive: ''
+    ins:
+      ability: wis
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 0
+      bonuses:
+        check: ''
+        passive: ''
+    itm:
+      ability: cha
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 0
+      bonuses:
+        check: ''
+        passive: ''
+    inv:
+      ability: int
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 0
+      bonuses:
+        check: ''
+        passive: ''
+    med:
+      ability: wis
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 0
+      bonuses:
+        check: ''
+        passive: ''
+    nat:
+      ability: int
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 0
+      bonuses:
+        check: ''
+        passive: ''
+    prc:
+      ability: wis
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 2
+      bonuses:
+        check: ''
+        passive: ''
+    prf:
+      ability: cha
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 0
+      bonuses:
+        check: ''
+        passive: ''
+    per:
+      ability: cha
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 0
+      bonuses:
+        check: ''
+        passive: ''
+    rel:
+      ability: int
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 0
+      bonuses:
+        check: ''
+        passive: ''
+    slt:
+      ability: dex
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 0
+      bonuses:
+        check: ''
+        passive: ''
+    ste:
+      ability: dex
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 3
+      bonuses:
+        check: ''
+        passive: ''
+    sur:
+      ability: wis
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 0
+      bonuses:
+        check: ''
+        passive: ''
+  tools: {}
+  spells:
+    spell1:
+      value: 0
+      override: null
+    spell2:
+      value: 0
+      override: null
+    spell3:
+      value: 0
+      override: null
+    spell4:
+      value: 0
+      override: null
+    spell5:
+      value: 0
+      override: null
+    spell6:
+      value: 0
+      override: null
+    spell7:
+      value: 0
+      override: null
+    spell8:
+      value: 0
+      override: null
+    spell9:
+      value: 0
+      override: null
+    pact:
+      value: 0
+      override: null
+  attributes:
+    init:
+      ability: ''
+      roll:
+        min: null
+        max: null
+        mode: 0
+      bonus: ''
+    movement:
+      walk: '20'
+      fly: null
+      swim: null
+      burrow: '40'
+      climb: null
+      hover: false
+      units: null
+      ignoredDifficultTerrain: []
+    attunement:
+      max: 3
+    senses:
+      units: null
+      special: blind beyond this radius
+      ranges:
+        darkvision: null
+        blindsight: null
+        tremorsense: 60
+        truesight: null
+    spellcasting: ''
+    exhaustion: 0
+    concentration:
+      ability: ''
+      roll:
+        min: null
+        max: null
+        mode: 0
+      bonuses:
+        save: ''
+      limit: 1
+    ac:
+      flat: 15
+      calc: natural
+    hd:
+      spent: 0
+    hp:
+      value: 136
+      max: 136
+      temp: null
+      tempmax: null
+      formula: 13d10 + 65
+    death:
+      roll:
+        min: null
+        max: null
+        mode: 0
+      success: 0
+      failure: 0
+      bonuses:
+        save: ''
+    spell:
+      level: 0
+    loyalty:
+      value: null
+    price:
+      value: null
+      denomination: gp
+  details:
+    biography:
+      value: ''
+      public: ''
+    alignment: Unaligned
+    ideal: ''
+    bond: ''
+    flaw: ''
+    race: null
+    type:
+      value: aberration
+    cr: 7
+    habitat:
+      value: []
+      custom: ''
+    treasure:
+      value: []
+    source:
+      rules: homebrew
+      custom: Madweave Campaign
+      book: ''
+      license: ''
+      revision: 1
+  resources:
+    legact:
+      max: 0
+      spent: 0
+    legres:
+      max: 0
+      spent: 0
+    lair:
+      value: false
+      initiative: null
+      inside: false
+  traits:
+    size: lg
+    di:
+      bypasses: []
+      value:
+        - psychic
+      custom: ''
+    dr:
+      bypasses:
+        - mgc
+      value:
+        - acid
+        - bludgeoning
+      custom: ''
+    dv:
+      bypasses: []
+      value: []
+      custom: ''
+    dm:
+      amount: {}
+      bypasses: []
+    ci:
+      value:
+        - blinded
+        - charmed
+        - frightened
+        - prone
+      custom: ''
+    languages:
+      value: []
+      custom: ''
+      communication: {}
+    important: false
+prototypeToken:
+  name: Maw of the Wastes
+  displayName: 20
+  actorLink: false
+  appendNumber: false
+  prependAdjective: false
+  width: 2
+  height: 2
+  texture:
+    src: null
+    anchorX: 0.5
+    anchorY: 0.5
+    offsetX: 0
+    offsetY: 0
+    fit: contain
+    scaleX: 2
+    scaleY: 2
+    rotation: 0
+    tint: '#ffffff'
+    alphaThreshold: 0.75
+  lockRotation: false
+  rotation: 0
+  alpha: 1
+  disposition: -1
+  displayBars: 20
+  bar1:
+    attribute: attributes.hp
+  bar2:
+    attribute: null
+  light:
+    negative: false
+    priority: 0
+    alpha: 0.5
+    angle: 360
+    bright: 0
+    color: null
+    coloration: 1
+    dim: 0
+    attenuation: 0.5
+    luminosity: 0.5
+    saturation: 0
+    contrast: 0
+    shadows: 0
+    animation:
+      type: null
+      speed: 5
+      intensity: 5
+      reverse: false
+    darkness:
+      min: 0
+      max: 1
+  sight:
+    enabled: true
+    range: 60
+    angle: 360
+    visionMode: tremorsense
+    color: null
+    attenuation: 0.1
+    brightness: 0
+    saturation: 0
+    contrast: 0
+  detectionModes: []
+  occludable:
+    radius: 0
+  ring:
+    enabled: false
+    colors:
+      ring: null
+      background: null
+    effects: 1
+    subject:
+      scale: 2
+      texture: null
+  flags: {}
+  randomImg: false
+  turnMarker:
+    mode: 1
+    animation: null
+    src: null
+    disposition: false
+  movementAction: null
+items:
+  - _id: mwMawTrmSns00001
+    name: Tremorsense Hunter
+    type: feat
+    img: icons/magic/earth/projectile-stone-fragment-brown.webp
+    system:
+      type:
+        value: monster
+        subtype: ''
+      activities: {}
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      description:
+        value: >-
+          <p class="feature">The [[lookup @name lowercase]]{monster} detects
+          creatures exclusively through ground vibrations. A creature that has
+          not moved since the start of its last turn is invisible to the Maw.
+          Flying or levitating creatures are also invisible to it. Creatures
+          moving on the ground within 60 feet are automatically detected
+          regardless of stealth or concealment.</p>
+        chat: ''
+      identifier: tremorsense-hunter
+      source:
+        rules: homebrew
+        custom: Madweave Campaign
+        book: ''
+        license: ''
+        revision: 1
+      enchant: {}
+      prerequisites:
+        level: null
+        repeatable: false
+        items: []
+      properties:
+        - trait
+      requirements: ''
+      advancement: {}
+      cover: null
+      crewed: false
+    folder: L9Zgr8qAPc3ngKhb
+    effects: []
+    flags: {}
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      lastModifiedBy: null
+    ownership:
+      default: 0
+    sort: 0
+    _key: '!actors.items!mwMawWastes00001.mwMawTrmSns00001'
+  - _id: mwMawAmbColl0001
+    name: Ambush Collapse
+    type: feat
+    img: icons/magic/earth/stomp-stomp-smash-brown.webp
+    system:
+      type:
+        value: monster
+        subtype: ''
+      activities:
+        mwMawACActv00001:
+          _id: mwMawACActv00001
+          type: save
+          sort: 0
+          name: ''
+          img: null
+          activation:
+            type: action
+            value: null
+            override: false
+            condition: while burrowing
+          consumption:
+            scaling:
+              allowed: false
+            spellSlot: true
+            targets: []
+          description:
+            chatFlavor: ''
+          duration:
+            units: inst
+            concentration: false
+            override: false
+          effects:
+            - _id: mwMawACsinkAE001
+              onSave: false
+              level: {}
+          range:
+            override: false
+            units: self
+            special: ''
+          target:
+            template:
+              contiguous: false
+              units: ft
+              type: radius
+              size: '30'
+              count: ''
+            affects:
+              choice: false
+              type: creature
+              count: ''
+              special: ''
+            override: false
+            prompt: true
+          uses:
+            spent: 0
+            recovery: []
+            max: ''
+          damage:
+            parts:
+              - number: 2
+                denomination: 6
+                bonus: ''
+                types:
+                  - bludgeoning
+                custom:
+                  enabled: false
+                  formula: ''
+                scaling:
+                  number: 1
+            onSave: none
+          save:
+            ability:
+              - dex
+            dc:
+              calculation: ''
+              formula: '16'
+          flags: {}
+          visibility:
+            level: {}
+            requireAttunement: false
+            requireIdentification: false
+            requireMagic: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      description:
+        value: >-
+          <p class="feature">While burrowing, the [[lookup @name
+          lowercase]]{monster} weakens the ground in a 30-foot radius circle
+          centered on a point directly above it, creating a Sinkhole Trap.</p>
+          <p><em>Dexterity Saving Throw:</em> DC 16, each creature in the area.
+          </p><p><em>Failure:</em> The creature falls 20 feet into the pit,
+          taking [[/damage average]] bludgeoning damage and landing prone and
+          restrained (escape DC 16 Strength Athletics check as an
+          action).</p><p><em>Acid Gullet:</em> A restrained creature also takes
+          10 (3d6) acid damage at the start of its turn.</p>
+        chat: ''
+      identifier: ambush-collapse
+      source:
+        rules: homebrew
+        custom: Madweave Campaign
+        book: ''
+        license: ''
+        revision: 1
+      enchant: {}
+      prerequisites:
+        level: null
+        repeatable: false
+        items: []
+      properties: []
+      requirements: ''
+      advancement: {}
+      cover: null
+      crewed: false
+    folder: 4T18pEvubPMQLzvD
+    effects:
+      - _id: mwMawACsinkAE001
+        name: Trapped in Sinkhole
+        type: base
+        img: systems/dnd5e/icons/svg/statuses/restrained.svg
+        transfer: false
+        disabled: false
+        origin: Compendium.dnd5e.actors24.Actor.mwMawWastes00001.Item.mwMawAmbColl0001
+        description: >-
+          <p>Prone and restrained in the sinkhole. Escape requires a DC 16
+          Strength (Athletics) check as an action.</p>
+        tint: '#ffffff'
+        duration:
+          startTime: null
+          seconds: null
+          rounds: null
+          turns: null
+          combat: null
+          startRound: null
+          startTurn: null
+        statuses:
+          - restrained
+          - prone
+        changes: []
+        system: {}
+        flags: {}
+        sort: 0
+        _stats:
+          compendiumSource: null
+          duplicateSource: null
+          exportSource: null
+          coreVersion: '13.351'
+          systemId: dnd5e
+          systemVersion: 5.3.0
+          lastModifiedBy: null
+        _key: >-
+          !actors.items.effects!mwMawWastes00001.mwMawAmbColl0001.mwMawACsinkAE001
+    flags:
+      dnd5e:
+        riders:
+          activity: []
+          effect: []
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      lastModifiedBy: null
+    ownership:
+      default: 0
+    sort: 1
+    _key: '!actors.items!mwMawWastes00001.mwMawAmbColl0001'
+  - _id: mwMawErtGlid0001
+    name: Earth Glide
+    type: feat
+    img: icons/magic/earth/projectile-boulder-throw-brown.webp
+    system:
+      type:
+        value: monster
+        subtype: ''
+      activities: {}
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      description:
+        value: >-
+          <p class="feature">The [[lookup @name lowercase]]{monster} can burrow
+          through nonmagical earth and stone without disturbing the material it
+          moves through, leaving no tunnel.</p>
+        chat: ''
+      identifier: earth-glide
+      source:
+        rules: homebrew
+        custom: Madweave Campaign
+        book: ''
+        license: ''
+        revision: 1
+      enchant: {}
+      prerequisites:
+        level: null
+        repeatable: false
+        items: []
+      properties:
+        - trait
+      requirements: ''
+      advancement: {}
+      cover: null
+      crewed: false
+    folder: L9Zgr8qAPc3ngKhb
+    effects: []
+    flags: {}
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      lastModifiedBy: null
+    ownership:
+      default: 0
+    sort: 2
+    _key: '!actors.items!mwMawWastes00001.mwMawErtGlid0001'
+  - _id: mwMawAcidGlt0001
+    name: Acid Gullet
+    type: feat
+    img: icons/magic/acid/dissolve-pool-bubbles.webp
+    system:
+      type:
+        value: monster
+        subtype: ''
+      activities: {}
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      description:
+        value: >-
+          <p class="feature">A creature grappled by the [[lookup @name
+          lowercase]]{monster} or trapped in its Sinkhole takes 10 (3d6) acid
+          damage at the start of its turn.</p>
+        chat: ''
+      identifier: acid-gullet
+      source:
+        rules: homebrew
+        custom: Madweave Campaign
+        book: ''
+        license: ''
+        revision: 1
+      enchant: {}
+      prerequisites:
+        level: null
+        repeatable: false
+        items: []
+      properties:
+        - trait
+      requirements: ''
+      advancement: {}
+      cover: null
+      crewed: false
+    folder: L9Zgr8qAPc3ngKhb
+    effects: []
+    flags: {}
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      lastModifiedBy: null
+    ownership:
+      default: 0
+    sort: 3
+    _key: '!actors.items!mwMawWastes00001.mwMawAcidGlt0001'
+  - _id: mwMawMultiatk001
+    name: Multiattack
+    type: feat
+    img: icons/skills/melee/strike-weapons-orange.webp
+    system:
+      type:
+        value: monster
+        subtype: ''
+      activities:
+        mwMawMAActv00001:
+          _id: mwMawMAActv00001
+          type: utility
+          sort: 0
+          name: Use
+          img: null
+          activation:
+            type: action
+            value: null
+            override: false
+            condition: ''
+          consumption:
+            scaling:
+              allowed: false
+            spellSlot: true
+            targets: []
+          description:
+            chatFlavor: ''
+          duration:
+            units: inst
+            concentration: false
+            override: false
+          effects: []
+          range:
+            override: false
+            units: self
+          target:
+            template:
+              contiguous: false
+              units: ft
+            affects:
+              choice: false
+            override: false
+            prompt: true
+          uses:
+            spent: 0
+            recovery: []
+            max: ''
+          roll:
+            prompt: false
+            visible: false
+            name: ''
+            formula: ''
+          flags: {}
+          visibility:
+            level: {}
+            requireAttunement: false
+            requireIdentification: false
+            requireMagic: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      description:
+        value: >-
+          <p>The [[lookup @name lowercase]]{monster} makes two [[/item
+          .mwMawTentacl0001]] attacks and one [[/item .mwMawBite0000001]]
+          attack. It can replace one Tentacle attack with a [[/item
+          .mwMawTntGrpl0001]].</p>
+        chat: ''
+      identifier: multiattack
+      source:
+        rules: homebrew
+        custom: Madweave Campaign
+        book: ''
+        license: ''
+        revision: 1
+      enchant: {}
+      prerequisites:
+        level: null
+        repeatable: false
+        items: []
+      properties: []
+      requirements: ''
+      advancement: {}
+      cover: null
+      crewed: false
+    folder: 4T18pEvubPMQLzvD
+    effects: []
+    flags:
+      dnd5e:
+        riders:
+          activity: []
+          effect: []
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      lastModifiedBy: null
+    ownership:
+      default: 0
+    sort: 4
+    _key: '!actors.items!mwMawWastes00001.mwMawMultiatk001'
+  - _id: mwMawTentacl0001
+    name: Tentacle
+    type: weapon
+    img: icons/creatures/tentacles/tentacles-octopus-black-pink.webp
+    system:
+      type:
+        value: natural
+        baseItem: ''
+      activities:
+        mwMawTntActv0001:
+          _id: mwMawTntActv0001
+          type: attack
+          sort: 0
+          name: ''
+          img: null
+          activation:
+            type: action
+            value: null
+            override: false
+            condition: ''
+          consumption:
+            scaling:
+              allowed: false
+            spellSlot: true
+            targets: []
+          description:
+            chatFlavor: ''
+          duration:
+            units: inst
+            concentration: false
+            override: false
+          effects: []
+          range:
+            override: false
+            units: self
+          target:
+            template:
+              contiguous: false
+              units: ft
+              type: ''
+            affects:
+              choice: false
+              count: '1'
+              type: creature
+            override: false
+            prompt: true
+          uses:
+            spent: 0
+            recovery: []
+            max: ''
+          attack:
+            critical:
+              threshold: null
+              bonus: ''
+            flat: false
+            type:
+              value: melee
+              classification: ''
+            ability: ''
+            bonus: ''
+          damage:
+            critical:
+              allow: true
+              bonus: ''
+            includeBase: true
+            parts:
+              - number: 2
+                denomination: 4
+                bonus: ''
+                types:
+                  - acid
+                custom:
+                  enabled: false
+                  formula: ''
+                scaling:
+                  number: 1
+          flags: {}
+          visibility:
+            level: {}
+            requireAttunement: false
+            requireIdentification: false
+            requireMagic: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      description:
+        value: <p>[[/attack extended]]. [[/damage average extended]].</p>
+        chat: ''
+      identifier: tentacle
+      source:
+        rules: homebrew
+        custom: Madweave Campaign
+        book: ''
+        license: ''
+        revision: 1
+      identified: true
+      unidentified:
+        description: ''
+      container: null
+      quantity: 1
+      weight:
+        value: 0
+        units: lb
+      price:
+        value: 0
+        denomination: gp
+      rarity: ''
+      attunement: ''
+      attuned: false
+      equipped: true
+      armor:
+        value: null
+      cover: null
+      hp:
+        value: null
+        max: null
+        dt: null
+        conditions: ''
+      ammunition: {}
+      damage:
+        base:
+          number: 2
+          denomination: 6
+          types:
+            - bludgeoning
+          custom:
+            enabled: false
+          scaling:
+            number: 1
+          bonus: ''
+        versatile:
+          number: null
+          denomination: null
+          types: []
+          custom:
+            enabled: false
+          scaling:
+            number: 1
+      properties: []
+      proficient: null
+      range:
+        value: null
+        long: null
+        reach: 15
+        units: ft
+      mastery: ''
+      crew:
+        value: []
+      enchant: {}
+    folder: pSCWWdqMX9eUATRJ
+    effects: []
+    flags:
+      dnd5e:
+        riders:
+          activity: []
+          effect: []
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      lastModifiedBy: null
+    ownership:
+      default: 0
+    sort: 5
+    _key: '!actors.items!mwMawWastes00001.mwMawTentacl0001'
+  - _id: mwMawTntGrpl0001
+    name: Tentacle Grapple
+    type: weapon
+    img: icons/creatures/tentacles/tentacle-earth-green.webp
+    system:
+      type:
+        value: natural
+        baseItem: ''
+      activities:
+        mwMawTGActv00001:
+          _id: mwMawTGActv00001
+          type: attack
+          sort: 0
+          name: ''
+          img: null
+          activation:
+            type: action
+            value: null
+            override: false
+            condition: ''
+          consumption:
+            scaling:
+              allowed: false
+            spellSlot: true
+            targets: []
+          description:
+            chatFlavor: ''
+          duration:
+            units: inst
+            concentration: false
+            override: false
+          effects:
+            - _id: mwMawTntGrpAE001
+              level: {}
+          range:
+            override: false
+            units: self
+          target:
+            template:
+              contiguous: false
+              units: ft
+              type: ''
+            affects:
+              choice: false
+              count: '1'
+              type: creature
+            override: false
+            prompt: true
+          uses:
+            spent: 0
+            recovery: []
+            max: ''
+          attack:
+            critical:
+              threshold: null
+              bonus: ''
+            flat: false
+            type:
+              value: melee
+              classification: ''
+            ability: ''
+            bonus: ''
+          damage:
+            critical:
+              allow: true
+              bonus: ''
+            includeBase: true
+            parts: []
+          flags: {}
+          visibility:
+            level: {}
+            requireAttunement: false
+            requireIdentification: false
+            requireMagic: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      description:
+        value: >-
+          <p>[[/attack extended]]. [[/damage average extended]]. On a hit, the
+          target is grappled (escape DC 16). The Maw has 4 tentacles and can
+          grapple up to 4 creatures simultaneously. Each tentacle can be
+          targeted independently (AC 13, 20 HP).</p>
+        chat: ''
+      identifier: tentacle-grapple
+      source:
+        rules: homebrew
+        custom: Madweave Campaign
+        book: ''
+        license: ''
+        revision: 1
+      identified: true
+      unidentified:
+        description: ''
+      container: null
+      quantity: 1
+      weight:
+        value: 0
+        units: lb
+      price:
+        value: 0
+        denomination: gp
+      rarity: ''
+      attunement: ''
+      attuned: false
+      equipped: true
+      armor:
+        value: null
+      cover: null
+      hp:
+        value: null
+        max: null
+        dt: null
+        conditions: ''
+      ammunition: {}
+      damage:
+        base:
+          number: 2
+          denomination: 4
+          types:
+            - bludgeoning
+          custom:
+            enabled: false
+          scaling:
+            number: 1
+          bonus: ''
+        versatile:
+          number: null
+          denomination: null
+          types: []
+          custom:
+            enabled: false
+          scaling:
+            number: 1
+      properties: []
+      proficient: null
+      range:
+        value: null
+        long: null
+        reach: 15
+        units: ft
+      mastery: ''
+      crew:
+        value: []
+      enchant: {}
+    folder: pSCWWdqMX9eUATRJ
+    effects:
+      - _id: mwMawTntGrpAE001
+        name: Grappled
+        type: base
+        img: systems/dnd5e/icons/svg/statuses/grappled.svg
+        transfer: false
+        disabled: false
+        origin: Compendium.dnd5e.actors24.Actor.mwMawWastes00001.Item.mwMawTntGrpl0001
+        description: >-
+          <p>Grappled by the Maw of the Wastes (escape DC 16).</p> <p>[[/check
+          skill=ath ability=str]]</p> <p>[[/check skill=acr ability=dex]]</p>
+        tint: '#ffffff'
+        duration:
+          startTime: null
+          seconds: null
+          rounds: null
+          turns: null
+          combat: null
+          startRound: null
+          startTurn: null
+        statuses:
+          - grappled
+        changes: []
+        system: {}
+        flags: {}
+        sort: 0
+        _stats:
+          compendiumSource: null
+          duplicateSource: null
+          exportSource: null
+          coreVersion: '13.351'
+          systemId: dnd5e
+          systemVersion: 5.3.0
+          lastModifiedBy: null
+        _key: >-
+          !actors.items.effects!mwMawWastes00001.mwMawTntGrpl0001.mwMawTntGrpAE001
+    flags:
+      dnd5e:
+        riders:
+          activity: []
+          effect: []
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      lastModifiedBy: null
+    ownership:
+      default: 0
+    sort: 6
+    _key: '!actors.items!mwMawWastes00001.mwMawTntGrpl0001'
+  - _id: mwMawBite0000001
+    name: Bite
+    type: weapon
+    img: icons/skills/melee/jaws-teeth-crocodile.webp
+    system:
+      type:
+        value: natural
+        baseItem: ''
+      activities:
+        mwMawBtActv00001:
+          _id: mwMawBtActv00001
+          type: attack
+          sort: 0
+          name: ''
+          img: null
+          activation:
+            type: action
+            value: null
+            override: false
+            condition: ''
+          consumption:
+            scaling:
+              allowed: false
+            spellSlot: true
+            targets: []
+          description:
+            chatFlavor: ''
+          duration:
+            units: inst
+            concentration: false
+            override: false
+          effects: []
+          range:
+            override: false
+            units: self
+          target:
+            template:
+              contiguous: false
+              units: ft
+              type: ''
+            affects:
+              choice: false
+              count: '1'
+              type: creature
+              special: grappled or restrained
+            override: false
+            prompt: true
+          uses:
+            spent: 0
+            recovery: []
+            max: ''
+          attack:
+            critical:
+              threshold: null
+              bonus: ''
+            flat: false
+            type:
+              value: melee
+              classification: ''
+            ability: ''
+            bonus: ''
+          damage:
+            critical:
+              allow: true
+              bonus: ''
+            includeBase: true
+            parts:
+              - number: 3
+                denomination: 6
+                bonus: ''
+                types:
+                  - acid
+                custom:
+                  enabled: false
+                  formula: ''
+                scaling:
+                  number: 1
+          flags: {}
+          visibility:
+            level: {}
+            requireAttunement: false
+            requireIdentification: false
+            requireMagic: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      description:
+        value: >-
+          <p>[[/attack extended]]. [[/damage average extended]].</p> <p>On a
+          hit, the target must succeed on a DC 16 Strength saving throw or be
+          swallowed. A swallowed creature is blinded and restrained, has total
+          cover against attacks and other effects outside the Maw, and takes 14
+          (4d6) acid damage at the start of each of the Maw's turns.</p>
+        chat: ''
+      identifier: bite
+      source:
+        rules: homebrew
+        custom: Madweave Campaign
+        book: ''
+        license: ''
+        revision: 1
+      identified: true
+      unidentified:
+        description: ''
+      container: null
+      quantity: 1
+      weight:
+        value: 0
+        units: lb
+      price:
+        value: 0
+        denomination: gp
+      rarity: ''
+      attunement: ''
+      attuned: false
+      equipped: true
+      armor:
+        value: null
+      cover: null
+      hp:
+        value: null
+        max: null
+        dt: null
+        conditions: ''
+      ammunition: {}
+      damage:
+        base:
+          number: 3
+          denomination: 10
+          types:
+            - piercing
+          custom:
+            enabled: false
+          scaling:
+            number: 1
+          bonus: ''
+        versatile:
+          number: null
+          denomination: null
+          types: []
+          custom:
+            enabled: false
+          scaling:
+            number: 1
+      properties: []
+      proficient: null
+      range:
+        value: null
+        long: null
+        reach: 5
+        units: ft
+      mastery: ''
+      crew:
+        value: []
+      enchant: {}
+    folder: pSCWWdqMX9eUATRJ
+    effects: []
+    flags:
+      dnd5e:
+        riders:
+          activity: []
+          effect: []
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      lastModifiedBy: null
+    ownership:
+      default: 0
+    sort: 7
+    _key: '!actors.items!mwMawWastes00001.mwMawBite0000001'
+  - _id: mwMawTrmFlinc001
+    name: Tremor Flinch
+    type: feat
+    img: icons/magic/earth/projectile-stone-fragment-brown.webp
+    system:
+      type:
+        value: monster
+        subtype: ''
+      activities:
+        mwMawTFActv00001:
+          _id: mwMawTFActv00001
+          type: utility
+          sort: 0
+          name: Expend Use
+          img: null
+          activation:
+            type: reaction
+            value: null
+            override: false
+            condition: creature within 60 ft. moves 20+ ft. in one turn
+          consumption:
+            scaling:
+              allowed: false
+            spellSlot: true
+            targets: []
+          description:
+            chatFlavor: ''
+          duration:
+            units: inst
+            concentration: false
+            override: false
+          effects: []
+          range:
+            override: false
+            units: self
+            special: ''
+          target:
+            template:
+              contiguous: false
+              units: ft
+              type: ''
+            affects:
+              choice: false
+              type: ''
+            override: false
+            prompt: false
+          uses:
+            spent: 0
+            recovery: []
+            max: ''
+          roll:
+            prompt: false
+            visible: false
+            name: ''
+            formula: ''
+          flags: {}
+          visibility:
+            level: {}
+            requireAttunement: false
+            requireIdentification: false
+            requireMagic: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      description:
+        value: >-
+          <p class="feature">When a creature the [[lookup @name
+          lowercase]]{monster} can sense via tremorsense moves more than 20 feet
+          in a single turn while within 60 feet, the [[lookup @name
+          lowercase]]{monster} can use its reaction to burrow up to 20 feet
+          toward that creature.</p>
+        chat: ''
+      identifier: tremor-flinch
+      source:
+        rules: homebrew
+        custom: Madweave Campaign
+        book: ''
+        license: ''
+        revision: 1
+      enchant: {}
+      prerequisites:
+        level: null
+        repeatable: false
+        items: []
+      properties: []
+      requirements: ''
+      advancement: {}
+      cover: null
+      crewed: false
+    folder: 4T18pEvubPMQLzvD
+    effects: []
+    flags:
+      dnd5e:
+        riders:
+          activity: []
+          effect: []
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      lastModifiedBy: null
+    ownership:
+      default: 0
+    sort: 8
+    _key: '!actors.items!mwMawWastes00001.mwMawTrmFlinc001'
+effects: []
+folder: sUWhvnagivVASLJz
+flags: {}
+_stats:
+  duplicateSource: null
+  exportSource: null
+  coreVersion: '13.351'
+  systemId: dnd5e
+  systemVersion: 5.3.0
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+sort: 0
+ownership:
+  default: 0
+_key: '!actors!mwMawWastes00001'
+

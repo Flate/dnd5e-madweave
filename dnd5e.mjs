@@ -794,6 +794,17 @@ Hooks.on("dnd5e.postUseActivity", (activity, usageConfig, results) => {
   if ( hasChaoticSurge ) documents.Actor5e.rollChaoticSurge(actor, activity);
 });
 
+// Creeping Taint: stamp the cast level onto the applied AE so the damage hook can scale correctly.
+Hooks.on("dnd5e.postUseActivity", (activity, usageConfig, results) => {
+  if ( activity.item?.system?.identifier !== "creeping-taint" || activity.name !== "Apply Taint" ) return;
+  const actor = activity.item?.actor;
+  if ( !actor ) return;
+  const level = actor.system.spells?.[usageConfig.spell?.slot]?.level ?? 1;
+  for ( const effect of (results.effects ?? []) ) {
+    if ( effect.getFlag("dnd5e", "creepingTaintBonus") ) effect.setFlag("dnd5e", "creepingTaintLevel", level);
+  }
+});
+
 // --- Vortex Damage Effects: Mental Echo + Soul Erosion ---
 
 // Per-round vortex damage tracker for Soul Erosion: actorUuid → { round, total, triggered }.
@@ -840,7 +851,19 @@ function _resolveVortexDC(origin) {
 
 // After damage is calculated (post-resistance), store vortex subtotal and resolved DC in options
 // so the applyDamage hook can act on them without re-walking the damages array.
+// Also injects Creeping Taint bonus damage when the target has that AE.
 Hooks.on("dnd5e.calculateDamage", (actor, damages, options) => {
+  // Creeping Taint: add bonus vortex damage whenever vortex damage is taken.
+  // Dice scale with cast level: 1d4 (1st), 1d6 (3rd+), 1d8 (5th+) — level stamped on AE at cast time.
+  const taintEffect = actor.effects.find(e => e.getFlag("dnd5e", "creepingTaintBonus"));
+  if ( taintEffect && damages.some(d => d.type === "vortex") ) {
+    const castLevel = taintEffect.getFlag("dnd5e", "creepingTaintLevel") ?? 1;
+    const formula = castLevel >= 5 ? "1d8" : castLevel >= 3 ? "1d6" : "1d4";
+    const bonus = new Roll(formula).evaluateSync();
+    damages.push({ type: "vortex", value: bonus.total, active: true });
+    ChatMessage.create({ content: `<p><strong>${actor.name}</strong> takes ${bonus.total} additional Vortex damage from Creeping Taint (${formula}).</p>`, speaker: ChatMessage.getSpeaker({ actor }) });
+  }
+
   const vortexTotal = damages
     .filter(d => d.type === "vortex")
     .reduce((sum, d) => sum + (d.value ?? 0), 0);
@@ -992,6 +1015,18 @@ Hooks.on("createActiveEffect", (effect, options, userId) => {
       ChatMessage.create({ content: `<p><strong>${actor.name}</strong> gains ${newLevel - current} level(s) of exhaustion. (Now level ${newLevel})</p>`, speaker: ChatMessage.getSpeaker({ actor }) });
     }
     effect.delete();
+  }
+
+  // Hollow Shell: if the caster has EM 1+, grant temp HP equal to spellcasting mod.
+  if ( effect.getFlag("dnd5e", "hollowShellTempHP") ) {
+    if ( (actor.system.attributes?.eldritchMadness ?? 0) >= 1 ) {
+      const spellcastingAbility = actor.system.attributes?.spellcasting;
+      const mod = spellcastingAbility ? (actor.system.abilities?.[spellcastingAbility]?.mod ?? 0) : 0;
+      if ( mod > 0 ) {
+        const current = actor.system.attributes.hp.temp ?? 0;
+        if ( mod > current ) actor.update({ "system.attributes.hp.temp": mod });
+      }
+    }
   }
 });
 

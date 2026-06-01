@@ -1,0 +1,271 @@
+_id: CreepTaintSpl001
+name: Creeping Taint
+type: spell
+img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
+system:
+  description:
+    value: >-
+      <p>You fix your attention on a creature you can see within range and mark
+      it with an invisible stain that sinks beneath the skin. For the duration,
+      whenever the target takes Vortex damage from any source, it takes an
+      additional 1d4 Vortex damage. Additionally, the target has disadvantage on
+      saving throws against gaining levels of Eldritch Madness.</p>
+      <p>If the target drops to 0 hit points before the spell ends, you can use
+      a bonus action on a subsequent turn to move the taint to a new creature you
+      can see within 30 feet of the original target. The taint crawls visibly
+      across the ground or through the air to reach the new host — all creatures
+      who can see this must succeed on a DC 10 Wisdom saving throw or become
+      frightened of the new host until the end of their next turn.</p>
+      <p><em>Note: the additional Vortex damage and EM save disadvantage must be
+      tracked manually. Use <strong>Move Taint</strong> against each observer
+      when moving the taint.</em></p>
+      <p><strong>At Higher Levels.</strong> When you cast this spell using a
+      spell slot of 3rd level or higher, the additional Vortex damage increases
+      to 1d6. At 5th level or higher, it increases to 1d8.</p>
+    chat: ''
+  source:
+    custom: Madweave Campaign
+    rules: homebrew
+    book: ''
+    page: ''
+    license: ''
+  activation:
+    type: bonus
+    condition: ''
+    value: 1
+  duration:
+    value: '1'
+    units: minute
+  target:
+    affects:
+      choice: false
+    template:
+      units: ''
+      contiguous: false
+      type: ''
+  range:
+    value: '60'
+    units: ft
+    special: ''
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 1
+  school: ela
+  materials:
+    value: a dead insect
+    consumed: false
+    cost: 0
+    supply: 0
+  preparation:
+    mode: prepared
+    prepared: false
+  properties:
+    - vocal
+    - somatic
+    - material
+    - concentration
+  activities:
+    dnd5eactivity000:
+      _id: dnd5eactivity000
+      type: utility
+      activation:
+        type: bonus
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: >-
+          At 3rd-level slot: additional Vortex damage becomes 1d6. At 5th-level
+          slot: 1d8.
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects:
+        - _id: CreepTaintEff001
+          level:
+            min: null
+            max: null
+      range:
+        override: false
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+        affects:
+          choice: false
+        override: false
+      roll:
+        formula: ''
+        name: ''
+        prompt: false
+        visible: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      name: Apply Taint
+      img: ''
+      visibility:
+        level:
+          min: null
+          max: null
+    dnd5eactivity100:
+      _id: dnd5eactivity100
+      type: save
+      activation:
+        type: bonus
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: false
+      description:
+        chatFlavor: >-
+          Move Taint — use when host drops to 0 HP. Roll against each creature
+          that can see the taint move.
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects:
+        - _id: CreepTaintEff002
+          onSave: false
+          level:
+            min: null
+            max: null
+      range:
+        override: false
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+        affects:
+          choice: false
+        override: false
+      damage:
+        onSave: none
+        parts: []
+      save:
+        ability: wis
+        dc:
+          calculation: flat
+          formula: '10'
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      name: Move Taint
+      img: ''
+      visibility:
+        level:
+          min: null
+          max: null
+  identifier: creeping-taint
+sort: 0
+flags: {}
+effects:
+  - name: Creeping Taint
+    img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
+    origin: Compendium.dnd5e.spells24.Item.CreepTaintSpl001
+    transfer: false
+    _id: CreepTaintEff001
+    type: base
+    system: {}
+    changes:
+      - key: system.abilities.wis.save.roll.mode
+        mode: 2
+        value: '-1'
+        priority: null
+    disabled: false
+    duration:
+      startTime: null
+      combat: null
+      seconds: 60
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: >-
+      <p>Marked by Creeping Taint. Whenever you take Vortex damage, you take an
+      additional 1d4 (1d6 at 3rd slot, 1d8 at 5th slot) Vortex damage. You have
+      disadvantage on Wisdom saving throws.</p>
+    tint: '#6A0DAD'
+    statuses: []
+    sort: 0
+    flags:
+      dnd5e:
+        creepingTaintBonus: true
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+    _key: '!items.effects!CreepTaintSpl001.CreepTaintEff001'
+  - name: Creeping Taint — Frightened
+    img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
+    origin: Compendium.dnd5e.spells24.Item.CreepTaintSpl001
+    transfer: false
+    _id: CreepTaintEff002
+    type: base
+    system: {}
+    changes: []
+    disabled: true
+    duration:
+      startTime: null
+      combat: null
+      seconds: 6
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: >-
+      <p>Frightened of the new host of the Creeping Taint until the end of your
+      next turn.</p>
+    tint: '#6A0DAD'
+    statuses:
+      - frightened
+    sort: 0
+    flags: {}
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+    _key: '!items.effects!CreepTaintSpl001.CreepTaintEff002'
+folder: ERuXllkhTQF51rDJ
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+  coreVersion: '13.351'
+  systemId: dnd5e
+  systemVersion: 5.3.0
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+_key: '!items!CreepTaintSpl001'

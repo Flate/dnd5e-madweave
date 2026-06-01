@@ -1,0 +1,409 @@
+_id: TearInVeilSpl001
+name: Tear in the Veil
+type: spell
+img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
+system:
+  description:
+    value: >-
+      <p>You claw at the membrane between planes and something pushes through
+      from the other side. A Veil-Born manifests in an unoccupied space you can
+      see within range. It acts on your initiative count, immediately after your
+      turn.</p>
+      <p>The Veil-Born obeys your spoken commands (no action required). If you
+      issue no command, it attacks the nearest creature that is not you. You do
+      not choose what comes through — the DM determines the Veil-Born's exact
+      appearance, which is always unsettling.</p>
+      <p>When the Veil-Born is first summoned, each creature within 10 feet of
+      the summoning point (other than you) must make a Wisdom saving throw or
+      become frightened of the Veil-Born until the end of its next turn. Use the
+      <strong>Summoning Fear</strong> activity.</p>
+      <p>When the spell ends — whether by your choice, by losing concentration,
+      or because the Veil-Born is reduced to 0 hit points — the tear seals shut
+      violently. Each creature within 5 feet of the Veil-Born when it disappears
+      takes 2d6 Vortex damage (no save). You must then make a Wisdom saving
+      throw against your own spell save DC. On a failure, you gain one level of
+      Eldritch Madness. Use the <strong>Tear Seals Shut</strong> and
+      <strong>Seal Backlash</strong> activities when the spell ends.</p>
+      <p><strong>At Higher Levels.</strong> When you cast this spell using a
+      spell slot of 4th level or higher, the Veil-Born's hit points increase by
+      10 and its Rend deals 1 additional die of Vortex damage for each slot level
+      above 3rd. The Unstable Form trigger also expands: 4th–5th level triggers
+      on a 1, 6th–7th on a 1–2, and 8th–9th on a 1–3.</p>
+    chat: ''
+  source:
+    custom: Madweave Campaign
+    rules: homebrew
+    book: ''
+    page: ''
+    license: ''
+  activation:
+    type: action
+    condition: ''
+    value: 1
+  duration:
+    value: '1'
+    units: minute
+  target:
+    affects:
+      type: space
+      count: '1'
+      choice: false
+      special: ''
+    template:
+      units: ''
+      contiguous: false
+      type: ''
+  range:
+    value: '30'
+    units: ft
+    special: ''
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 3
+  school: ela
+  materials:
+    value: a tooth from an aberration
+    consumed: false
+    cost: 0
+    supply: 0
+  preparation:
+    mode: prepared
+    prepared: false
+  properties:
+    - vocal
+    - somatic
+    - material
+    - concentration
+  activities:
+    dnd5eactivity000:
+      _id: dnd5eactivity000
+      type: summon
+      activation:
+        type: action
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: >-
+          After summoning, use Summoning Fear against creatures within 10 ft.
+          When the spell ends, use Tear Seals Shut then Seal Backlash.
+      duration:
+        units: inst
+        override: false
+      range:
+        override: false
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+        affects:
+          choice: false
+        override: false
+      bonuses:
+        ac: ''
+        hd: ''
+        hp: '(@item.level - 3) * 10'
+        attackDamage: ''
+        saveDamage: ''
+        healing: ''
+      creatureSizes: []
+      creatureTypes: []
+      match:
+        proficiency: true
+        attacks: true
+        saves: true
+      profiles:
+        - count: ''
+          name: ''
+          _id: VeilBornProf0001
+          uuid: Compendium.dnd5e.actors24.Actor.VeilBornActor001
+          level:
+            min: null
+            max: null
+          types: []
+      summon:
+        identifier: ''
+        mode: ''
+        prompt: true
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      name: Summon
+      img: ''
+      appliedEffects: []
+      visibility:
+        level:
+          min: null
+          max: null
+    dnd5eactivity100:
+      _id: dnd5eactivity100
+      type: save
+      activation:
+        type: special
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: false
+      description:
+        chatFlavor: >-
+          Use against each creature within 10 ft of the summoning point (not
+          you) when the Veil-Born first appears.
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects:
+        - _id: TearVeilFrEff001
+          onSave: false
+          level:
+            min: null
+            max: null
+      range:
+        override: false
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+        affects:
+          choice: false
+        override: false
+      damage:
+        onSave: none
+        parts: []
+      save:
+        ability: wis
+        dc:
+          calculation: spellcasting
+          formula: ''
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      name: Summoning Fear
+      img: ''
+      visibility:
+        level:
+          min: null
+          max: null
+    dnd5eactivity200:
+      _id: dnd5eactivity200
+      type: damage
+      activation:
+        type: special
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: false
+      description:
+        chatFlavor: >-
+          Use against each creature within 5 ft of the Veil-Born when the spell
+          ends. No saving throw.
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects: []
+      range:
+        override: false
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+        affects:
+          choice: false
+        override: false
+      damage:
+        critical:
+          allow: false
+          bonus: ''
+        parts:
+          - number: 2
+            denomination: 6
+            bonus: ''
+            types:
+              - vortex
+            custom:
+              enabled: false
+              formula: ''
+            scaling:
+              mode: none
+              number: null
+              formula: ''
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      name: Tear Seals Shut
+      img: ''
+      visibility:
+        level:
+          min: null
+          max: null
+    dnd5eactivity300:
+      _id: dnd5eactivity300
+      type: save
+      activation:
+        type: special
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: false
+      description:
+        chatFlavor: >-
+          Caster saves after the tear seals. On failure: gain 1 level of
+          Eldritch Madness.
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects:
+        - _id: TearVeilEmEff001
+          onSave: false
+          level:
+            min: null
+            max: null
+      range:
+        override: false
+      target:
+        prompt: false
+        template:
+          contiguous: false
+          units: ''
+        affects:
+          choice: false
+          type: self
+        override: false
+      damage:
+        onSave: none
+        parts: []
+      save:
+        ability: wis
+        dc:
+          calculation: spellcasting
+          formula: ''
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      name: Seal Backlash
+      img: ''
+      visibility:
+        level:
+          min: null
+          max: null
+  identifier: tear-in-the-veil
+sort: 0
+flags: {}
+effects:
+  - name: Tear in the Veil — Frightened
+    img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
+    origin: Compendium.dnd5e.spells24.Item.TearInVeilSpl001
+    transfer: false
+    _id: TearVeilFrEff001
+    type: base
+    system: {}
+    changes: []
+    disabled: true
+    duration:
+      startTime: null
+      combat: null
+      seconds: 6
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: >-
+      <p>Frightened of the Veil-Born until the end of your next turn.</p>
+    tint: '#6A0DAD'
+    statuses:
+      - frightened
+    sort: 0
+    flags: {}
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+    _key: '!items.effects!TearInVeilSpl001.TearVeilFrEff001'
+  - name: Tear in the Veil — Gain 1 EM Level
+    img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
+    origin: Compendium.dnd5e.spells24.Item.TearInVeilSpl001
+    transfer: false
+    _id: TearVeilEmEff001
+    type: base
+    system: {}
+    changes: []
+    disabled: true
+    duration:
+      startTime: null
+      combat: null
+      seconds: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: >-
+      <p>Sentinel — increments Eldritch Madness by 1 and self-deletes
+      immediately.</p>
+    tint: '#ffffff'
+    statuses: []
+    sort: 0
+    flags:
+      dnd5e:
+        eldritchMadnessSentinel: true
+        eldritchMadnessGain: 1
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+    _key: '!items.effects!TearInVeilSpl001.TearVeilEmEff001'
+folder: 5Si35RRLLaaoWvC3
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+  coreVersion: '13.351'
+  systemId: dnd5e
+  systemVersion: 5.3.0
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+_key: '!items!TearInVeilSpl001'

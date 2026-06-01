@@ -1,0 +1,53 @@
+_id: mwFnatDevtn00001
+name: Fanatical Devotion
+type: feat
+img: icons/magic/holy/prayer-circle-orange.webp
+folder: L9Zgr8qAPc3ngKhb
+system:
+  identifier: fanatical-devotion
+  description:
+    value: >-
+      <p class="feature">The [[lookup @name lowercase]]{monster} has advantage
+      on saving throws against being charmed or frightened.</p>
+    chat: ''
+  source:
+    rules: homebrew
+    custom: Madweave Campaign
+    book: ''
+    license: ''
+    revision: 1
+  type:
+    value: monster
+    subtype: ''
+  activities: {}
+  uses:
+    spent: 0
+    recovery: []
+    max: ''
+  enchant: {}
+  prerequisites:
+    level: null
+    repeatable: false
+    items: []
+  properties:
+    - trait
+  requirements: ''
+  advancement: {}
+  cover: null
+  crewed: false
+effects: []
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+  coreVersion: '13.351'
+  systemId: dnd5e
+  systemVersion: 5.3.0
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+sort: 0
+ownership:
+  default: 0
+_key: '!items!mwFnatDevtn00001'

@@ -1,0 +1,180 @@
+_id: HollwShellSpl001
+name: Hollow Shell
+type: spell
+img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
+system:
+  description:
+    value: >-
+      <p>You momentarily hollow yourself out — your body becomes a vessel for the
+      void rather than a target. You gain resistance to the triggering damage.
+      Until the start of your next turn, you also gain resistance to Vortex
+      damage.</p>
+      <p>However, while the shell persists, you appear wrong to anyone looking at
+      you. Your shadow moves independently. Your reflection doesn't match. Until
+      the start of your next turn, any creature that can see you and attempts to
+      target you with a spell that restores hit points must succeed on a Wisdom
+      saving throw against your spell save DC or the spell fails (the slot is not
+      expended).</p>
+      <p>If you are currently affected by at least one level of Eldritch Madness
+      when you cast this spell, you also gain temporary hit points equal to your
+      spellcasting ability modifier.</p>
+      <p><em>Note: resistance to the triggering damage type and the healing-spell
+      interference must be applied manually. Vortex resistance and temporary hit
+      points (if EM 1+) are automated via the AE.</em></p>
+    chat: ''
+  source:
+    custom: Madweave Campaign
+    rules: homebrew
+    book: ''
+    page: ''
+    license: ''
+  activation:
+    type: reaction
+    condition: when you take damage
+    value: 1
+  duration:
+    value: '1'
+    units: round
+  target:
+    affects:
+      type: self
+      count: ''
+      choice: false
+      special: ''
+    template:
+      units: ''
+      contiguous: false
+      type: ''
+  range:
+    units: self
+    special: ''
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 1
+  school: ela
+  materials:
+    value: ''
+    consumed: false
+    cost: 0
+    supply: 0
+  preparation:
+    mode: prepared
+    prepared: false
+  properties:
+    - vocal
+    - somatic
+  activities:
+    dnd5eactivity000:
+      _id: dnd5eactivity000
+      type: utility
+      activation:
+        type: reaction
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: >-
+          Grants Vortex resistance and temp HP (if EM 1+) automatically.
+          Resistance to the triggering damage type and healing-spell
+          interference must be applied manually.
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects:
+        - _id: HollwShellEff001
+          level:
+            min: null
+            max: null
+      range:
+        override: false
+      target:
+        prompt: false
+        template:
+          contiguous: false
+          units: ''
+        affects:
+          choice: false
+          type: self
+        override: false
+      roll:
+        formula: ''
+        name: ''
+        prompt: false
+        visible: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      name: Cast
+      img: ''
+      visibility:
+        level:
+          min: null
+          max: null
+  identifier: hollow-shell
+sort: 0
+flags: {}
+effects:
+  - name: Hollow Shell
+    img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
+    origin: Compendium.dnd5e.spells24.Item.HollwShellSpl001
+    transfer: false
+    _id: HollwShellEff001
+    type: base
+    system: {}
+    changes:
+      - key: system.traits.dr.value
+        mode: 2
+        value: vortex
+        priority: null
+    disabled: false
+    duration:
+      startTime: null
+      combat: null
+      seconds: 6
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: >-
+      <p>Resistance to Vortex damage. Your appearance is wrong — creatures
+      targeting you with healing spells must succeed on a Wisdom saving throw
+      against your spell save DC or the spell fails (slot not expended).</p>
+    tint: '#6A0DAD'
+    statuses: []
+    sort: 0
+    flags:
+      dnd5e:
+        hollowShellTempHP: true
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+    _key: '!items.effects!HollwShellSpl001.HollwShellEff001'
+folder: ERuXllkhTQF51rDJ
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+  coreVersion: '13.351'
+  systemId: dnd5e
+  systemVersion: 5.3.0
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+_key: '!items!HollwShellSpl001'

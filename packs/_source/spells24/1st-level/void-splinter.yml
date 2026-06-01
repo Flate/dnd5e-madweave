@@ -1,0 +1,192 @@
+_id: VoidSplntSpell01
+name: Void Splinter
+type: spell
+img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
+system:
+  description:
+    value: >-
+      <p>You reach into the space between moments and pull. Reality cracks — a
+      hairline fracture, barely visible, lances toward a creature you can see
+      within range. The fracture passes through matter, ignoring cover.</p>
+      <p>Make a ranged spell attack against the target. This attack ignores half
+      cover and three-quarters cover. On a hit, the target takes 2d6 Vortex
+      damage. If the target is concentrating on a spell, it has disadvantage on
+      the Constitution saving throw to maintain concentration against this
+      damage.</p>
+      <p><em>Note: cover is ignored automatically; concentration save
+      disadvantage must be applied manually.</em></p>
+      <p><strong>At Higher Levels.</strong> When you cast this spell using a
+      spell slot of 2nd level or higher, the damage increases by 1d6 for each
+      slot level above 1st.</p>
+    chat: ''
+  source:
+    custom: Madweave Campaign
+    rules: homebrew
+    book: ''
+    page: ''
+    license: ''
+  activation:
+    type: action
+    condition: ''
+    value: 1
+  duration:
+    value: ''
+    units: inst
+  target:
+    affects:
+      choice: false
+    template:
+      units: ''
+      contiguous: false
+      type: ''
+  range:
+    value: '60'
+    units: ft
+    special: ''
+  uses:
+    max: ''
+    recovery: []
+    spent: 0
+  level: 1
+  school: ela
+  materials:
+    value: ''
+    consumed: false
+    cost: 0
+    supply: 0
+  preparation:
+    mode: prepared
+    prepared: false
+  properties:
+    - vocal
+    - somatic
+  activities:
+    dnd5eactivity000:
+      _id: dnd5eactivity000
+      type: attack
+      activation:
+        type: action
+        value: null
+        override: false
+      consumption:
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+        spellSlot: true
+      description:
+        chatFlavor: >-
+          Ignores half cover and three-quarters cover. If target concentrating:
+          disadvantage on CON save to maintain concentration.
+      duration:
+        units: inst
+        concentration: false
+        override: false
+      effects:
+        - _id: VoidSplntEff0001
+          level:
+            min: null
+            max: null
+      range:
+        override: false
+      target:
+        prompt: true
+        template:
+          contiguous: false
+          units: ft
+        affects:
+          choice: false
+        override: false
+      attack:
+        ability: ''
+        bonus: ''
+        critical:
+          threshold: null
+          bonus: ''
+        flat: false
+        type:
+          value: ranged
+          classification: spell
+      damage:
+        critical:
+          allow: true
+          bonus: ''
+        parts:
+          - number: 2
+            denomination: 6
+            bonus: ''
+            types:
+              - vortex
+            custom:
+              enabled: false
+              formula: ''
+            scaling:
+              mode: whole
+              number: 1
+              formula: ''
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      sort: 0
+      name: Attack
+      img: ''
+      visibility:
+        level:
+          min: null
+          max: null
+  identifier: void-splinter
+sort: 0
+flags: {}
+effects:
+  - name: Void Splinter — Concentration Disadvantage
+    img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
+    origin: Compendium.dnd5e.spells24.Item.VoidSplntSpell01
+    transfer: false
+    _id: VoidSplntEff0001
+    type: base
+    system: {}
+    changes:
+      - key: system.attributes.concentration.roll.mode
+        mode: 2
+        value: '-1'
+        priority: null
+    disabled: false
+    duration:
+      startTime: null
+      combat: null
+      seconds: 6
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: >-
+      <p>Disadvantage on Constitution saving throws to maintain
+      concentration.</p>
+    tint: '#6A0DAD'
+    statuses: []
+    sort: 0
+    flags: {}
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+    _key: '!items.effects!VoidSplntSpell01.VoidSplntEff0001'
+folder: ERuXllkhTQF51rDJ
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+  coreVersion: '13.351'
+  systemId: dnd5e
+  systemVersion: 5.3.0
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+_key: '!items!VoidSplntSpell01'

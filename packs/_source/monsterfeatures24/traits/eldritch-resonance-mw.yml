@@ -1,0 +1,54 @@
+_id: mwEldResAbr00001
+name: Eldritch Resonance
+type: feat
+img: systems/dnd5e/icons/svg/schools/eldritch-arcanum.svg
+folder: L9Zgr8qAPc3ngKhb
+system:
+  identifier: eldritch-resonance-mw
+  description:
+    value: >-
+      <p class="feature">When the [[lookup @name lowercase]]{monster} casts a
+      spell from the Eldritch Arcanum school, roll a d100 and consult the
+      Eldritch Resonance Table from the Eldritch Arcanum document.</p>
+    chat: ''
+  source:
+    rules: homebrew
+    custom: Madweave Campaign
+    book: ''
+    license: ''
+    revision: 1
+  type:
+    value: monster
+    subtype: ''
+  activities: {}
+  uses:
+    spent: 0
+    recovery: []
+    max: ''
+  enchant: {}
+  prerequisites:
+    level: null
+    repeatable: false
+    items: []
+  properties:
+    - trait
+  requirements: ''
+  advancement: {}
+  cover: null
+  crewed: false
+effects: []
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  exportSource: null
+  coreVersion: '13.351'
+  systemId: dnd5e
+  systemVersion: 5.3.0
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+sort: 0
+ownership:
+  default: 0
+_key: '!items!mwEldResAbr00001'

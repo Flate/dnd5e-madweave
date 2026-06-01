@@ -1,0 +1,1554 @@
+_id: mwWlcmgHearth001
+name: The Welcoming Hearth
+type: npc
+img: null
+system:
+  currency:
+    pp: 0
+    gp: 0
+    ep: 0
+    sp: 0
+    cp: 0
+  abilities:
+    str:
+      value: 22
+      proficient: 0
+      max: null
+      bonuses:
+        check: ''
+        save: ''
+      check:
+        roll:
+          min: null
+          max: null
+          mode: 0
+      save:
+        roll:
+          min: null
+          max: null
+          mode: 0
+    dex:
+      value: 4
+      proficient: 0
+      max: null
+      bonuses:
+        check: ''
+        save: ''
+      check:
+        roll:
+          min: null
+          max: null
+          mode: 0
+      save:
+        roll:
+          min: null
+          max: null
+          mode: 0
+    con:
+      value: 18
+      proficient: 1
+      max: null
+      bonuses:
+        check: ''
+        save: ''
+      check:
+        roll:
+          min: null
+          max: null
+          mode: 0
+      save:
+        roll:
+          min: null
+          max: null
+          mode: 0
+    int:
+      value: 3
+      proficient: 0
+      max: null
+      bonuses:
+        check: ''
+        save: ''
+      check:
+        roll:
+          min: null
+          max: null
+          mode: 0
+      save:
+        roll:
+          min: null
+          max: null
+          mode: 0
+    wis:
+      value: 14
+      proficient: 1
+      max: null
+      bonuses:
+        check: ''
+        save: ''
+      check:
+        roll:
+          min: null
+          max: null
+          mode: 0
+      save:
+        roll:
+          min: null
+          max: null
+          mode: 0
+    cha:
+      value: 16
+      proficient: 0
+      max: null
+      bonuses:
+        check: ''
+        save: ''
+      check:
+        roll:
+          min: null
+          max: null
+          mode: 0
+      save:
+        roll:
+          min: null
+          max: null
+          mode: 0
+  bonuses:
+    mwak:
+      attack: ''
+      damage: ''
+    rwak:
+      attack: ''
+      damage: ''
+    msak:
+      attack: ''
+      damage: ''
+    rsak:
+      attack: ''
+      damage: ''
+    abilities:
+      check: ''
+      save: ''
+      skill: ''
+    spell:
+      dc: ''
+  skills:
+    acr:
+      ability: dex
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 0
+      bonuses:
+        check: ''
+        passive: ''
+    ani:
+      ability: wis
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 0
+      bonuses:
+        check: ''
+        passive: ''
+    arc:
+      ability: int
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 0
+      bonuses:
+        check: ''
+        passive: ''
+    ath:
+      ability: str
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 0
+      bonuses:
+        check: ''
+        passive: ''
+    dec:
+      ability: cha
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 2
+      bonuses:
+        check: ''
+        passive: ''
+    his:
+      ability: int
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 0
+      bonuses:
+        check: ''
+        passive: ''
+    ins:
+      ability: wis
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 0
+      bonuses:
+        check: ''
+        passive: ''
+    itm:
+      ability: cha
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 0
+      bonuses:
+        check: ''
+        passive: ''
+    inv:
+      ability: int
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 0
+      bonuses:
+        check: ''
+        passive: ''
+    med:
+      ability: wis
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 0
+      bonuses:
+        check: ''
+        passive: ''
+    nat:
+      ability: int
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 0
+      bonuses:
+        check: ''
+        passive: ''
+    prc:
+      ability: wis
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 2
+      bonuses:
+        check: ''
+        passive: ''
+    prf:
+      ability: cha
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 0
+      bonuses:
+        check: ''
+        passive: ''
+    per:
+      ability: cha
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 0
+      bonuses:
+        check: ''
+        passive: ''
+    rel:
+      ability: int
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 0
+      bonuses:
+        check: ''
+        passive: ''
+    slt:
+      ability: dex
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 0
+      bonuses:
+        check: ''
+        passive: ''
+    ste:
+      ability: dex
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 0
+      bonuses:
+        check: ''
+        passive: ''
+    sur:
+      ability: wis
+      roll:
+        min: null
+        max: null
+        mode: 0
+      value: 0
+      bonuses:
+        check: ''
+        passive: ''
+  tools: {}
+  spells:
+    spell1:
+      value: 0
+      override: null
+    spell2:
+      value: 0
+      override: null
+    spell3:
+      value: 0
+      override: null
+    spell4:
+      value: 0
+      override: null
+    spell5:
+      value: 0
+      override: null
+    spell6:
+      value: 0
+      override: null
+    spell7:
+      value: 0
+      override: null
+    spell8:
+      value: 0
+      override: null
+    spell9:
+      value: 0
+      override: null
+    pact:
+      value: 0
+      override: null
+  attributes:
+    init:
+      ability: ''
+      roll:
+        min: null
+        max: null
+        mode: 0
+      bonus: ''
+    movement:
+      walk: '0'
+      fly: null
+      swim: null
+      burrow: null
+      climb: null
+      hover: false
+      units: null
+      ignoredDifficultTerrain: []
+    attunement:
+      max: 3
+    senses:
+      units: null
+      special: ''
+      ranges:
+        darkvision: null
+        blindsight: 30
+        tremorsense: 60
+        truesight: null
+    spellcasting: ''
+    exhaustion: 0
+    concentration:
+      ability: ''
+      roll:
+        min: null
+        max: null
+        mode: 0
+      bonuses:
+        save: ''
+      limit: 1
+    ac:
+      flat: 16
+      calc: natural
+    hd:
+      spent: 0
+    hp:
+      value: 168
+      max: 168
+      temp: null
+      tempmax: null
+      formula: 16d12 + 64
+    death:
+      roll:
+        min: null
+        max: null
+        mode: 0
+      success: 0
+      failure: 0
+      bonuses:
+        save: ''
+    spell:
+      level: 0
+    loyalty:
+      value: null
+    price:
+      value: null
+      denomination: gp
+  details:
+    biography:
+      value: ''
+      public: ''
+    alignment: Unaligned
+    ideal: ''
+    bond: ''
+    flaw: ''
+    race: null
+    type:
+      value: aberration
+    cr: 8
+    habitat:
+      value: []
+      custom: ''
+    treasure:
+      value: []
+    source:
+      rules: homebrew
+      custom: Madweave Campaign
+      book: ''
+      license: ''
+      revision: 1
+  resources:
+    legact:
+      max: 0
+      spent: 0
+    legres:
+      max: 0
+      spent: 0
+    lair:
+      value: false
+      initiative: null
+      inside: false
+  traits:
+    size: huge
+    di:
+      bypasses: []
+      value:
+        - poison
+      custom: ''
+    dr:
+      bypasses: []
+      value:
+        - bludgeoning
+        - piercing
+        - psychic
+      custom: ''
+    dv:
+      bypasses: []
+      value:
+        - fire
+      custom: ''
+    dm:
+      amount: {}
+      bypasses: []
+    ci:
+      value:
+        - blinded
+        - charmed
+        - deafened
+        - exhaustion
+        - frightened
+        - prone
+        - stunned
+      custom: ''
+    languages:
+      value: []
+      custom: ''
+      communication: {}
+    important: false
+prototypeToken:
+  name: The Welcoming Hearth
+  displayName: 20
+  actorLink: false
+  appendNumber: false
+  prependAdjective: false
+  width: 3
+  height: 3
+  texture:
+    src: null
+    anchorX: 0.5
+    anchorY: 0.5
+    offsetX: 0
+    offsetY: 0
+    fit: contain
+    scaleX: 3
+    scaleY: 3
+    rotation: 0
+    tint: '#ffffff'
+    alphaThreshold: 0.75
+  lockRotation: false
+  rotation: 0
+  alpha: 1
+  disposition: -1
+  displayBars: 20
+  bar1:
+    attribute: attributes.hp
+  bar2:
+    attribute: null
+  light:
+    negative: false
+    priority: 0
+    alpha: 0.5
+    angle: 360
+    bright: 0
+    color: null
+    coloration: 1
+    dim: 0
+    attenuation: 0.5
+    luminosity: 0.5
+    saturation: 0
+    contrast: 0
+    shadows: 0
+    animation:
+      type: null
+      speed: 5
+      intensity: 5
+      reverse: false
+    darkness:
+      min: 0
+      max: 1
+  sight:
+    enabled: true
+    range: 60
+    angle: 360
+    visionMode: tremorsense
+    color: null
+    attenuation: 0.1
+    brightness: 0
+    saturation: 0
+    contrast: 0
+  detectionModes: []
+  occludable:
+    radius: 0
+  ring:
+    enabled: false
+    colors:
+      ring: null
+      background: null
+    effects: 1
+    subject:
+      scale: 3
+      texture: null
+  flags: {}
+  randomImg: false
+  turnMarker:
+    mode: 1
+    animation: null
+    src: null
+    disposition: false
+  movementAction: null
+items:
+  - _id: mwHrthImmbl00001
+    name: Immobile
+    type: feat
+    img: icons/magic/earth/projectile-boulder-throw-brown.webp
+    system:
+      type:
+        value: monster
+        subtype: ''
+      activities: {}
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      description:
+        value: >-
+          <p class="feature">The Hearth cannot move. All combat takes place
+          inside or immediately around the structure.</p>
+        chat: ''
+      identifier: immobile
+      source:
+        rules: homebrew
+        custom: Madweave Campaign
+        book: ''
+        license: ''
+        revision: 1
+      enchant: {}
+      prerequisites:
+        level: null
+        repeatable: false
+        items: []
+      properties:
+        - trait
+      requirements: ''
+      advancement: {}
+      cover: null
+      crewed: false
+    folder: L9Zgr8qAPc3ngKhb
+    effects: []
+    flags: {}
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      lastModifiedBy: null
+    ownership:
+      default: 0
+    sort: 0
+    _key: '!actors.items!mwWlcmgHearth001.mwHrthImmbl00001'
+  - _id: mwHrthFalShlt001
+    name: False Shelter
+    type: feat
+    img: icons/magic/illusion/illusion-silhouette.webp
+    system:
+      type:
+        value: monster
+        subtype: ''
+      activities: {}
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      description:
+        value: >-
+          <p class="feature">From the outside, the Hearth appears as a small,
+          sturdy stone building radiating warmth and dim firelight. A DC 18
+          Investigation check (from outside) detects something wrong: faintly
+          organic building materials, warmth with no visible source, "smoke"
+          smelling faintly of stomach acid. A DC 16 Arcana check detects a faint
+          transmutation aura.</p>
+        chat: ''
+      identifier: false-shelter
+      source:
+        rules: homebrew
+        custom: Madweave Campaign
+        book: ''
+        license: ''
+        revision: 1
+      enchant: {}
+      prerequisites:
+        level: null
+        repeatable: false
+        items: []
+      properties:
+        - trait
+      requirements: ''
+      advancement: {}
+      cover: null
+      crewed: false
+    folder: L9Zgr8qAPc3ngKhb
+    effects: []
+    flags: {}
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      lastModifiedBy: null
+    ownership:
+      default: 0
+    sort: 1
+    _key: '!actors.items!mwWlcmgHearth001.mwHrthFalShlt001'
+  - _id: mwHrthLureCns001
+    name: Lure-Constructs
+    type: feat
+    img: icons/magic/control/silhouette-aura-energy.webp
+    system:
+      type:
+        value: monster
+        subtype: ''
+      activities: {}
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      description:
+        value: >-
+          <p class="feature">The Hearth produces 2–4 humanoid-shaped appendages
+          that mimic innkeepers and travelers (Deception +7). They are
+          extensions of the Hearth and share its HP pool. Destroying one (AC 12,
+          20 HP) doesn't harm the Hearth but eliminates the social lure.</p>
+        chat: ''
+      identifier: lure-constructs
+      source:
+        rules: homebrew
+        custom: Madweave Campaign
+        book: ''
+        license: ''
+        revision: 1
+      enchant: {}
+      prerequisites:
+        level: null
+        repeatable: false
+        items: []
+      properties:
+        - trait
+      requirements: ''
+      advancement: {}
+      cover: null
+      crewed: false
+    folder: L9Zgr8qAPc3ngKhb
+    effects: []
+    flags: {}
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      lastModifiedBy: null
+    ownership:
+      default: 0
+    sort: 2
+    _key: '!actors.items!mwWlcmgHearth001.mwHrthLureCns001'
+  - _id: mwHrthSlwDig0001
+    name: Slow Digestion
+    type: feat
+    img: icons/magic/acid/dissolve-pool-bubbles.webp
+    system:
+      type:
+        value: monster
+        subtype: ''
+      activities: {}
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      description:
+        value: >-
+          <p class="feature">The Hearth activates 2d4 hours after creatures
+          enter and settle in. On activation, doors and windows seal shut, the
+          fire extinguishes, and the walls begin to sweat acid. Lure-Constructs
+          collapse. Roll initiative.</p>
+        chat: ''
+      identifier: slow-digestion
+      source:
+        rules: homebrew
+        custom: Madweave Campaign
+        book: ''
+        license: ''
+        revision: 1
+      enchant: {}
+      prerequisites:
+        level: null
+        repeatable: false
+        items: []
+      properties:
+        - trait
+      requirements: ''
+      advancement: {}
+      cover: null
+      crewed: false
+    folder: L9Zgr8qAPc3ngKhb
+    effects: []
+    flags: {}
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      lastModifiedBy: null
+    ownership:
+      default: 0
+    sort: 3
+    _key: '!actors.items!mwWlcmgHearth001.mwHrthSlwDig0001'
+  - _id: mwHrthDigSec0001
+    name: Digestive Secretion
+    type: feat
+    img: icons/magic/acid/projectile-stream-green.webp
+    system:
+      type:
+        value: monster
+        subtype: ''
+      activities:
+        mwHrthDSActv0001:
+          _id: mwHrthDSActv0001
+          type: damage
+          sort: 0
+          name: Apply Round Damage
+          img: null
+          activation:
+            type: ''
+            value: null
+            override: false
+            condition: initiative count 20 (losing ties)
+          consumption:
+            scaling:
+              allowed: false
+            spellSlot: true
+            targets: []
+          description:
+            chatFlavor: Increases by 1d6 each round (max 5d6)
+          duration:
+            units: inst
+            concentration: false
+            override: false
+          effects: []
+          range:
+            override: false
+            units: self
+            special: ''
+          target:
+            template:
+              contiguous: false
+              units: ft
+              type: ''
+            affects:
+              choice: false
+              type: creature
+              special: every creature inside the Hearth
+            override: false
+            prompt: true
+          uses:
+            spent: 0
+            recovery: []
+            max: ''
+          damage:
+            critical:
+              allow: false
+            parts:
+              - number: 2
+                denomination: 6
+                bonus: ''
+                types:
+                  - acid
+                custom:
+                  enabled: false
+                  formula: ''
+                scaling:
+                  number: 1
+          flags: {}
+          visibility:
+            level: {}
+            requireAttunement: false
+            requireIdentification: false
+            requireMagic: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      description:
+        value: >-
+          <p class="feature">At the start of each round on initiative count 20
+          (losing ties), every creature inside the Hearth takes acid damage. No
+          save. The damage increases by 1d6 each round: 7 (2d6) on round 1, 10
+          (3d6) on round 2, 14 (4d6) on round 3, 17 (5d6) on round 4 and
+          beyond.</p>
+        chat: ''
+      identifier: digestive-secretion
+      source:
+        rules: homebrew
+        custom: Madweave Campaign
+        book: ''
+        license: ''
+        revision: 1
+      enchant: {}
+      prerequisites:
+        level: null
+        repeatable: false
+        items: []
+      properties:
+        - trait
+      requirements: ''
+      advancement: {}
+      cover: null
+      crewed: false
+    folder: L9Zgr8qAPc3ngKhb
+    effects: []
+    flags:
+      dnd5e:
+        riders:
+          activity: []
+          effect: []
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      lastModifiedBy: null
+    ownership:
+      default: 0
+    sort: 4
+    _key: '!actors.items!mwWlcmgHearth001.mwHrthDigSec0001'
+  - _id: mwHrthSldExt0001
+    name: Sealed Exits
+    type: feat
+    img: icons/magic/earth/wall-stone-gray.webp
+    system:
+      type:
+        value: monster
+        subtype: ''
+      activities: {}
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      description:
+        value: >-
+          <p class="feature">When activated, all doors (AC 15, 40 HP, vulnerable
+          to fire) and windows (AC 13, 25 HP, vulnerable to fire) seal shut.
+          Walls are AC 17, 60 HP per 5-ft section, vulnerable to fire. Dealing
+          30 or more fire damage to any sealed exit in a single turn causes it
+          to char and crumble.</p>
+        chat: ''
+      identifier: sealed-exits
+      source:
+        rules: homebrew
+        custom: Madweave Campaign
+        book: ''
+        license: ''
+        revision: 1
+      enchant: {}
+      prerequisites:
+        level: null
+        repeatable: false
+        items: []
+      properties:
+        - trait
+      requirements: ''
+      advancement: {}
+      cover: null
+      crewed: false
+    folder: L9Zgr8qAPc3ngKhb
+    effects: []
+    flags: {}
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      lastModifiedBy: null
+    ownership:
+      default: 0
+    sort: 5
+    _key: '!actors.items!mwWlcmgHearth001.mwHrthSldExt0001'
+  - _id: mwHrthMultiatk01
+    name: Multiattack
+    type: feat
+    img: icons/skills/melee/strike-weapons-orange.webp
+    system:
+      type:
+        value: monster
+        subtype: ''
+      activities:
+        mwHrthMAActv0001:
+          _id: mwHrthMAActv0001
+          type: utility
+          sort: 0
+          name: Use
+          img: null
+          activation:
+            type: action
+            value: null
+            override: false
+            condition: ''
+          consumption:
+            scaling:
+              allowed: false
+            spellSlot: true
+            targets: []
+          description:
+            chatFlavor: ''
+          duration:
+            units: inst
+            concentration: false
+            override: false
+          effects: []
+          range:
+            override: false
+            units: self
+          target:
+            template:
+              contiguous: false
+              units: ft
+            affects:
+              choice: false
+            override: false
+            prompt: true
+          uses:
+            spent: 0
+            recovery: []
+            max: ''
+          roll:
+            prompt: false
+            visible: false
+            name: ''
+            formula: ''
+          flags: {}
+          visibility:
+            level: {}
+            requireAttunement: false
+            requireIdentification: false
+            requireMagic: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      description:
+        value: >-
+          <p>The Hearth makes three attacks: two [[/item .mwHrthWallSlm001]]
+          attacks and one [[/item .mwHrthConstr0001]].</p>
+        chat: ''
+      identifier: multiattack
+      source:
+        rules: homebrew
+        custom: Madweave Campaign
+        book: ''
+        license: ''
+        revision: 1
+      enchant: {}
+      prerequisites:
+        level: null
+        repeatable: false
+        items: []
+      properties: []
+      requirements: ''
+      advancement: {}
+      cover: null
+      crewed: false
+    folder: 4T18pEvubPMQLzvD
+    effects: []
+    flags:
+      dnd5e:
+        riders:
+          activity: []
+          effect: []
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      lastModifiedBy: null
+    ownership:
+      default: 0
+    sort: 6
+    _key: '!actors.items!mwWlcmgHearth001.mwHrthMultiatk01'
+  - _id: mwHrthWallSlm001
+    name: Wall Slam
+    type: weapon
+    img: icons/magic/earth/wall-stone-gray.webp
+    system:
+      type:
+        value: natural
+        baseItem: ''
+      activities:
+        mwHrthWSActv0001:
+          _id: mwHrthWSActv0001
+          type: attack
+          sort: 0
+          name: ''
+          img: null
+          activation:
+            type: action
+            value: null
+            override: false
+            condition: ''
+          consumption:
+            scaling:
+              allowed: false
+            spellSlot: true
+            targets: []
+          description:
+            chatFlavor: Target pushed 5 ft. toward center on hit
+          duration:
+            units: inst
+            concentration: false
+            override: false
+          effects: []
+          range:
+            override: false
+            units: self
+          target:
+            template:
+              contiguous: false
+              units: ft
+              type: ''
+            affects:
+              choice: false
+              count: '1'
+              type: creature
+              special: adjacent to a wall
+            override: false
+            prompt: true
+          uses:
+            spent: 0
+            recovery: []
+            max: ''
+          attack:
+            critical:
+              threshold: null
+              bonus: ''
+            flat: false
+            type:
+              value: melee
+              classification: ''
+            ability: ''
+            bonus: '1'
+          damage:
+            critical:
+              allow: true
+              bonus: ''
+            includeBase: true
+            parts: []
+          flags: {}
+          visibility:
+            level: {}
+            requireAttunement: false
+            requireIdentification: false
+            requireMagic: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      description:
+        value: >-
+          <p>[[/attack extended]]. [[/damage average extended]]. On a hit, the
+          target is pushed 5 feet toward the center of the room.</p>
+        chat: ''
+      identifier: wall-slam
+      source:
+        rules: homebrew
+        custom: Madweave Campaign
+        book: ''
+        license: ''
+        revision: 1
+      identified: true
+      unidentified:
+        description: ''
+      container: null
+      quantity: 1
+      weight:
+        value: 0
+        units: lb
+      price:
+        value: 0
+        denomination: gp
+      rarity: ''
+      attunement: ''
+      attuned: false
+      equipped: true
+      armor:
+        value: null
+      cover: null
+      hp:
+        value: null
+        max: null
+        dt: null
+        conditions: ''
+      ammunition: {}
+      damage:
+        base:
+          number: 2
+          denomination: 6
+          types:
+            - bludgeoning
+          custom:
+            enabled: false
+          scaling:
+            number: 1
+          bonus: ''
+        versatile:
+          number: null
+          denomination: null
+          types: []
+          custom:
+            enabled: false
+          scaling:
+            number: 1
+      properties: []
+      proficient: null
+      range:
+        value: null
+        long: null
+        reach: 5
+        units: ft
+      mastery: ''
+      crew:
+        value: []
+      enchant: {}
+    folder: pSCWWdqMX9eUATRJ
+    effects: []
+    flags:
+      dnd5e:
+        riders:
+          activity: []
+          effect: []
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      lastModifiedBy: null
+    ownership:
+      default: 0
+    sort: 7
+    _key: '!actors.items!mwWlcmgHearth001.mwHrthWallSlm001'
+  - _id: mwHrthConstr0001
+    name: Constrict
+    type: feat
+    img: icons/magic/earth/projectile-stone-fragment-brown.webp
+    system:
+      type:
+        value: monster
+        subtype: ''
+      activities:
+        mwHrthCoActv0001:
+          _id: mwHrthCoActv0001
+          type: save
+          sort: 0
+          name: ''
+          img: null
+          activation:
+            type: action
+            value: null
+            override: false
+            condition: ''
+          consumption:
+            scaling:
+              allowed: false
+            spellSlot: true
+            targets: []
+          description:
+            chatFlavor: ''
+          duration:
+            units: inst
+            concentration: false
+            override: false
+          effects:
+            - _id: mwHrthCoAE00001
+              onSave: false
+              level: {}
+          range:
+            override: false
+            units: self
+            special: ''
+          target:
+            template:
+              contiguous: false
+              units: ft
+              type: ''
+            affects:
+              choice: false
+              count: '1'
+              type: creature
+            override: false
+            prompt: true
+          uses:
+            spent: 0
+            recovery: []
+            max: ''
+          damage:
+            parts: []
+            onSave: none
+          save:
+            ability:
+              - str
+            dc:
+              calculation: ''
+              formula: '16'
+          flags: {}
+          visibility:
+            level: {}
+            requireAttunement: false
+            requireIdentification: false
+            requireMagic: false
+      uses:
+        spent: 0
+        recovery: []
+        max: ''
+      description:
+        value: >-
+          <p class="feature">The floor beneath one creature ripples and attempts
+          to engulf its legs.</p> <p><em>Strength Saving Throw:</em> DC 16, one
+          creature the Hearth can sense.</p> <p><em>Failure:</em> The creature
+          is restrained. A restrained creature takes 3 (1d6) acid damage at the
+          start of its turn. Escaping requires a DC 16 Strength (Athletics)
+          check as an action.</p>
+        chat: ''
+      identifier: constrict
+      source:
+        rules: homebrew
+        custom: Madweave Campaign
+        book: ''
+        license: ''
+        revision: 1
+      enchant: {}
+      prerequisites:
+        level: null
+        repeatable: false
+        items: []
+      properties: []
+      requirements: ''
+      advancement: {}
+      cover: null
+      crewed: false
+    folder: 4T18pEvubPMQLzvD
+    effects:
+      - _id: mwHrthCoAE00001
+        name: Restrained by Floor
+        type: base
+        img: systems/dnd5e/icons/svg/statuses/restrained.svg
+        transfer: false
+        disabled: false
+        origin: Compendium.dnd5e.actors24.Actor.mwWlcmgHearth001.Item.mwHrthConstr0001
+        description: >-
+          <p>Restrained by the Hearth's floor. Takes 3 (1d6) acid damage at the
+          start of each turn. Escape: DC 16 Strength (Athletics) check as an
+          action.</p>
+        tint: '#ffffff'
+        duration:
+          startTime: null
+          seconds: null
+          rounds: null
+          turns: null
+          combat: null
+          startRound: null
+          startTurn: null
+        statuses:
+          - restrained
+        changes: []
+        system: {}
+        flags: {}
+        sort: 0
+        _stats:
+          compendiumSource: null
+          duplicateSource: null
+          exportSource: null
+          coreVersion: '13.351'
+          systemId: dnd5e
+          systemVersion: 5.3.0
+          lastModifiedBy: null
+        _key: >-
+          !actors.items.effects!mwWlcmgHearth001.mwHrthConstr0001.mwHrthCoAE00001
+    flags:
+      dnd5e:
+        riders:
+          activity: []
+          effect: []
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      lastModifiedBy: null
+    ownership:
+      default: 0
+    sort: 8
+    _key: '!actors.items!mwWlcmgHearth001.mwHrthConstr0001'
+  - _id: mwHrthCeilDrp001
+    name: Ceiling Drop
+    type: feat
+    img: icons/magic/earth/stomp-stomp-smash-brown.webp
+    system:
+      type:
+        value: monster
+        subtype: ''
+      activities:
+        mwHrthCDActv0001:
+          _id: mwHrthCDActv0001
+          type: save
+          sort: 0
+          name: ''
+          img: null
+          activation:
+            type: action
+            value: null
+            override: false
+            condition: ''
+          consumption:
+            scaling:
+              allowed: false
+            spellSlot: false
+            targets:
+              - type: itemUses
+                value: '1'
+                target: ''
+                scaling: {}
+          description:
+            chatFlavor: Recharge 5-6 at the start of the Hearth's turn
+          duration:
+            units: inst
+            concentration: false
+            override: false
+          effects:
+            - _id: mwHrthCDAE00001
+              onSave: false
+              level: {}
+          range:
+            override: false
+            units: self
+            special: ''
+          target:
+            template:
+              contiguous: false
+              units: ft
+              type: ''
+            affects:
+              choice: false
+              count: '1'
+              type: creature
+            override: false
+            prompt: true
+          uses:
+            spent: 0
+            recovery: []
+            max: ''
+          damage:
+            parts:
+              - number: 3
+                denomination: 10
+                bonus: ''
+                types:
+                  - bludgeoning
+                custom:
+                  enabled: false
+                  formula: ''
+                scaling:
+                  number: 1
+            onSave: half
+          save:
+            ability:
+              - dex
+            dc:
+              calculation: ''
+              formula: '16'
+          flags: {}
+          visibility:
+            level: {}
+            requireAttunement: false
+            requireIdentification: false
+            requireMagic: false
+      uses:
+        spent: 0
+        recovery: []
+        max: '1'
+      description:
+        value: >-
+          <p class="feature"><em>Recharge 5–6.</em> A section of ceiling above
+          one creature detaches and falls.</p> <p><em>Dexterity Saving
+          Throw:</em> DC 16, one creature the Hearth can sense.</p>
+          <p><em>Failure:</em> [[/damage average]] bludgeoning damage, knocked
+          prone, and buried (restrained; DC 14 Strength to escape as an
+          action).</p> <p><em>Success:</em> Half damage only.</p>
+        chat: ''
+      identifier: ceiling-drop
+      source:
+        rules: homebrew
+        custom: Madweave Campaign
+        book: ''
+        license: ''
+        revision: 1
+      enchant: {}
+      prerequisites:
+        level: null
+        repeatable: false
+        items: []
+      properties: []
+      requirements: ''
+      advancement: {}
+      cover: null
+      crewed: false
+    folder: 4T18pEvubPMQLzvD
+    effects:
+      - _id: mwHrthCDAE00001
+        name: Buried under Rubble
+        type: base
+        img: systems/dnd5e/icons/svg/statuses/restrained.svg
+        transfer: false
+        disabled: false
+        origin: Compendium.dnd5e.actors24.Actor.mwWlcmgHearth001.Item.mwHrthCeilDrp001
+        description: >-
+          <p>Prone and buried under rubble. Escape: DC 14 Strength check as an
+          action.</p>
+        tint: '#ffffff'
+        duration:
+          startTime: null
+          seconds: null
+          rounds: null
+          turns: null
+          combat: null
+          startRound: null
+          startTurn: null
+        statuses:
+          - restrained
+          - prone
+        changes: []
+        system: {}
+        flags: {}
+        sort: 0
+        _stats:
+          compendiumSource: null
+          duplicateSource: null
+          exportSource: null
+          coreVersion: '13.351'
+          systemId: dnd5e
+          systemVersion: 5.3.0
+          lastModifiedBy: null
+        _key: >-
+          !actors.items.effects!mwWlcmgHearth001.mwHrthCeilDrp001.mwHrthCDAE00001
+    flags:
+      dnd5e:
+        riders:
+          activity: []
+          effect: []
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      exportSource: null
+      coreVersion: '13.351'
+      systemId: dnd5e
+      systemVersion: 5.3.0
+      lastModifiedBy: null
+    ownership:
+      default: 0
+    sort: 9
+    _key: '!actors.items!mwWlcmgHearth001.mwHrthCeilDrp001'
+effects: []
+folder: sUWhvnagivVASLJz
+flags: {}
+_stats:
+  duplicateSource: null
+  exportSource: null
+  coreVersion: '13.351'
+  systemId: dnd5e
+  systemVersion: 5.3.0
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+sort: 0
+ownership:
+  default: 0
+_key: '!actors!mwWlcmgHearth001'
+
