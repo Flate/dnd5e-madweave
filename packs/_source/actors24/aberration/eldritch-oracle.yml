@@ -1,7 +1,7 @@
 _id: mwEldOracle00001
 name: Eldritch Oracle
 type: npc
-img: null
+img: 'systems/dnd5e/tokens/aberrations/EldritchOracle5.webp'
 system:
   currency:
     pp: 0
@@ -479,7 +479,7 @@ prototypeToken:
   width: 1
   height: 1
   texture:
-    src: null
+    src: 'systems/dnd5e/tokens/aberrations/EldritchOracle5_token.webp'
     anchorX: 0.5
     anchorY: 0.5
     offsetX: 0

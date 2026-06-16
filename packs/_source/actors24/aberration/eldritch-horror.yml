@@ -1,7 +1,7 @@
 _id: mwEldHorror00001
 name: Eldritch Horror
 type: npc
-img: null
+img: 'systems/dnd5e/tokens/aberrations/EldritchHorror1.webp'
 system:
   currency:
     pp: 0
@@ -482,7 +482,7 @@ prototypeToken:
   width: 2
   height: 2
   texture:
-    src: null
+    src: 'systems/dnd5e/tokens/aberrations/EldritchHorror1_token.webp'
     anchorX: 0.5
     anchorY: 0.5
     offsetX: 0

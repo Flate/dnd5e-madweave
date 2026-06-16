@@ -472,7 +472,7 @@ system:
     custom: Madweave Campaign
     revision: 1
 _id: VeilBornActor001
-img: ''
+img: 'systems/dnd5e/tokens/summons/Veil-Born.webp'
 prototypeToken:
   name: Veil-Born
   displayName: 20
@@ -482,7 +482,7 @@ prototypeToken:
   width: 1
   height: 1
   texture:
-    src: ''
+    src: 'systems/dnd5e/tokens/summons/Veil-Born_token.webp'
     anchorX: 0.5
     anchorY: 0.5
     offsetX: 0

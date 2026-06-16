@@ -1,7 +1,7 @@
 _id: mwWlcmgHearth001
 name: The Welcoming Hearth
 type: npc
-img: null
+img: 'systems/dnd5e/tokens/aberrations/WelcomingHearth.webp'
 system:
   currency:
     pp: 0

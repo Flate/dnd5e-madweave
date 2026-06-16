@@ -1,7 +1,7 @@
 _id: mwVoidCultist001
 name: Illuminated Void Cultist
 type: npc
-img: ''
+img: 'forgotten-adventures/FA_Tokens/Adversaries/Cultists/Cultist_Robed_Holding_Book_08.png'
 system:
   currency:
     pp: 0
@@ -490,7 +490,7 @@ prototypeToken:
   rotation: 0
   alpha: 1
   texture:
-    src: ''
+    src: 'forgotten-adventures/FA_Tokens/Adversaries/Cultists/Cultist_Robed_Holding_Book_08.png'
     anchorX: 0.5
     anchorY: 0.5
     offsetX: 0
